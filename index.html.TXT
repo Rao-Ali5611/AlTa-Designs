@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rao Designs</title>
+  <title>AlTa Designs</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -31,8 +31,9 @@
   </style>
 </head>
 <body>
-  <h1>Welcome to Rao Designs 🎨</h1>
+  <h1>Welcome to AlTa Designs 🎨</h1>
   <p>We create 3D Wooden Logos, YouTube Thumbnails, Wedding Cards, and more!</p>
-  <a class="btn" href="https://wa.me/923xxxxxxxxx" target="_blank">Order Now on WhatsApp<923032792947>
+  <a class="btn" href="https://wa.me/923032792947" target="_blank">Order Now on WhatsApp</a>
 </body>
 </html>
+
