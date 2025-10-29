@@ -3,38 +3,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AlTa Designs</title>
+  <title>AlTa Designs | Professional Graphic Services</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafc;
+      color: #333;
       text-align: center;
-      background-color: #f5f5f5;
-      padding: 50px;
+      padding: 20px;
     }
-    h1 {
-      color: #222;
-    }
-    p {
-      color: #444;
-      font-size: 18px;
-    }
-    .btn {
-      background-color: #007bff;
+
+    header {
+      background: #007bff;
       color: white;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 8px;
+      padding: 25px 0;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1em;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 10px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .card h3 {
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
     .btn:hover {
-      background-color: #0056b3;
+      background: #0056b3;
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #777;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to AlTa Designs 🎨</h1>
-  <p>We create 3D Wooden Logos, YouTube Thumbnails, Wedding Cards, and more!</p>
-  <a class="btn" href="https://wa.me/923032792947" target="_blank">Order Now on WhatsApp</a>
+
+  <header>
+    <h1>Welcome to AlTa Designs 🎨</h1>
+    <p>Professional Graphic Design Services — Ready to Create for You!</p>
+  </header>
+
+  <section class="services">
+    <div class="card">
+      <h3>🎬 YouTube Thumbnail Design</h3>
+      <p>Custom, eye-catching thumbnails that boost your clicks.</p>
+      <a class="btn" href="https://wa.me/923032792947" target="_blank">Order Now</a>
+    </div>
+
+    <div class="card">
+      <h3>🪵 3D Wooden Logo Design</h3>
+      <p>Beautiful 3D wooden effect logos for brands & shops.</p>
+      <a class="btn" href="https://wa.me/923032792947" target="_blank">Order Now</a>
+    </div>
+
+    <div class="card">
+      <h3>💍 Wedding Invitation Cards</h3>
+      <p>Elegant and creative invitations for your special day.</p>
+      <a class="btn" href="https://wa.me/923032792947" target="_blank">Order Now</a>
+    </div>
+
+    <div class="card">
+      <h3>📱 Social Media Posts</h3>
+      <p>Stunning post designs for Facebook, Instagram & more.</p>
+      <a class="btn" href="https://wa.me/923032792947" target="_blank">Order Now</a>
+    </div>
+
+    <div class="card">
+      <h3>🧩 3D Logo Design</h3>
+      <p>Modern, bold and premium 3D logos for your business.</p>
+      <a class="btn" href="https://wa.me/923032792947" target="_blank">Order Now</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 AlTa Designs | Created by Rao Ali</p>
+  </footer>
+
 </body>
 </html>
-
-
