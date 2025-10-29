@@ -5,90 +5,166 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AlTa Designs</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f5f5f5;
-      padding: 50px;
-    }
-    h1 {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #ffffff, #f0f4ff);
       color: #222;
     }
-    p {
-      color: #555;
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .hero p {
       font-size: 18px;
+      color: #555;
+      margin-bottom: 25px;
     }
-    .services {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 30px;
-      gap: 15px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      width: 250px;
-    }
+
     .btn {
       background-color: #007bff;
       color: white;
-      padding: 10px 20px;
-      text-decoration: none;
+      padding: 12px 25px;
       border-radius: 8px;
-      display: inline-block;
-      margin-top: 10px;
+      text-decoration: none;
+      transition: 0.3s;
     }
+
     .btn:hover {
       background-color: #0056b3;
     }
+
+    .services, .portfolio {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .services h3, .portfolio h3 {
+      font-size: 28px;
+      color: #007bff;
+      margin-bottom: 30px;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 270px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card h4 {
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
     footer {
+      text-align: center;
+      background-color: #222;
+      color: white;
+      padding: 25px;
       margin-top: 50px;
-      color: #777;
       font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to AlTa Designs 🎨</h1>
-  <p>Professional Graphic Design Services — Ready to Create for You!</p>
+  <header>
+    <h1>AlTa Designs 🎨</h1>
+    <p>Your Creative Partner for Graphic Perfection</p>
+  </header>
 
-  <div class="services">
-    <div class="card">
-      <h3>🎬 YouTube Thumbnail Design</h3>
-      <p>Custom, eye-catching thumbnails that boost your clicks.</p>
-      <a class="btn" href="https://wa.me/923032792947?text=Hi!%20I%20want%20to%20order%20a%20YouTube%20Thumbnail%20Design." target="_blank">Order Now</a>
-    </div>
+  <section class="hero">
+    <h2>Professional Graphic Design Services</h2>
+    <p>We bring your ideas to life with creativity and precision!</p>
+    <a class="btn" href="https://wa.me/923032792947?text=Hi!%20I%20want%20to%20order%20a%20design%20from%20AlTa%20Designs." target="_blank">Order on WhatsApp</a>
+  </section>
 
-    <div class="card">
-      <h3>🪵 3D Wooden Logo Design</h3>
-      <p>Beautiful 3D wooden effect logos for brands & shops.</p>
-      <a class="btn" href="https://wa.me/923032792947?text=Hi!%20I%20want%20to%20order%20a%203D%20Wooden%20Logo%20Design." target="_blank">Order Now</a>
+  <section class="services">
+    <h3>💼 Our Services</h3>
+    <div class="cards">
+      <div class="card">
+        <h4>🎬 YouTube Thumbnail Design</h4>
+        <p>Eye-catching thumbnails that boost your video views.</p>
+      </div>
+      <div class="card">
+        <h4>🪵 3D Wooden Logo</h4>
+        <p>Realistic wooden effects that make your brand stand out.</p>
+      </div>
+      <div class="card">
+        <h4>💍 Wedding Invitation Cards</h4>
+        <p>Elegant designs to make your special day memorable.</p>
+      </div>
+      <div class="card">
+        <h4>📱 Social Media Posts</h4>
+        <p>Creative designs for Instagram, Facebook & more.</p>
+      </div>
+      <div class="card">
+        <h4>🧩 3D Logo Design</h4>
+        <p>Premium, modern 3D logos for businesses.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>💍 Wedding Invitation Cards</h3>
-      <p>Elegant and creative invitations for your special day.</p>
-      <a class="btn" href="https://wa.me/923032792947?text=Hi!%20I%20want%20to%20order%20a%20Wedding%20Invitation%20Card." target="_blank">Order Now</a>
+  <section class="portfolio">
+    <h3>🖼️ Our Portfolio</h3>
+    <div class="cards">
+      <div class="card">
+        <h4>3D Wooden Logo</h4>
+        <img src="https://via.placeholder.com/250x150" alt="Wooden Logo Sample">
+      </div>
+      <div class="card">
+        <h4>Wedding Invitation Card</h4>
+        <img src="https://via.placeholder.com/250x150" alt="Invitation Sample">
+      </div>
+      <div class="card">
+        <h4>YouTube Thumbnail</h4>
+        <img src="https://via.placeholder.com/250x150" alt="Thumbnail Sample">
+      </div>
     </div>
-
-    <div class="card">
-      <h3>📱 Social Media Posts</h3>
-      <p>Stunning post designs for Facebook, Instagram & more.</p>
-      <a class="btn" href="https://wa.me/923032792947?text=Hi!%20I%20want%20to%20order%20a%20Social%20Media%20Post%20Design." target="_blank">Order Now</a>
-    </div>
-
-    <div class="card">
-      <h3>🧩 3D Logo Design</h3>
-      <p>Modern, bold and premium 3D logos for your business.</p>
-      <a class="btn" href="https://wa.me/923032792947?text=Hi!%20I%20want%20to%20order%20a%203D%20Logo%20Design." target="_blank">Order Now</a>
-    </div>
-  </div>
+  </section>
 
   <footer>
-    © 2025 AlTa Designs | Created by Rao Ali
+    © 2025 AlTa Designs | Created by Rao Ali 💙
   </footer>
 </body>
 </html>
