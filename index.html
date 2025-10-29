@@ -5,166 +5,220 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AlTa Designs</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Montserrat", sans-serif;
+    }
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #f0f4ff);
-      color: #222;
-    }
-
-    header {
-      background-color: #007bff;
+      background-color: #3b2b23;
       color: white;
-      padding: 20px 0;
       text-align: center;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      overflow-x: hidden;
     }
-
+    header {
+      padding: 60px 20px 40px;
+      background: linear-gradient(180deg, #4e3629, #3b2b23);
+      animation: fadeIn 1s ease-in-out;
+    }
     header h1 {
-      font-size: 28px;
+      font-size: 3rem;
+      font-weight: 800;
       letter-spacing: 1px;
     }
-
-    .hero {
-      text-align: center;
-      padding: 60px 20px;
+    header p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: #e4d6c5;
     }
 
-    .hero h2 {
-      font-size: 36px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #555;
-      margin-bottom: 25px;
-    }
-
-    .btn {
-      background-color: #007bff;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #0056b3;
-    }
-
-    .services, .portfolio {
-      text-align: center;
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
       padding: 50px 20px;
+      background-color: #fff;
+      color: #3b2b23;
     }
-
-    .services h3, .portfolio h3 {
-      font-size: 28px;
-      color: #007bff;
-      margin-bottom: 30px;
-    }
-
-    .cards {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
     .card {
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: #f9f4f0;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       padding: 20px;
-      width: 270px;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s;
+      animation: fadeUp 1s ease forwards;
     }
-
     .card:hover {
       transform: translateY(-8px);
     }
-
-    .card h4 {
-      margin-bottom: 10px;
-      color: #222;
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    .samples {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .sample-box {
+      width: 60px;
+      height: 60px;
+      background: #d6c4b3;
+      border-radius: 10px;
+    }
+    .order-btn {
+      background-color: #3b2b23;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .order-btn:hover {
+      background-color: #2d1f17;
     }
 
-    .card p {
-      font-size: 15px;
-      color: #555;
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .popup-content {
+      background: #fff;
+      color: #3b2b23;
+      padding: 30px;
+      border-radius: 14px;
+      text-align: center;
+      width: 90%;
+      max-width: 300px;
+      animation: popIn 0.4s ease;
+    }
+    .popup-content h2 {
       margin-bottom: 15px;
+    }
+    .popup-btn {
+      display: block;
+      margin: 10px auto;
+      width: 80%;
+      background-color: #3b2b23;
+      color: #fff;
+      padding: 10px 0;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .popup-btn:hover {
+      background-color: #2d1f17;
     }
 
     footer {
-      text-align: center;
-      background-color: #222;
-      color: white;
-      padding: 25px;
+      background-color: #2d1f17;
+      color: #fff;
+      padding: 20px;
       margin-top: 50px;
-      font-size: 14px;
     }
+
+    @keyframes fadeIn { from{opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);} }
+    @keyframes fadeUp { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+    @keyframes popIn { from{transform:scale(0.8); opacity:0;} to{transform:scale(1); opacity:1;} }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>AlTa Designs 🎨</h1>
-    <p>Your Creative Partner for Graphic Perfection</p>
+    <h1>AlTa Designs</h1>
+    <p>We create premium, eye-catching designs for your brand!</p>
   </header>
 
-  <section class="hero">
-    <h2>Professional Graphic Design Services</h2>
-    <p>We bring your ideas to life with creativity and precision!</p>
-    <a class="btn" href="https://wa.me/923032792947?text=Hi!%20I%20want%20to%20order%20a%20design%20from%20AlTa%20Designs." target="_blank">Order on WhatsApp</a>
-  </section>
-
   <section class="services">
-    <h3>💼 Our Services</h3>
-    <div class="cards">
-      <div class="card">
-        <h4>🎬 YouTube Thumbnail Design</h4>
-        <p>Eye-catching thumbnails that boost your video views.</p>
-      </div>
-      <div class="card">
-        <h4>🪵 3D Wooden Logo</h4>
-        <p>Realistic wooden effects that make your brand stand out.</p>
-      </div>
-      <div class="card">
-        <h4>💍 Wedding Invitation Cards</h4>
-        <p>Elegant designs to make your special day memorable.</p>
-      </div>
-      <div class="card">
-        <h4>📱 Social Media Posts</h4>
-        <p>Creative designs for Instagram, Facebook & more.</p>
-      </div>
-      <div class="card">
-        <h4>🧩 3D Logo Design</h4>
-        <p>Premium, modern 3D logos for businesses.</p>
-      </div>
+    <div class="card" data-service="YouTube Thumbnails Designs">
+      <h3>YouTube Thumbnails Designs</h3>
+      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
+      <button class="order-btn" onclick="openPopup('YouTube Thumbnails Designs')">Order Now</button>
+    </div>
+
+    <div class="card" data-service="Wedding Invitation Cards">
+      <h3>Wedding Invitation Cards</h3>
+      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
+      <button class="order-btn" onclick="openPopup('Wedding Invitation Cards')">Order Now</button>
+    </div>
+
+    <div class="card" data-service="Business Cards">
+      <h3>Business Cards</h3>
+      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
+      <button class="order-btn" onclick="openPopup('Business Cards')">Order Now</button>
+    </div>
+
+    <div class="card" data-service="3D Logo">
+      <h3>3D Logo</h3>
+      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
+      <button class="order-btn" onclick="openPopup('3D Logo')">Order Now</button>
+    </div>
+
+    <div class="card" data-service="3D Wooden Logo">
+      <h3>3D Wooden Logo</h3>
+      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
+      <button class="order-btn" onclick="openPopup('3D Wooden Logo')">Order Now</button>
+    </div>
+
+    <div class="card" data-service="Social Media Posts">
+      <h3>Social Media Posts</h3>
+      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
+      <button class="order-btn" onclick="openPopup('Social Media Posts')">Order Now</button>
+    </div>
+
+    <div class="card" data-service="Packaging Design">
+      <h3>Packaging Design</h3>
+      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
+      <button class="order-btn" onclick="openPopup('Packaging Design')">Order Now</button>
+    </div>
+
+    <div class="card" data-service="T-Shirt Design">
+      <h3>T-Shirt Design</h3>
+      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
+      <button class="order-btn" onclick="openPopup('T-Shirt Design')">Order Now</button>
     </div>
   </section>
 
-  <section class="portfolio">
-    <h3>🖼️ Our Portfolio</h3>
-    <div class="cards">
-      <div class="card">
-        <h4>3D Wooden Logo</h4>
-        <img src="https://via.placeholder.com/250x150" alt="Wooden Logo Sample">
-      </div>
-      <div class="card">
-        <h4>Wedding Invitation Card</h4>
-        <img src="https://via.placeholder.com/250x150" alt="Invitation Sample">
-      </div>
-      <div class="card">
-        <h4>YouTube Thumbnail</h4>
-        <img src="https://via.placeholder.com/250x150" alt="Thumbnail Sample">
-      </div>
+  <!-- Popup -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <h2>Order via</h2>
+      <a id="whatsappLink" class="popup-btn" href="#" target="_blank">WhatsApp</a>
+      <a id="telegramLink" class="popup-btn" href="#" target="_blank">Telegram</a>
+      <button class="order-btn" style="margin-top:10px;" onclick="closePopup()">Close</button>
     </div>
-  </section>
+  </div>
 
   <footer>
-    © 2025 AlTa Designs | Created by Rao Ali 💙
+    © 2025 AlTa Designs. All Rights Reserved.
   </footer>
+
+  <script>
+    function openPopup(service) {
+      document.getElementById("popup").style.display = "flex";
+      const encoded = encodeURIComponent(`Hi! I want to order a ${service} from AlTa Designs.`);
+      document.getElementById("whatsappLink").href = `https://wa.me/923032792947?text=${encoded}`;
+      document.getElementById("telegramLink").href = `https://t.me/923032792947?text=${encoded}`;
+    }
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+  </script>
+
 </body>
 </html>
