@@ -6,132 +6,43 @@
 <title>Creative Services Dashboard</title>
 <style>
     /* --- Global Styles --- */
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-        display: flex;
-        height: 100vh;
-        background: linear-gradient(135deg, #f0f4f8, #e0eaf4);
-        color: #333;
-    }
-
+    * { box-sizing: border-box; margin:0; padding:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { display:flex; height:100vh; background: linear-gradient(135deg,#f0f4f8,#e0eaf4); color:#333; overflow:hidden; }
+    
     /* --- Sidebar --- */
-    .sidebar {
-        width: 220px;
-        background: #fff;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    .sidebar h2 {
-        margin-bottom: 30px;
-        color: #3b82f6;
-    }
-
-    .sidebar a {
-        text-decoration: none;
-        color: #555;
-        margin-bottom: 15px;
-        font-weight: 500;
-        transition: all 0.3s;
-    }
-
-    .sidebar a:hover {
-        color: #3b82f6;
-    }
+    .sidebar { width:220px; background:#fff; box-shadow:2px 0 10px rgba(0,0,0,0.1); display:flex; flex-direction:column; padding:20px; }
+    .sidebar h2 { margin-bottom:30px; color:#3b82f6; }
+    .sidebar a { text-decoration:none; color:#555; margin-bottom:15px; font-weight:500; transition:0.3s; }
+    .sidebar a:hover { color:#3b82f6; }
 
     /* --- Main Content --- */
-    .main-content {
-        flex: 1;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-    }
-
+    .main-content { flex:1; padding:30px; display:flex; flex-direction:column; overflow-y:auto; }
+    
     /* --- Search Bar --- */
-    .search-bar {
-        position: relative;
-        margin-bottom: 40px;
-    }
-
-    .search-bar input {
-        width: 100%;
-        padding: 12px 20px;
-        border-radius: 10px;
-        border: none;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        font-size: 16px;
-        outline: none;
-    }
-
+    .search-bar { position: relative; margin-bottom: 30px; display:flex; gap:10px; }
+    .search-bar input { flex:1; padding:12px 20px; border-radius:10px; border:none; box-shadow:0 4px 15px rgba(0,0,0,0.1); font-size:16px; outline:none; }
+    .search-bar button { padding:12px 15px; border:none; border-radius:10px; background:#3b82f6; color:#fff; cursor:pointer; }
+    
     /* --- Services Grid --- */
-    .services {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-    }
+    .services { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+    .service-card { background:#fff; border-radius:15px; padding:20px; box-shadow:0 8px 20px rgba(0,0,0,0.1); display:flex; flex-direction:column; transition:0.3s; }
+    .service-card:hover { transform:translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.15); }
+    .service-card h3 { margin-bottom:15px; color:#3b82f6; }
+    .service-buttons { display:flex; justify-content:space-between; flex-wrap:wrap; gap:5px; }
+    .service-buttons button { flex:1; padding:10px; border:none; border-radius:8px; cursor:pointer; font-weight:600; transition:0.3s; }
+    .buy-btn { background:#10b981; color:#fff; }
+    .buy-btn:hover { background:#059669; }
+    .enter-btn { background:#3b82f6; color:#fff; }
+    .enter-btn:hover { background:#2563eb; }
 
-    .service-card {
-        background: #fff;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .service-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-    }
-
-    .service-card h3 {
-        margin-bottom: 15px;
-        color: #3b82f6;
-    }
-
-    .service-buttons {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .service-buttons button {
-        flex: 1;
-        margin: 5px;
-        padding: 10px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s;
-    }
-
-    .buy-btn {
-        background: #10b981;
-        color: #fff;
-    }
-
-    .buy-btn:hover {
-        background: #059669;
-    }
-
-    .enter-btn {
-        background: #3b82f6;
-        color: #fff;
-    }
-
-    .enter-btn:hover {
-        background: #2563eb;
-    }
+    /* --- Folder Modal --- */
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; }
+    .modal-content { background:#fff; border-radius:15px; width:80%; max-height:80%; overflow-y:auto; padding:20px; }
+    .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .modal-header h3 { color:#3b82f6; }
+    .close-btn { cursor:pointer; font-size:20px; color:#333; }
+    .samples { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:15px; }
+    .samples img { width:100%; border-radius:10px; }
 
 </style>
 </head>
@@ -141,90 +52,186 @@
 <div class="sidebar">
     <h2>Dashboard</h2>
     <a href="#">Home</a>
-    <a href="#">Classwork</a>
-    <a href="#">Projects</a>
-    <a href="#">Messages</a>
-    <a href="#">Settings</a>
+    <a href="#" onclick="openSettings()">Settings</a>
 </div>
 
 <!-- Main Content -->
 <div class="main-content">
     <!-- Search -->
     <div class="search-bar">
-        <input type="text" placeholder="Search services...">
+        <input type="text" id="searchInput" placeholder="Search samples...">
+        <button onclick="voiceSearch()">🎤</button>
     </div>
 
     <!-- Services -->
     <div class="services">
-        <div class="service-card">
+        <div class="service-card" data-service="3D Logo">
             <h3>3D Logo</h3>
             <div class="service-buttons">
-                <button class="buy-btn" onclick="buyNow('3D Logo')">Buy Now</button>
-                <button class="enter-btn" onclick="enterFolder('3D Logo')">Enter Folder</button>
+                <button class="buy-btn" onclick="orderNow('3D Logo')">Order Now</button>
+                <button class="enter-btn" onclick="openFolder('3D Logo')">View Samples</button>
             </div>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="3D Wooden Logo">
             <h3>3D Wooden Logo</h3>
             <div class="service-buttons">
-                <button class="buy-btn" onclick="buyNow('3D Wooden Logo')">Buy Now</button>
-                <button class="enter-btn" onclick="enterFolder('3D Wooden Logo')">Enter Folder</button>
+                <button class="buy-btn" onclick="orderNow('3D Wooden Logo')">Order Now</button>
+                <button class="enter-btn" onclick="openFolder('3D Wooden Logo')">View Samples</button>
             </div>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="T-shirt Design">
             <h3>T-shirt Design</h3>
             <div class="service-buttons">
-                <button class="buy-btn" onclick="buyNow('T-shirt Design')">Buy Now</button>
-                <button class="enter-btn" onclick="enterFolder('T-shirt Design')">Enter Folder</button>
+                <button class="buy-btn" onclick="orderNow('T-shirt Design')">Order Now</button>
+                <button class="enter-btn" onclick="openFolder('T-shirt Design')">View Samples</button>
             </div>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="Social Media Posts">
             <h3>Social Media Posts</h3>
             <div class="service-buttons">
-                <button class="buy-btn" onclick="buyNow('Social Media Posts')">Buy Now</button>
-                <button class="enter-btn" onclick="enterFolder('Social Media Posts')">Enter Folder</button>
+                <button class="buy-btn" onclick="orderNow('Social Media Posts')">Order Now</button>
+                <button class="enter-btn" onclick="openFolder('Social Media Posts')">View Samples</button>
             </div>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="Packaging Design">
             <h3>Packaging Design</h3>
             <div class="service-buttons">
-                <button class="buy-btn" onclick="buyNow('Packaging Design')">Buy Now</button>
-                <button class="enter-btn" onclick="enterFolder('Packaging Design')">Enter Folder</button>
+                <button class="buy-btn" onclick="orderNow('Packaging Design')">Order Now</button>
+                <button class="enter-btn" onclick="openFolder('Packaging Design')">View Samples</button>
             </div>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="Marriage Invitation Card">
             <h3>Marriage Invitation Card</h3>
             <div class="service-buttons">
-                <button class="buy-btn" onclick="buyNow('Marriage Invitation Card')">Buy Now</button>
-                <button class="enter-btn" onclick="enterFolder('Marriage Invitation Card')">Enter Folder</button>
+                <button class="buy-btn" onclick="orderNow('Marriage Invitation Card')">Order Now</button>
+                <button class="enter-btn" onclick="openFolder('Marriage Invitation Card')">View Samples</button>
             </div>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="Business Card">
             <h3>Business Card</h3>
             <div class="service-buttons">
-                <button class="buy-btn" onclick="buyNow('Business Card')">Buy Now</button>
-                <button class="enter-btn" onclick="enterFolder('Business Card')">Enter Folder</button>
+                <button class="buy-btn" onclick="orderNow('Business Card')">Order Now</button>
+                <button class="enter-btn" onclick="openFolder('Business Card')">View Samples</button>
             </div>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="YouTube Thumbnails">
             <h3>YouTube Thumbnails</h3>
             <div class="service-buttons">
-                <button class="buy-btn" onclick="buyNow('YouTube Thumbnails')">Buy Now</button>
-                <button class="enter-btn" onclick="enterFolder('YouTube Thumbnails')">Enter Folder</button>
+                <button class="buy-btn" onclick="orderNow('YouTube Thumbnails')">Order Now</button>
+                <button class="enter-btn" onclick="openFolder('YouTube Thumbnails')">View Samples</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Folder Modal -->
+<div class="modal" id="folderModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="folderTitle">Folder</h3>
+            <span class="close-btn" onclick="closeFolder()">✖</span>
+        </div>
+        <div class="samples" id="sampleContainer">
+            <!-- Samples dynamically inserted here -->
+        </div>
+    </div>
+</div>
+
 <script>
-    function buyNow(service) {
-        alert('Redirecting to Buy Now for: ' + service);
-        // Yahan aap buy process ke link ya function laga sakte ho
+    const samplesData = {
+        "3D Logo": [
+            "https://via.placeholder.com/150?text=3D+Logo+1",
+            "https://via.placeholder.com/150?text=3D+Logo+2",
+            "https://via.placeholder.com/150?text=3D+Logo+3"
+        ],
+        "3D Wooden Logo": [
+            "https://via.placeholder.com/150?text=3D+Wooden+Logo+1",
+            "https://via.placeholder.com/150?text=3D+Wooden+Logo+2"
+        ],
+        "T-shirt Design": [
+            "https://via.placeholder.com/150?text=T-shirt+1",
+            "https://via.placeholder.com/150?text=T-shirt+2"
+        ],
+        "Social Media Posts": [
+            "https://via.placeholder.com/150?text=Social+1",
+            "https://via.placeholder.com/150?text=Social+2"
+        ],
+        "Packaging Design": [
+            "https://via.placeholder.com/150?text=Packaging+1",
+            "https://via.placeholder.com/150?text=Packaging+2"
+        ],
+        "Marriage Invitation Card": [
+            "https://via.placeholder.com/150?text=Invite+1",
+            "https://via.placeholder.com/150?text=Invite+2"
+        ],
+        "Business Card": [
+            "https://via.placeholder.com/150?text=Business+1",
+            "https://via.placeholder.com/150?text=Business+2"
+        ],
+        "YouTube Thumbnails": [
+            "https://via.placeholder.com/150?text=YT+1",
+            "https://via.placeholder.com/150?text=YT+2"
+        ]
+    };
+
+    function orderNow(service) {
+        const number = "+923032792947";
+        if(confirm("Order " + service + " via Telegram? Cancel for WhatsApp")) {
+            window.open("https://t.me/+923032792947","_blank");
+        } else {
+            window.open("https://wa.me/923032792947","_blank");
+        }
     }
 
-    function enterFolder(service) {
-        alert('Opening folder for: ' + service);
-        // Yahan aap folder content open karne ka logic laga sakte ho
+    function openFolder(service) {
+        document.getElementById('folderTitle').innerText = service + " Samples";
+        const container = document.getElementById('sampleContainer');
+        container.innerHTML = "";
+        samplesData[service].forEach(url => {
+            const img = document.createElement('img');
+            img.src = url;
+            container.appendChild(img);
+        });
+        document.getElementById('folderModal').style.display = 'flex';
     }
+
+    function closeFolder() {
+        document.getElementById('folderModal').style.display = 'none';
+    }
+
+    // --- Voice Search ---
+    function voiceSearch() {
+        if(!('webkitSpeechRecognition' in window)) {
+            alert("Voice search not supported");
+            return;
+        }
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.start();
+        recognition.onresult = function(event) {
+            const text = event.results[0][0].transcript;
+            document.getElementById('searchInput').value = text;
+            performSearch(text);
+        }
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function(){
+        performSearch(this.value);
+    });
+
+    function performSearch(query) {
+        query = query.toLowerCase();
+        document.querySelectorAll('.service-card').forEach(card=>{
+            const service = card.getAttribute('data-service').toLowerCase();
+            if(service.includes(query)) card.style.display='block';
+            else card.style.display='none';
+        });
+    }
+
+    function openSettings() {
+        alert("Settings panel can be implemented here for theme/color changes.");
+    }
+
 </script>
 
 </body>
