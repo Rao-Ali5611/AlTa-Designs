@@ -1,224 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AlTa Designs</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Services Dashboard</title>
+<style>
+    /* --- Global Styles --- */
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Montserrat", sans-serif;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
     body {
-      background-color: #3b2b23;
-      color: white;
-      text-align: center;
-      overflow-x: hidden;
-    }
-    header {
-      padding: 60px 20px 40px;
-      background: linear-gradient(180deg, #4e3629, #3b2b23);
-      animation: fadeIn 1s ease-in-out;
-    }
-    header h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-    header p {
-      margin-top: 10px;
-      font-size: 1.2rem;
-      color: #e4d6c5;
+        display: flex;
+        height: 100vh;
+        background: linear-gradient(135deg, #f0f4f8, #e0eaf4);
+        color: #333;
     }
 
+    /* --- Sidebar --- */
+    .sidebar {
+        width: 220px;
+        background: #fff;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 30px;
+        color: #3b82f6;
+    }
+
+    .sidebar a {
+        text-decoration: none;
+        color: #555;
+        margin-bottom: 15px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+
+    .sidebar a:hover {
+        color: #3b82f6;
+    }
+
+    /* --- Main Content --- */
+    .main-content {
+        flex: 1;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* --- Search Bar --- */
+    .search-bar {
+        position: relative;
+        margin-bottom: 40px;
+    }
+
+    .search-bar input {
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        font-size: 16px;
+        outline: none;
+    }
+
+    /* --- Services Grid --- */
     .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      padding: 50px 20px;
-      background-color: #fff;
-      color: #3b2b23;
-    }
-    .card {
-      background: #f9f4f0;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      padding: 20px;
-      transition: transform 0.3s;
-      animation: fadeUp 1s ease forwards;
-    }
-    .card:hover {
-      transform: translateY(-8px);
-    }
-    .card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 15px;
-      font-weight: 700;
-    }
-    .samples {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
-    .sample-box {
-      width: 60px;
-      height: 60px;
-      background: #d6c4b3;
-      border-radius: 10px;
-    }
-    .order-btn {
-      background-color: #3b2b23;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    .order-btn:hover {
-      background-color: #2d1f17;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
     }
 
-    /* Popup */
-    .popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .popup-content {
-      background: #fff;
-      color: #3b2b23;
-      padding: 30px;
-      border-radius: 14px;
-      text-align: center;
-      width: 90%;
-      max-width: 300px;
-      animation: popIn 0.4s ease;
-    }
-    .popup-content h2 {
-      margin-bottom: 15px;
-    }
-    .popup-btn {
-      display: block;
-      margin: 10px auto;
-      width: 80%;
-      background-color: #3b2b23;
-      color: #fff;
-      padding: 10px 0;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-    .popup-btn:hover {
-      background-color: #2d1f17;
+    .service-card {
+        background: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    footer {
-      background-color: #2d1f17;
-      color: #fff;
-      padding: 20px;
-      margin-top: 50px;
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
     }
 
-    @keyframes fadeIn { from{opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);} }
-    @keyframes fadeUp { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
-    @keyframes popIn { from{transform:scale(0.8); opacity:0;} to{transform:scale(1); opacity:1;} }
-  </style>
+    .service-card h3 {
+        margin-bottom: 15px;
+        color: #3b82f6;
+    }
+
+    .service-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .service-buttons button {
+        flex: 1;
+        margin: 5px;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .buy-btn {
+        background: #10b981;
+        color: #fff;
+    }
+
+    .buy-btn:hover {
+        background: #059669;
+    }
+
+    .enter-btn {
+        background: #3b82f6;
+        color: #fff;
+    }
+
+    .enter-btn:hover {
+        background: #2563eb;
+    }
+
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>AlTa Designs</h1>
-    <p>We create premium, eye-catching designs for your brand!</p>
-  </header>
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Dashboard</h2>
+    <a href="#">Home</a>
+    <a href="#">Classwork</a>
+    <a href="#">Projects</a>
+    <a href="#">Messages</a>
+    <a href="#">Settings</a>
+</div>
 
-  <section class="services">
-    <div class="card" data-service="YouTube Thumbnails Designs">
-      <h3>YouTube Thumbnails Designs</h3>
-      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
-      <button class="order-btn" onclick="openPopup('YouTube Thumbnails Designs')">Order Now</button>
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Search -->
+    <div class="search-bar">
+        <input type="text" placeholder="Search services...">
     </div>
 
-    <div class="card" data-service="Wedding Invitation Cards">
-      <h3>Wedding Invitation Cards</h3>
-      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
-      <button class="order-btn" onclick="openPopup('Wedding Invitation Cards')">Order Now</button>
+    <!-- Services -->
+    <div class="services">
+        <div class="service-card">
+            <h3>3D Logo</h3>
+            <div class="service-buttons">
+                <button class="buy-btn" onclick="buyNow('3D Logo')">Buy Now</button>
+                <button class="enter-btn" onclick="enterFolder('3D Logo')">Enter Folder</button>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>3D Wooden Logo</h3>
+            <div class="service-buttons">
+                <button class="buy-btn" onclick="buyNow('3D Wooden Logo')">Buy Now</button>
+                <button class="enter-btn" onclick="enterFolder('3D Wooden Logo')">Enter Folder</button>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>T-shirt Design</h3>
+            <div class="service-buttons">
+                <button class="buy-btn" onclick="buyNow('T-shirt Design')">Buy Now</button>
+                <button class="enter-btn" onclick="enterFolder('T-shirt Design')">Enter Folder</button>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>Social Media Posts</h3>
+            <div class="service-buttons">
+                <button class="buy-btn" onclick="buyNow('Social Media Posts')">Buy Now</button>
+                <button class="enter-btn" onclick="enterFolder('Social Media Posts')">Enter Folder</button>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>Packaging Design</h3>
+            <div class="service-buttons">
+                <button class="buy-btn" onclick="buyNow('Packaging Design')">Buy Now</button>
+                <button class="enter-btn" onclick="enterFolder('Packaging Design')">Enter Folder</button>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>Marriage Invitation Card</h3>
+            <div class="service-buttons">
+                <button class="buy-btn" onclick="buyNow('Marriage Invitation Card')">Buy Now</button>
+                <button class="enter-btn" onclick="enterFolder('Marriage Invitation Card')">Enter Folder</button>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>Business Card</h3>
+            <div class="service-buttons">
+                <button class="buy-btn" onclick="buyNow('Business Card')">Buy Now</button>
+                <button class="enter-btn" onclick="enterFolder('Business Card')">Enter Folder</button>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>YouTube Thumbnails</h3>
+            <div class="service-buttons">
+                <button class="buy-btn" onclick="buyNow('YouTube Thumbnails')">Buy Now</button>
+                <button class="enter-btn" onclick="enterFolder('YouTube Thumbnails')">Enter Folder</button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="card" data-service="Business Cards">
-      <h3>Business Cards</h3>
-      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
-      <button class="order-btn" onclick="openPopup('Business Cards')">Order Now</button>
-    </div>
-
-    <div class="card" data-service="3D Logo">
-      <h3>3D Logo</h3>
-      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
-      <button class="order-btn" onclick="openPopup('3D Logo')">Order Now</button>
-    </div>
-
-    <div class="card" data-service="3D Wooden Logo">
-      <h3>3D Wooden Logo</h3>
-      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
-      <button class="order-btn" onclick="openPopup('3D Wooden Logo')">Order Now</button>
-    </div>
-
-    <div class="card" data-service="Social Media Posts">
-      <h3>Social Media Posts</h3>
-      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
-      <button class="order-btn" onclick="openPopup('Social Media Posts')">Order Now</button>
-    </div>
-
-    <div class="card" data-service="Packaging Design">
-      <h3>Packaging Design</h3>
-      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
-      <button class="order-btn" onclick="openPopup('Packaging Design')">Order Now</button>
-    </div>
-
-    <div class="card" data-service="T-Shirt Design">
-      <h3>T-Shirt Design</h3>
-      <div class="samples"><div class="sample-box"></div><div class="sample-box"></div><div class="sample-box"></div></div>
-      <button class="order-btn" onclick="openPopup('T-Shirt Design')">Order Now</button>
-    </div>
-  </section>
-
-  <!-- Popup -->
-  <div id="popup" class="popup">
-    <div class="popup-content">
-      <h2>Order via</h2>
-      <a id="whatsappLink" class="popup-btn" href="#" target="_blank">WhatsApp</a>
-      <a id="telegramLink" class="popup-btn" href="#" target="_blank">Telegram</a>
-      <button class="order-btn" style="margin-top:10px;" onclick="closePopup()">Close</button>
-    </div>
-  </div>
-
-  <footer>
-    © 2025 AlTa Designs. All Rights Reserved.
-  </footer>
-
-  <script>
-    function openPopup(service) {
-      document.getElementById("popup").style.display = "flex";
-      const encoded = encodeURIComponent(`Hi! I want to order a ${service} from AlTa Designs.`);
-      document.getElementById("whatsappLink").href = `https://wa.me/923032792947?text=${encoded}`;
-      document.getElementById("telegramLink").href = `https://t.me/923032792947?text=${encoded}`;
+<script>
+    function buyNow(service) {
+        alert('Redirecting to Buy Now for: ' + service);
+        // Yahan aap buy process ke link ya function laga sakte ho
     }
-    function closePopup() {
-      document.getElementById("popup").style.display = "none";
+
+    function enterFolder(service) {
+        alert('Opening folder for: ' + service);
+        // Yahan aap folder content open karne ka logic laga sakte ho
     }
-  </script>
+</script>
 
 </body>
 </html>
