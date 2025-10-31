@@ -4,7 +4,217 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AlTa Graphics</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-color: #0e0e10;
+      color: #f1f1f1;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #121212;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid #222;
+      transition: all 0.3s ease;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent, #d4af37);
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
+    .nav {
+      list-style: none;
+    }
+
+    .nav li {
+      padding: 12px 15px;
+      margin: 8px 0;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.3s;
+      color: #bbb;
+    }
+
+    .nav li:hover,
+    .nav li.active {
+      background: var(--accent, #d4af37);
+      color: #000;
+      font-weight: 600;
+    }
+
+    .sidebar footer {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      margin-top: 20px;
+    }
+
+    /* Main Content */
+    .content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    section.active-section {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+      font-size: 36px;
+      color: var(--accent, #d4af37);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    /* Service Cards */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: #1a1a1d;
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      background: #242428;
+    }
+
+    .service-card h3 {
+      margin-bottom: 15px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .order-btn {
+      background: var(--accent, #d4af37);
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .order-btn:hover {
+      background: #ffda6a;
+    }
+
+    /* Contact + Settings + About */
+    #contact ul, #clientchat ul {
+      list-style: none;
+      margin-top: 15px;
+    }
+
+    #contact li, #clientchat li {
+      background: #1c1c1f;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 6px;
+    }
+
+    .setting-options {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 400px;
+    }
+
+    label {
+      color: #aaa;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input[type="color"], input[type="file"], button {
+      background: #1e1e22;
+      color: #f1f1f1;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 8px 10px;
+      width: 100%;
+    }
+
+    button:hover {
+      background: var(--accent, #d4af37);
+      color: #000;
+    }
+
+    #about p {
+      max-width: 600px;
+      line-height: 1.7;
+      color: #ccc;
+      margin-top: 10px;
+    }
+
+    /* Light Mode */
+    body.light {
+      background: #f3f3f3;
+      color: #222;
+    }
+
+    body.light .sidebar {
+      background: #fff;
+      border-color: #ccc;
+    }
+
+    body.light .nav li {
+      color: #555;
+    }
+
+    body.light .nav li.active {
+      background: var(--accent, #d4af37);
+      color: #000;
+    }
+
+    body.light .service-card {
+      background: #fff;
+      color: #111;
+    }
+  </style>
 </head>
 <body>
 
@@ -13,13 +223,13 @@
     <aside class="sidebar">
       <h2 class="logo">AlTa</h2>
       <ul class="nav">
-        <li class="active">Home</li>
-        <li>My Projects</li>
-        <li>Inspiration</li>
-        <li>Client Chat</li>
-        <li>Contact</li>
-        <li>Settings</li>
-        <li>About Us</li>
+        <li class="active" data-section="home">Home</li>
+        <li data-section="projects">My Projects</li>
+        <li data-section="inspiration">Inspiration</li>
+        <li data-section="clientchat">Client Chat</li>
+        <li data-section="contact">Contact</li>
+        <li data-section="settings">Settings</li>
+        <li data-section="about">About Us</li>
       </ul>
       <footer>Designed & Developed by Rao Ali</footer>
     </aside>
@@ -58,29 +268,27 @@
 
       <section id="projects">
         <h1>My Projects</h1>
-        <p>Add or showcase your design samples here.</p>
+        <p>Showcase your graphic design samples here.</p>
       </section>
 
       <section id="inspiration">
         <h1>Inspiration</h1>
-        <p>Creative layout samples will appear here.</p>
+        <p>Upload or view creative ideas and layout references.</p>
       </section>
 
       <section id="clientchat">
         <h1>Client Chat</h1>
-        <div class="contacts">
-          <p>WhatsApp / Telegram / Email options</p>
-          <ul>
-            <li>muhammadaliorangzaibrao@gmail.com</li>
-            <li>abug2572@gmail.com</li>
-            <li>ra3275867@gmail.com</li>
-            <li>naeemshahzad112324@gmail.com</li>
-          </ul>
-        </div>
+        <p>Contact me via Email, WhatsApp, or Telegram:</p>
+        <ul>
+          <li>muhammadaliorangzaibrao@gmail.com</li>
+          <li>abug2572@gmail.com</li>
+          <li>ra3275867@gmail.com</li>
+          <li>naeemshahzad112324@gmail.com</li>
+        </ul>
       </section>
 
       <section id="contact">
-        <h1>Contact Us</h1>
+        <h1>Contact</h1>
         <ul>
           <li>muhammadaliorangzaibrao@gmail.com</li>
           <li>abug2572@gmail.com</li>
@@ -109,12 +317,62 @@
 
       <section id="about">
         <h1>About Us</h1>
-        <p>Welcome to <b>AlTa Graphics</b> — a creative design studio offering premium services including 3D Logo, Branding, Social Media Posts, and more.  
-        Our goal is to deliver modern, high-quality visuals that make your brand stand out.</p>
+        <p>Welcome to <b>AlTa Graphics</b> — a creative design studio providing premium services such as Logo Design, Branding, Social Media Design, and more.  
+        Our mission is to deliver elegant, modern, and professional visuals that make your brand stand out globally.</p>
       </section>
     </main>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Sidebar navigation
+    const navItems = document.querySelectorAll('.nav li');
+    const sections = document.querySelectorAll('section');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        sections.forEach(sec => sec.classList.remove('active-section'));
+        document.getElementById(item.dataset.section).classList.add('active-section');
+      });
+    });
+
+    // Accent color change
+    document.getElementById('accentColor').addEventListener('input', e => {
+      document.documentElement.style.setProperty('--accent', e.target.value);
+    });
+
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      document.body.classList.toggle('light');
+    });
+
+    // Wallpaper upload
+    document.getElementById('wallpaperUpload').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          document.body.style.backgroundImage = `url('${ev.target.result}')`;
+          document.body.style.backgroundSize = "cover";
+          document.body.style.backgroundAttachment = "fixed";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Order button popup
+    const buttons = document.querySelectorAll('.order-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choice = confirm("Order via WhatsApp (OK) or Telegram (Cancel)?");
+        if (choice) {
+          window.open("https://wa.me/yourwhatsapplink", "_blank");
+        } else {
+          window.open("https://t.me/yourtelegramlink", "_blank");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
