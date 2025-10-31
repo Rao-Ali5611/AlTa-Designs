@@ -1,238 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Creative Services Dashboard</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AlTa Graphics — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-    /* --- Global Styles --- */
-    * { box-sizing: border-box; margin:0; padding:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { display:flex; height:100vh; background: linear-gradient(135deg,#f0f4f8,#e0eaf4); color:#333; overflow:hidden; }
-    
-    /* --- Sidebar --- */
-    .sidebar { width:220px; background:#fff; box-shadow:2px 0 10px rgba(0,0,0,0.1); display:flex; flex-direction:column; padding:20px; }
-    .sidebar h2 { margin-bottom:30px; color:#3b82f6; }
-    .sidebar a { text-decoration:none; color:#555; margin-bottom:15px; font-weight:500; transition:0.3s; }
-    .sidebar a:hover { color:#3b82f6; }
+  :root{
+    --bg:#0b0b0d;
+    --panel:#0f1113;
+    --muted:#9aa0a6;
+    --accent:#c59b26; /* gold */
+    --card:#131417;
+    --glass: rgba(255,255,255,0.03);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Poppins',system-ui,Segoe UI,Arial;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(140,90,170,0.06), transparent),
+                linear-gradient(180deg,#080808 0%, #0b0b0d 100%);
+    color:#e9eef6;
+    min-height:100vh;
+    display:flex;
+    overflow:hidden;
+  }
 
-    /* --- Main Content --- */
-    .main-content { flex:1; padding:30px; display:flex; flex-direction:column; overflow-y:auto; }
-    
-    /* --- Search Bar --- */
-    .search-bar { position: relative; margin-bottom: 30px; display:flex; gap:10px; }
-    .search-bar input { flex:1; padding:12px 20px; border-radius:10px; border:none; box-shadow:0 4px 15px rgba(0,0,0,0.1); font-size:16px; outline:none; }
-    .search-bar button { padding:12px 15px; border:none; border-radius:10px; background:#3b82f6; color:#fff; cursor:pointer; }
-    
-    /* --- Services Grid --- */
-    .services { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
-    .service-card { background:#fff; border-radius:15px; padding:20px; box-shadow:0 8px 20px rgba(0,0,0,0.1); display:flex; flex-direction:column; transition:0.3s; }
-    .service-card:hover { transform:translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.15); }
-    .service-card h3 { margin-bottom:15px; color:#3b82f6; }
-    .service-buttons { display:flex; justify-content:space-between; flex-wrap:wrap; gap:5px; }
-    .service-buttons button { flex:1; padding:10px; border:none; border-radius:8px; cursor:pointer; font-weight:600; transition:0.3s; }
-    .buy-btn { background:#10b981; color:#fff; }
-    .buy-btn:hover { background:#059669; }
-    .enter-btn { background:#3b82f6; color:#fff; }
-    .enter-btn:hover { background:#2563eb; }
+  /* Sidebar */
+  .sidebar{
+    width:240px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-right:1px solid rgba(255,255,255,0.03);
+    padding:28px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    box-shadow: 6px 0 30px rgba(0,0,0,0.6);
+  }
+  .brand{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    align-items:flex-start;
+  }
+  .logo{
+    width:44px;height:44px;border-radius:10px;
+    background: linear-gradient(135deg, rgba(255,215,130,0.08), rgba(200,140,40,0.12));
+    border:1px solid rgba(255,215,130,0.06);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;color:var(--accent);
+    box-shadow: 0 6px 18px rgba(197,155,38,0.08), inset 0 -6px 18px rgba(0,0,0,0.3);
+  }
+  .brand h1{font-size:16px;margin:0;color:var(--accent);letter-spacing:0.6px}
+  .brand p{margin:0;font-size:12px;color:var(--muted)}
 
-    /* --- Folder Modal --- */
-    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; }
-    .modal-content { background:#fff; border-radius:15px; width:80%; max-height:80%; overflow-y:auto; padding:20px; }
-    .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-    .modal-header h3 { color:#3b82f6; }
-    .close-btn { cursor:pointer; font-size:20px; color:#333; }
-    .samples { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:15px; }
-    .samples img { width:100%; border-radius:10px; }
+  .menu{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+  .menu button{
+    display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:10px;
+    background:transparent;border:none;color:#dbe3ee;font-weight:500;cursor:pointer;
+    transition: all .18s ease; text-align:left;
+  }
+  .menu button:hover{background: rgba(255,255,255,0.02); transform:translateX(4px)}
+  .menu button.active{background: linear-gradient(90deg, rgba(255,215,130,0.04), rgba(255,255,255,0.02)); box-shadow: 0 6px 18px rgba(197,155,38,0.04); color:var(--accent)}
+  .menu .icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));display:inline-grid;place-items:center;font-weight:700;color:var(--muted)}
 
+  .spacer{flex:1}
+
+  .sidebar-footer{
+    font-size:12px;color:var(--muted);text-align:left;border-top:1px solid rgba(255,255,255,0.02);padding-top:12px;
+  }
+  .small{font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px}
+
+  /* Main area */
+  .main{
+    flex:1;
+    padding:30px;
+    overflow:auto;
+  }
+  .top-row{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;
+  }
+  .center-brand{
+    display:flex;align-items:center;gap:18px;
+  }
+  .center-brand .title{
+    font-size:26px;font-weight:700;color:var(--accent);
+    letter-spacing:0.6px;
+  }
+  .subtitle{color:var(--muted);font-size:13px;margin-top:4px}
+
+  /* Search */
+  .search-wrap{display:flex;gap:12px;align-items:center;margin:18px 0}
+  .search{
+    flex:1; display:flex;align-items:center;background:var(--panel);padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  }
+  .search input{flex:1;background:transparent;border:0;color:inherit;outline:none;font-size:15px}
+  .voice-btn{
+    background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:10px;padding:8px;border:0;color:var(--muted);cursor:pointer;
+  }
+
+  /* Services grid */
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:12px}
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,0.02);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    display:flex;flex-direction:column;gap:12px;min-height:160px;position:relative;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-6px); box-shadow: 0 24px 48px rgba(0,0,0,0.6)}
+  .card h3{margin:0;color:#fff;font-size:16px}
+  .card p{margin:0;color:var(--muted);font-size:13px}
+  .card .actions{margin-top:auto;display:flex;gap:8px}
+  .btn{
+    flex:1;padding:10px;border-radius:10px;border:0;font-weight:600;cursor:pointer;
+    transition:transform .12s;box-shadow: 0 6px 18px rgba(0,0,0,0.6)
+  }
+  .tg{background:transparent;color:var(--accent);border:1px solid rgba(197,155,38,0.16)}
+  .wa{background:var(--accent);color:#080808}
+
+  /* Modal */
+  .modal{
+    position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;
+    background: linear-gradient(180deg, rgba(3,3,3,0.6), rgba(3,3,3,0.85));z-index:60;padding:30px;
+  }
+  .modal.open{display:flex}
+  .modal-card{width:100%;max-width:1000px;background:linear-gradient(180deg,#0b0b0d,#0f1113);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 80px rgba(0,0,0,0.8);overflow:auto;max-height:86vh}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .modal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+  .sample{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:var(--card)}
+  .sample img{width:100%;display:block;object-fit:cover;height:120px}
+
+  /* Sections */
+  .section{display:none}
+  .section.active{display:block}
+
+  /* Footer */
+  .footer-note{margin-top:28px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.02);padding-top:14px}
+
+  /* Responsive */
+  @media (max-width:900px){
+    .sidebar{display:none}
+    body{flex-direction:column}
+    .main{padding:18px}
+  }
 </style>
 </head>
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <h2>Dashboard</h2>
-    <a href="#">Home</a>
-    <a href="#" onclick="openSettings()">Settings</a>
-</div>
-
-<!-- Main Content -->
-<div class="main-content">
-    <!-- Search -->
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search samples...">
-        <button onclick="voiceSearch()">🎤</button>
+  <!-- SIDEBAR -->
+  <aside class="sidebar" role="navigation" aria-label="Sidebar">
+    <div class="brand">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="logo">AG</div>
+        <div>
+          <h1>AlTa Graphics</h1>
+          <p class="small">Design Beyond Imagination</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Services -->
-    <div class="services">
-        <div class="service-card" data-service="3D Logo">
-            <h3>3D Logo</h3>
-            <div class="service-buttons">
-                <button class="buy-btn" onclick="orderNow('3D Logo')">Order Now</button>
-                <button class="enter-btn" onclick="openFolder('3D Logo')">View Samples</button>
-            </div>
-        </div>
-        <div class="service-card" data-service="3D Wooden Logo">
-            <h3>3D Wooden Logo</h3>
-            <div class="service-buttons">
-                <button class="buy-btn" onclick="orderNow('3D Wooden Logo')">Order Now</button>
-                <button class="enter-btn" onclick="openFolder('3D Wooden Logo')">View Samples</button>
-            </div>
-        </div>
-        <div class="service-card" data-service="T-shirt Design">
-            <h3>T-shirt Design</h3>
-            <div class="service-buttons">
-                <button class="buy-btn" onclick="orderNow('T-shirt Design')">Order Now</button>
-                <button class="enter-btn" onclick="openFolder('T-shirt Design')">View Samples</button>
-            </div>
-        </div>
-        <div class="service-card" data-service="Social Media Posts">
-            <h3>Social Media Posts</h3>
-            <div class="service-buttons">
-                <button class="buy-btn" onclick="orderNow('Social Media Posts')">Order Now</button>
-                <button class="enter-btn" onclick="openFolder('Social Media Posts')">View Samples</button>
-            </div>
-        </div>
-        <div class="service-card" data-service="Packaging Design">
-            <h3>Packaging Design</h3>
-            <div class="service-buttons">
-                <button class="buy-btn" onclick="orderNow('Packaging Design')">Order Now</button>
-                <button class="enter-btn" onclick="openFolder('Packaging Design')">View Samples</button>
-            </div>
-        </div>
-        <div class="service-card" data-service="Marriage Invitation Card">
-            <h3>Marriage Invitation Card</h3>
-            <div class="service-buttons">
-                <button class="buy-btn" onclick="orderNow('Marriage Invitation Card')">Order Now</button>
-                <button class="enter-btn" onclick="openFolder('Marriage Invitation Card')">View Samples</button>
-            </div>
-        </div>
-        <div class="service-card" data-service="Business Card">
-            <h3>Business Card</h3>
-            <div class="service-buttons">
-                <button class="buy-btn" onclick="orderNow('Business Card')">Order Now</button>
-                <button class="enter-btn" onclick="openFolder('Business Card')">View Samples</button>
-            </div>
-        </div>
-        <div class="service-card" data-service="YouTube Thumbnails">
-            <h3>YouTube Thumbnails</h3>
-            <div class="service-buttons">
-                <button class="buy-btn" onclick="orderNow('YouTube Thumbnails')">Order Now</button>
-                <button class="enter-btn" onclick="openFolder('YouTube Thumbnails')">View Samples</button>
-            </div>
-        </div>
-    </div>
-</div>
+    <nav class="menu" id="menu">
+      <button class="active" data-section="home"><span class="icon">🏠</span> Home</button>
+      <button data-section="projects"><span class="icon">📁</span> My Projects</button>
+      <button data-section="inspiration"><span class="icon">🎨</span> Inspiration</button>
+      <button data-section="chat"><span class="icon">💬</span> Client Chat</button>
+      <button data-section="settings"><span class="icon">⚙️</span> Settings</button>
+      <button data-section="contact"><span class="icon">📞</span> Contact</button>
+      <button data-section="about"><span class="icon">📢</span> About Us</button>
+    </nav>
 
-<!-- Folder Modal -->
-<div class="modal" id="folderModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="folderTitle">Folder</h3>
-            <span class="close-btn" onclick="closeFolder()">✖</span>
-        </div>
-        <div class="samples" id="sampleContainer">
-            <!-- Samples dynamically inserted here -->
-        </div>
+    <div class="spacer"></div>
+
+    <div class="sidebar-footer">
+      <div>© 2025 AlTa Graphics</div>
+      <div class="small">Designed by Rao Ali</div>
     </div>
-</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HOME -->
+    <section id="home" class="section active">
+      <div class="top-row">
+        <div class="center-brand">
+          <div style="width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg, rgba(197,155,38,0.12), rgba(180,120,40,0.06));display:grid;place-items:center;color:var(--accent);font-weight:700;font-size:20px">AG</div>
+          <div>
+            <div class="title">AlTa Graphics</div>
+            <div class="subtitle">Design Beyond Imagination</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="color:var(--muted);font-size:13px">Welcome — Rao Ali</div>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <div class="search">
+          <input id="searchInput" placeholder="Search services or samples (type or use voice)..." aria-label="Search">
+          <button class="voice-btn" id="voiceBtn" title="Voice search">🎤</button>
+        </div>
+        <div style="min-width:120px;text-align:right;color:var(--muted);font-size:13px">+92 303 2792947</div>
+      </div>
+
+      <div class="services-grid" id="servicesGrid">
+        <!-- Service cards added by JS -->
+      </div>
+
+      <div class="footer-note">
+        © 2025 AlTa Graphics — Designed by Rao Ali
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <h2 style="color:var(--accent);margin-bottom:12px">My Projects</h2>
+      <p style="color:var(--muted)">Apne tamam complete aur ongoing projects yahan show karain. Har project pe click kar kay details dekhen.</p>
+      <div style="margin-top:16px" id="projectsGrid">
+        <!-- Placeholder project cards -->
+      </div>
+    </section>
+
+    <!-- INSPIRATION -->
+    <section id="inspiration" class="section">
+      <h2 style="color:var(--accent);margin-bottom:12px">Inspiration</h2>
+      <p style="color:var(--muted)">Creative ideas, case studies, before & after examples.</p>
+      <div id="inspirationGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:14px">
+        <!-- inspiration samples -->
+      </div>
+    </section>
+
+    <!-- CHAT -->
+    <section id="chat" class="section">
+      <h2 style="color:var(--accent);margin-bottom:12px">Client Chat</h2>
+      <p style="color:var(--muted)">Aasan raastay: direct WhatsApp ya Telegram per baat karein.</p>
+      <div style="display:flex;gap:12px;margin-top:12px">
+        <button class="btn tg" onclick="openTelegram()">Open Telegram Chat</button>
+        <button class="btn wa" onclick="openWhatsApp()">Open WhatsApp Chat</button>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="section">
+      <h2 style="color:var(--accent);margin-bottom:12px">Settings</h2>
+      <p style="color:var(--muted)">Theme & appearance controls</p>
+
+      <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+        <div style="background:var(--panel);padding:12px;border-radius:10px;min-width:220px">
+          <div style="font-weight:600;color:var(--muted);margin-bottom:8px">Accent color</div>
+          <div style="display:flex;gap:8px">
+            <button onclick="setAccent('#c59b26')" style="padding:8px;border-radius:8px;background:#c59b26;border:0;cursor:pointer"></button>
+            <button onclick="setAccent('#9b59b6')" style="padding:8px;border-radius:8px;background:#9b59b6;border:0;cursor:pointer"></button>
+            <button onclick="setAccent('#e07b7b')" style="padding:8px;border-radius:8px;background:#e07b7b;border:0;cursor:pointer"></button>
+          </div>
+        </div>
+
+        <div style="background:var(--panel);padding:12px;border-radius:10px;min-width:220px">
+          <div style="font-weight:600;color:var(--muted);margin-bottom:8px">Layout</div>
+          <div style="display:flex;gap:8px">
+            <button onclick="toggleCompact(false)" style="padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer">Regular</button>
+            <button onclick="toggleCompact(true)" style="padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer">Compact</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <h2 style="color:var(--accent);margin-bottom:12px">Contact</h2>
+      <p style="color:var(--muted)">Phone & messaging</p>
+      <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+        <div style="font-weight:700;color:#fff">+92 303 2792947</div>
+        <div style="color:var(--muted)">WhatsApp / Telegram</div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <h2 style="color:var(--accent);margin-bottom:12px">About Us</h2>
+      <p style="color:var(--muted)">AlTa Graphics — professional design studio focused on branding, packaging, and digital visuals. Designed by Rao Ali.</p>
+    </section>
+
+  </main>
+
+  <!-- Samples Modal -->
+  <div class="modal" id="samplesModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div>
+          <h3 id="modalTitle" style="margin:0;color:var(--accent)"></h3>
+          <div style="color:var(--muted);font-size:13px" id="modalSubtitle"></div>
+        </div>
+        <div>
+          <button onclick="closeModal()" style="background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer">✖</button>
+        </div>
+      </div>
+      <div class="modal-grid" id="modalGrid">
+        <!-- images -->
+      </div>
+    </div>
+  </div>
 
 <script>
-    const samplesData = {
-        "3D Logo": [
-            "https://via.placeholder.com/150?text=3D+Logo+1",
-            "https://via.placeholder.com/150?text=3D+Logo+2",
-            "https://via.placeholder.com/150?text=3D+Logo+3"
-        ],
-        "3D Wooden Logo": [
-            "https://via.placeholder.com/150?text=3D+Wooden+Logo+1",
-            "https://via.placeholder.com/150?text=3D+Wooden+Logo+2"
-        ],
-        "T-shirt Design": [
-            "https://via.placeholder.com/150?text=T-shirt+1",
-            "https://via.placeholder.com/150?text=T-shirt+2"
-        ],
-        "Social Media Posts": [
-            "https://via.placeholder.com/150?text=Social+1",
-            "https://via.placeholder.com/150?text=Social+2"
-        ],
-        "Packaging Design": [
-            "https://via.placeholder.com/150?text=Packaging+1",
-            "https://via.placeholder.com/150?text=Packaging+2"
-        ],
-        "Marriage Invitation Card": [
-            "https://via.placeholder.com/150?text=Invite+1",
-            "https://via.placeholder.com/150?text=Invite+2"
-        ],
-        "Business Card": [
-            "https://via.placeholder.com/150?text=Business+1",
-            "https://via.placeholder.com/150?text=Business+2"
-        ],
-        "YouTube Thumbnails": [
-            "https://via.placeholder.com/150?text=YT+1",
-            "https://via.placeholder.com/150?text=YT+2"
-        ]
-    };
+  // Data
+  const PHONE = '923032792947'; // for wa.me (no +)
+  const TELEGRAM = 'https://t.me/+923032792947';
 
-    function orderNow(service) {
-        const number = "+923032792947";
-        if(confirm("Order " + service + " via Telegram? Cancel for WhatsApp")) {
-            window.open("https://t.me/+923032792947","_blank");
-        } else {
-            window.open("https://wa.me/923032792947","_blank");
-        }
+  const services = [
+    '3D Logo','3D Wooden Logo','T-shirt Design','Social Media Posts',
+    'Packaging Design','Invitation Card','Business Card','YouTube Thumbnails'
+  ];
+
+  // Placeholder sample images (you can replace with real URLs)
+  const samplesData = {};
+  services.forEach((s,i)=>{
+    samplesData[s] = [];
+    for(let j=1;j<=6;j++){
+      // Using placeholder images with label
+      samplesData[s].push('https://via.placeholder.com/600x400?text=' + encodeURIComponent(s + ' Sample ' + j));
     }
+  });
 
-    function openFolder(service) {
-        document.getElementById('folderTitle').innerText = service + " Samples";
-        const container = document.getElementById('sampleContainer');
-        container.innerHTML = "";
-        samplesData[service].forEach(url => {
-            const img = document.createElement('img');
-            img.src = url;
-            container.appendChild(img);
-        });
-        document.getElementById('folderModal').style.display = 'flex';
+  // Build service cards
+  const grid = document.getElementById('servicesGrid');
+  services.forEach(name=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.setAttribute('data-service', name);
+    card.innerHTML = `
+      <div style="display:flex;gap:12px;align-items:center">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:grid;place-items:center;color:var(--muted);font-weight:700">${name.split(' ')[0].slice(0,2)}</div>
+        <div>
+          <h3>${name}</h3>
+          <p>${name} services — high quality samples & mockups</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn tg" onclick="openOrder('${name}','telegram')">Order on Telegram</button>
+        <button class="btn wa" onclick="openOrder('${name}','whatsapp')">Order on WhatsApp</button>
+      </div>
+      <div style="position:absolute;left:14px;bottom:12px;font-size:12px;color:var(--muted)"><a href="#" onclick="openSamples(event,'${name}')" style="color:var(--muted);text-decoration:none">View Samples</a></div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Open order: choose telegram or whatsapp
+  function openOrder(service, via){
+    const text = encodeURIComponent(`Hello, I want to order: ${service} (via website)`);
+    if(via === 'telegram'){
+      // opens t.me link (public invite link format)
+      window.open(TELEGRAM,'_blank');
+    } else {
+      window.open('https://wa.me/' + PHONE + '?text=' + text, '_blank');
     }
+  }
 
-    function closeFolder() {
-        document.getElementById('folderModal').style.display = 'none';
-    }
-
-    // --- Voice Search ---
-    function voiceSearch() {
-        if(!('webkitSpeechRecognition' in window)) {
-            alert("Voice search not supported");
-            return;
-        }
-        const recognition = new webkitSpeechRecognition();
-        recognition.lang = "en-US";
-        recognition.start();
-        recognition.onresult = function(event) {
-            const text = event.results[0][0].transcript;
-            document.getElementById('searchInput').value = text;
-            performSearch(text);
-        }
-    }
-
-    document.getElementById('searchInput').addEventListener('input', function(){
-        performSearch(this.value);
+  // Open samples modal
+  const modal = document.getElementById('samplesModal');
+  const modalGrid = document.getElementById('modalGrid');
+  const modalTitle = document.getElementById('modalTitle');
+  function openSamples(ev,service){
+    if(ev) ev.preventDefault();
+    modal.classList.add('open');
+    modalTitle.textContent = service + ' Samples';
+    modalGrid.innerHTML = '';
+    (samplesData[service]||[]).forEach(url=>{
+      const s = document.createElement('div'); s.className='sample';
+      const img = document.createElement('img'); img.src = url;
+      s.appendChild(img); modalGrid.appendChild(s);
     });
+    document.body.style.overflow='hidden';
+    modal.setAttribute('aria-hidden','false');
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow='';
+    modal.setAttribute('aria-hidden','true');
+  }
 
-    function performSearch(query) {
-        query = query.toLowerCase();
-        document.querySelectorAll('.service-card').forEach(card=>{
-            const service = card.getAttribute('data-service').toLowerCase();
-            if(service.includes(query)) card.style.display='block';
-            else card.style.display='none';
-        });
+  // Navigation
+  document.getElementById('menu').addEventListener('click', e=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    document.querySelectorAll('#menu button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const sec = btn.getAttribute('data-section');
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(sec).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  // Projects & Inspiration sample placeholders
+  const projectsGrid = document.getElementById('projectsGrid');
+  for(let i=1;i<=6;i++){
+    const p = document.createElement('div'); p.className='card';
+    p.style.display='inline-block'; p.style.width='calc(33% - 12px)'; p.style.margin='6px';
+    p.innerHTML = `<h3>Project ${i}</h3><p style="color:var(--muted)">Client work sample ${i}</p>`;
+    projectsGrid.appendChild(p);
+  }
+  const insp = document.getElementById('inspirationGrid');
+  for(let i=1;i<=8;i++){
+    const d = document.createElement('div'); d.className='sample';
+    d.style.height='160px'; d.innerHTML = `<img src="https://via.placeholder.com/600x400?text=Inspiration+${i}" alt="insp">`;
+    insp.appendChild(d);
+  }
+
+  // Voice search
+  const voiceBtn = document.getElementById('voiceBtn');
+  const searchInput = document.getElementById('searchInput');
+  voiceBtn.addEventListener('click', ()=>voiceSearch());
+
+  function voiceSearch(){
+    if(!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)){
+      alert('Voice search not supported in your browser.');
+      return;
     }
+    const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const rec = new Rec();
+    rec.lang = 'en-US';
+    rec.interimResults = false;
+    rec.maxAlternatives = 1;
+    rec.start();
+    voiceBtn.textContent = '🎙️';
+    rec.onresult = (e)=>{
+      const text = e.results[0][0].transcript;
+      searchInput.value = text;
+      performSearch(text);
+    };
+    rec.onerror = ()=>{ voiceBtn.textContent='🎤'; }
+    rec.onend = ()=>{ voiceBtn.textContent='🎤'; }
+  }
 
-    function openSettings() {
-        alert("Settings panel can be implemented here for theme/color changes.");
+  // Search logic: filter service cards and samples overlay highlight (basic)
+  searchInput.addEventListener('input', (e)=>{
+    performSearch(e.target.value);
+  });
+  function performSearch(q){
+    q = (q||'').toLowerCase().trim();
+    document.querySelectorAll('.card').forEach(card=>{
+      const name = (card.getAttribute('data-service')||'').toLowerCase();
+      if(!q) { card.style.display='flex'; return; }
+      if(name.includes(q)) card.style.display='flex'; else card.style.display='none';
+    });
+  }
+
+  // Settings: accent change and compact toggle
+  function setAccent(col){
+    document.documentElement.style.setProperty('--accent', col);
+  }
+  function toggleCompact(isCompact){
+    if(isCompact){
+      document.documentElement.style.setProperty('--radius','8px');
+      document.querySelectorAll('.card').forEach(c=>c.style.padding='10px');
+    } else {
+      document.documentElement.style.setProperty('--radius','14px');
+      document.querySelectorAll('.card').forEach(c=>c.style.padding='16px');
     }
+  }
 
+  // Chat open helpers
+  function openWhatsApp(){ window.open('https://wa.me/' + PHONE,'_blank') }
+  function openTelegram(){ window.open(TELEGRAM,'_blank') }
+
+  // Accessibility: Esc to close modal
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape') closeModal();
+  });
+
+  // initial small tweaks
+  document.addEventListener('DOMContentLoaded', ()=>{
+    // ensure cards have data-service attribute for search
+    document.querySelectorAll('.card').forEach(c=>{
+      if(!c.getAttribute('data-service')) c.setAttribute('data-service', c.querySelector('h3')?.textContent || '');
+    });
+  });
 </script>
-
 </body>
 </html>
