@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AlTa Graphics</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlTa Designs</title>
   <style>
-    /* ---------- BASIC STYLING ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -57,6 +56,18 @@
       color: #000;
     }
 
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      border-top: 1px solid #2e2f33;
+      margin-top: 40px;
+    }
+
+    footer span {
+      color: #00e0ff;
+    }
+
     /* ---------- MAIN SECTION ---------- */
     .main {
       flex: 1;
@@ -88,6 +99,7 @@
       border: none;
       outline: none;
       font-size: 16px;
+      text-align: center;
     }
 
     /* ---------- SERVICES SECTION ---------- */
@@ -102,6 +114,7 @@
       padding: 20px;
       border-radius: 15px;
       text-align: center;
+      position: relative;
       transition: 0.3s;
     }
 
@@ -111,6 +124,8 @@
 
     .service-card h3 {
       margin-bottom: 15px;
+      color: var(--text-color, #fff);
+      cursor: pointer;
     }
 
     .order-btn {
@@ -127,55 +142,23 @@
       background: #fff;
     }
 
-    /* ---------- ORDER POPUP ---------- */
-    .popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+    /* Order options inside card */
+    .order-options {
       display: none;
-      justify-content: center;
-      align-items: center;
+      margin-top: 15px;
     }
 
-    .popup-content {
-      background: #15161a;
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-    }
-
-    .popup-content h2 {
-      margin-bottom: 20px;
-      color: #00e0ff;
-    }
-
-    .popup-content button {
+    .order-options button {
       background: #00e0ff;
       color: #000;
       border: none;
-      padding: 10px 20px;
-      margin: 10px;
+      padding: 10px 15px;
       border-radius: 10px;
+      margin: 5px;
       cursor: pointer;
     }
 
-    /* ---------- FOOTER ---------- */
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      border-top: 1px solid #2e2f33;
-      margin-top: 40px;
-    }
-
-    footer span {
-      color: #00e0ff;
-    }
-
-    /* ---------- SETTINGS POPUP ---------- */
+    /* ---------- SETTINGS PANEL ---------- */
     .settings-panel {
       display: none;
       position: fixed;
@@ -185,6 +168,7 @@
       padding: 25px;
       border-radius: 15px;
       width: 300px;
+      z-index: 999;
     }
 
     .settings-panel h3 {
@@ -192,25 +176,36 @@
       margin-bottom: 10px;
     }
 
-    .color-options {
+    .color-options, .text-color-options {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
 
-    .color-option {
+    .color-option, .text-color-option {
       width: 25px;
       height: 25px;
       border-radius: 50%;
       cursor: pointer;
     }
+
+    .samples {
+      display: none;
+      background: #15161a;
+      margin-top: 10px;
+      border-radius: 10px;
+      padding: 10px;
+      color: #ccc;
+    }
+
   </style>
 </head>
-
 <body>
+
+  <!-- SIDEBAR -->
   <div class="sidebar">
     <div>
-      <div class="logo">AlTa Graphics</div>
+      <div class="logo">AlTa Designs</div>
       <div class="menu">
         <a href="#">🏠 Home</a>
         <a href="#" onclick="toggleSettings()">⚙️ Settings</a>
@@ -221,12 +216,13 @@
         <a href="#">📜 About Us</a>
       </div>
     </div>
-    <footer>© 2025 <span>Rao Ali</span> | AlTa Graphics</footer>
+    <footer>© 2025 <span>Rao Ali</span> | AlTa Designs</footer>
   </div>
 
+  <!-- MAIN -->
   <div class="main">
     <div class="header">
-      <h1>Our Services</h1>
+      <h1>AlTa Designs Services</h1>
     </div>
 
     <div class="search-bar">
@@ -234,24 +230,85 @@
     </div>
 
     <div class="services">
-      <div class="service-card"><h3>3D Logo</h3><button class="order-btn" onclick="showPopup()">Order Now</button></div>
-      <div class="service-card"><h3>3D Wooden Logo</h3><button class="order-btn" onclick="showPopup()">Order Now</button></div>
-      <div class="service-card"><h3>T-Shirt Design</h3><button class="order-btn" onclick="showPopup()">Order Now</button></div>
-      <div class="service-card"><h3>Social Media Posts</h3><button class="order-btn" onclick="showPopup()">Order Now</button></div>
-      <div class="service-card"><h3>Packaging Design</h3><button class="order-btn" onclick="showPopup()">Order Now</button></div>
-      <div class="service-card"><h3>Marriage Invitation Card</h3><button class="order-btn" onclick="showPopup()">Order Now</button></div>
-      <div class="service-card"><h3>Business Card</h3><button class="order-btn" onclick="showPopup()">Order Now</button></div>
-      <div class="service-card"><h3>YouTube Thumbnails</h3><button class="order-btn" onclick="showPopup()">Order Now</button></div>
-    </div>
-  </div>
+      <div class="service-card">
+        <h3 onclick="toggleSamples(this)">3D Logo</h3>
+        <div class="samples">[Upload Area for 3D Logo Samples - Only Owner Access]</div>
+        <button class="order-btn" onclick="toggleOrder(this)">Order Now</button>
+        <div class="order-options">
+          <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
+          <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
+        </div>
+      </div>
 
-  <!-- POPUP -->
-  <div class="popup" id="orderPopup">
-    <div class="popup-content">
-      <h2>Choose your order platform</h2>
-      <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
-      <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
-      <button onclick="closePopup()">Close</button>
+      <div class="service-card">
+        <h3 onclick="toggleSamples(this)">3D Wooden Logo</h3>
+        <div class="samples">[Upload Area for Wooden Logo Samples]</div>
+        <button class="order-btn" onclick="toggleOrder(this)">Order Now</button>
+        <div class="order-options">
+          <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
+          <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3 onclick="toggleSamples(this)">T-Shirt Design</h3>
+        <div class="samples">[Upload Area for T-Shirt Design Samples]</div>
+        <button class="order-btn" onclick="toggleOrder(this)">Order Now</button>
+        <div class="order-options">
+          <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
+          <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3 onclick="toggleSamples(this)">Social Media Posts</h3>
+        <div class="samples">[Upload Area for Social Media Samples]</div>
+        <button class="order-btn" onclick="toggleOrder(this)">Order Now</button>
+        <div class="order-options">
+          <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
+          <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3 onclick="toggleSamples(this)">Packaging Design</h3>
+        <div class="samples">[Upload Area for Packaging Design Samples]</div>
+        <button class="order-btn" onclick="toggleOrder(this)">Order Now</button>
+        <div class="order-options">
+          <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
+          <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3 onclick="toggleSamples(this)">Marriage Invitation Card</h3>
+        <div class="samples">[Upload Area for Invitation Card Samples]</div>
+        <button class="order-btn" onclick="toggleOrder(this)">Order Now</button>
+        <div class="order-options">
+          <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
+          <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3 onclick="toggleSamples(this)">Business Card</h3>
+        <div class="samples">[Upload Area for Business Card Samples]</div>
+        <button class="order-btn" onclick="toggleOrder(this)">Order Now</button>
+        <div class="order-options">
+          <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
+          <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3 onclick="toggleSamples(this)">YouTube Thumbnails</h3>
+        <div class="samples">[Upload Area for YouTube Thumbnail Samples]</div>
+        <button class="order-btn" onclick="toggleOrder(this)">Order Now</button>
+        <div class="order-options">
+          <button onclick="window.open('https://wa.me/923032792947')">WhatsApp</button>
+          <button onclick="window.open('https://t.me/+923032792947')">Telegram</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -259,33 +316,54 @@
   <div class="settings-panel" id="settingsPanel">
     <h3>Accent Colour</h3>
     <div class="color-options">
-      <div class="color-option" style="background:#00e0ff"></div>
-      <div class="color-option" style="background:#ff0055"></div>
-      <div class="color-option" style="background:#22ff88"></div>
-      <div class="color-option" style="background:#ffaa00"></div>
-      <div class="color-option" style="background:#ffffff"></div>
+      <div class="color-option" style="background:#00e0ff" onclick="setAccent('#00e0ff')"></div>
+      <div class="color-option" style="background:#ff0055" onclick="setAccent('#ff0055')"></div>
+      <div class="color-option" style="background:#ffaa00" onclick="setAccent('#ffaa00')"></div>
+      <div class="color-option" style="background:#22ff88" onclick="setAccent('#22ff88')"></div>
     </div>
-    <h3>Theme</h3>
-    <button onclick="toggleTheme()">Light/Dark Mode</button><br><br>
-    <button onclick="alert('Wallpaper feature coming soon!')">Wallpaper / Remove Wallpaper</button>
+
+    <h3>Service Text Colour</h3>
+    <div class="text-color-options">
+      <div class="text-color-option" style="background:#fff" onclick="setTextColor('#fff')"></div>
+      <div class="text-color-option" style="background:#ff0077" onclick="setTextColor('#ff0077')"></div>
+      <div class="text-color-option" style="background:#00ffcc" onclick="setTextColor('#00ffcc')"></div>
+      <div class="text-color-option" style="background:#ffea00" onclick="setTextColor('#ffea00')"></div>
+    </div>
+
+    <h3>Theme Mode</h3>
+    <button onclick="toggleTheme()">Light / Dark</button>
   </div>
 
   <script>
-    function showPopup() {
-      document.getElementById("orderPopup").style.display = "flex";
+    function toggleOrder(btn) {
+      const options = btn.nextElementSibling;
+      options.style.display = options.style.display === "block" ? "none" : "block";
     }
-    function closePopup() {
-      document.getElementById("orderPopup").style.display = "none";
+
+    function toggleSamples(el) {
+      const next = el.nextElementSibling;
+      next.style.display = next.style.display === "block" ? "none" : "block";
     }
+
     function toggleSettings() {
-      let s = document.getElementById("settingsPanel");
-      s.style.display = s.style.display === "block" ? "none" : "block";
+      const panel = document.getElementById("settingsPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
     }
+
+    function setAccent(color) {
+      document.querySelectorAll(".logo, .header h1, footer span").forEach(el => el.style.color = color);
+      document.querySelectorAll(".order-btn, .order-options button").forEach(el => el.style.background = color);
+    }
+
+    function setTextColor(color) {
+      document.documentElement.style.setProperty('--text-color', color);
+    }
+
     function toggleTheme() {
       document.body.classList.toggle("light");
       if (document.body.classList.contains("light")) {
-        document.body.style.background = "#f5f5f5";
-        document.body.style.color = "#111";
+        document.body.style.background = "#f4f4f4";
+        document.body.style.color = "#000";
       } else {
         document.body.style.background = "#0e0f12";
         document.body.style.color = "#fff";
