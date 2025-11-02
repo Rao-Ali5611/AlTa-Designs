@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>AlTa Designs — Final</title>
+<!-- Google Fonts: Poppins (body) + Playfair Display (titles) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --sidebar-w:260px;
@@ -16,7 +18,7 @@
   --dark1:#070708; --dark2:#0b0b0d;
   --light1:#f6f8fb; --light2:#eef4ff;
   --svc-title-color:#ffffff;
-  --font: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  --font: "Poppins", "Playfair Display", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -50,28 +52,31 @@ nav.side button:hover{transform:translateX(6px);background:rgba(255,255,255,0.01
 nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgba(255,215,130,0.03), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(197,155,38,0.03)}
 
 .spacer{flex:1}
-.sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center}
-.sidebar .footer-line .admin-link{margin-left:8px;color:var(--muted);text-decoration:underline;cursor:pointer}
+.sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center;cursor:pointer}
+.sidebar .footer-line .admin-link{margin-left:8px;color:var(--muted);text-decoration:underline;cursor:pointer;display:none}
 
 /* Main */
 .main { flex:1; display:flex; flex-direction:column; padding:28px; overflow:auto; position:relative; }
 
 /* HOME: title, cloud search, services */
 .home-top { display:flex; flex-direction:column; align-items:center; gap:12px; margin-bottom:18px; margin-top:12px }
-.hero-title{ font-size:64px; font-weight:900; color:var(--accent); letter-spacing:.4px; text-shadow:0 12px 40px rgba(0,0,0,0.6); transition: font-size .2s, transform .2s }
+.hero-title{ font-size:64px; font-weight:900; color:var(--accent); letter-spacing:.4px; text-shadow:0 12px 40px rgba(0,0,0,0.6); transition: font-size .2s, transform .2s; font-family:'Playfair Display', serif; }
 @media (max-width:900px){ .hero-title{ font-size:36px } }
 
-/* Cloud-shaped search */
+/* Cloud-shaped search (more cloud-like bumps) */
 .search-wrap{ width:100%; display:flex; justify-content:center; }
 .cloud-search{
-  width:min(760px,64%); position:relative; border-radius:999px; padding:16px 20px;
+  width:min(760px,64%); position:relative; padding:16px 20px; border-radius:60px 60px 60px 60px/40px 40px 80px 80px;
   background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
   border:1px solid rgba(255,255,255,0.045); backdrop-filter: blur(10px);
   box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 2px 8px rgba(255,255,255,0.02);
+  overflow:visible;
 }
 .cloud-search::before{
-  content:""; position:absolute; inset:-18px; border-radius:999px; filter:blur(30px); opacity:0.18;
-  background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 20%), radial-gradient(circle at 80% 60%, rgba(180,220,255,0.02), transparent 10%);
+  content:""; position:absolute; left:-22px; top:-18px; width:120px; height:80px; border-radius:50%; background:rgba(255,255,255,0.02); filter:blur(10px); z-index:0; pointer-events:none;
+}
+.cloud-search::after{
+  content:""; position:absolute; right:-28px; top:-6px; width:68px; height:68px; border-radius:50%; background:rgba(255,255,255,0.02); filter:blur(10px); z-index:0; pointer-events:none;
 }
 .cloud-search input{ position:relative; z-index:2; width:100%; border:0; outline:0; background:transparent; color:var(--text); font-size:17px; padding:6px 8px; }
 .cloud-search .voice{ position:absolute; right:12px; top:50%; transform:translateY(-50%); background:transparent; border:0; color:var(--muted); font-size:18px; cursor:pointer; z-index:3 }
@@ -81,33 +86,33 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
 .svc-card{
   border-radius:14px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
   border:1px solid rgba(255,255,255,0.025); box-shadow: 0 14px 40px rgba(0,0,0,0.5);
-  display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:pointer; position:relative;
 }
 .svc-card:hover{ transform: translateY(-8px) }
-.svc-title{ font-size:16px; font-weight:700; color:var(--svc-title-color, #fff); text-align:center }
+.svc-title{ font-size:20px; font-weight:700; color:var(--svc-title-color, #fff); text-align:center; font-family:'Playfair Display', serif; }
 
-/* 3D Order button */
+/* move order button slightly lower within card */
 .order-3d{
-  margin-top:8px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
+  margin-top:12px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
   color:#000;font-weight:800;cursor:pointer; box-shadow: 0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
   transform-style:preserve-3d; transition: transform .18s, box-shadow .18s;
 }
 .order-3d:hover{ transform: translateY(-6px) rotateX(6deg); box-shadow: 0 28px 50px rgba(0,0,0,0.75), inset 0 -6px 10px rgba(255,255,255,0.14) }
 
-/* FS Modal with blur background */
+/* FS Modal with blur background - now smaller panel with blurred main behind */
 .fs-overlay{
   position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2200;
 }
 .fs-overlay.show{ display:flex }
-.fs-backdrop{ position:absolute; inset:0; backdrop-filter: blur(8px); background: rgba(0,0,0,0.45); }
+.fs-backdrop{ position:absolute; inset:0; backdrop-filter: blur(8px); background: rgba(0,0,0,0.55); }
 .fs-panel{
-  position:relative; z-index:10; width:95%; max-width:1150px; height:86vh; background: linear-gradient(180deg,#0b0b0d,#111214);
-  border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  position:relative; z-index:10; width:92%; max-width:980px; height:72vh; background: linear-gradient(180deg,#0b0b0d,#111214);
+  border-radius:18px; overflow:hidden; display:flex; flex-direction:column; box-shadow: 0 30px 80px rgba(0,0,0,0.7); transform: translateY(0);
 }
 .fs-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.02) }
 .fs-title{ font-size:18px; color:var(--accent); font-weight:700 }
 .fs-body{ flex:1; display:flex; gap:12px; padding:14px; overflow:auto }
-.fs-gallery{ flex:1; display:grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap:12px; align-content:start; }
+.fs-gallery{ flex:1; display:grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap:12px; align-content:start; }
 .fs-thumb{ background:#0b0b0d; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.03) }
 .fs-thumb img{ width:100%; height:170px; object-fit:cover; display:block }
 
@@ -142,6 +147,7 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
   .hero-title{ font-size:28px }
   .cloud-search{ width:92% }
   .services-grid{ grid-template-columns:1fr }
+  .fs-panel{ width:95%; height:78vh }
 }
 </style>
 </head>
@@ -167,8 +173,8 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
 
     <div class="spacer"></div>
 
-    <div class="footer-line">
-      © AlTa Group of Graphics — <strong>Rao Ali</strong>
+    <div class="footer-line" id="footerLine">
+      © AlTa Group of Graphics — <strong id="footerName">Rao Ali</strong>
       <span class="admin-link" id="adminLink">Admin Login</span>
     </div>
   </aside>
@@ -271,7 +277,7 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
   </main>
 </div>
 
-<!-- Fullscreen Modal (same-screen overlay with blur) -->
+<!-- Fullscreen Modal (centered, smaller than full, blurred background) -->
 <div class="fs-overlay" id="fsOverlay" aria-hidden="true">
   <div class="fs-backdrop"></div>
   <div class="fs-panel" role="dialog" aria-modal="true" aria-label="Service Samples">
@@ -542,19 +548,21 @@ function showPage(id){
   closeServiceModal(); // close modal if open
 }
 
-/* ============= Admin login via footer link ============= */
-document.getElementById('adminLink').addEventListener('click', ()=>{
+/* ============= Hidden Admin login via footer click ============= */
+document.getElementById('footerLine').addEventListener('click', ()=>{
   const p = prompt('Enter admin password:');
   if(p === ADMIN_PASSWORD){
     isAdmin = true;
     alert('Admin mode ON — you can now upload samples in services.');
     uploadBlock.style.display = 'block';
-  } else alert('Wrong password.');
+    // visually indicate admin (optional)
+    document.getElementById('footerName').textContent = 'Rao Ali (Admin)';
+  } else if(p !== null) alert('Wrong password.');
 });
 
 /* ============= About content translate ============= */
-const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali... (shortened for demo)`;
-const aboutUr = `AlTa Designs ایک ممتاز گرافک ڈیزائن اسٹوڈیو ہے...`;
+const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali. We create eye-catching thumbnails, social posts, logos, invitations, packaging and more. This demo site shows sample work and allows admin uploads.`;
+const aboutUr = `AlTa Designs ایک ممتاز گرافک ڈیزائن اسٹوڈیو ہے جس کی قیادت Rao Ali کر رہے ہیں۔ ہم YouTube تھمبنیلز، سوشل پوسٹس، لوگوز، دعوت نامے، پیکیجنگ وغیرہ ڈیزائن کرتے ہیں۔`;
 document.getElementById('aboutContent').textContent = aboutEng;
 let isUr = false;
 document.getElementById('translateBtn').addEventListener('click', ()=>{
@@ -597,9 +605,6 @@ function buildProjects(){
 applySettings();
 buildServices();
 buildProjects();
-
-/* render first service gallery on load to warm cache (optional) */
-// renderGallery(SERVICES[0]); // not needed now
 
 /* Save settings before unload */
 window.addEventListener('beforeunload', ()=> {
