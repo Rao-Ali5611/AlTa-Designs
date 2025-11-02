@@ -1,769 +1,220 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AlTa Designs — Final (Complete)</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlTa Design</title>
 <style>
-  :root{
-    --sidebar-width:220px;
-    --gap:20px;
-    --accent:#d4af37;
-    --svc-title-color:#ffffff;
-    --muted:#9aa0a6;
-    --bg-start:#070708;
-    --bg-end:#0b0b0d;
-    --glass: rgba(255,255,255,0.03);
-    --text:#e8eef6;
-    --card-shadow: 0 12px 30px rgba(0,0,0,0.6);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;font-family:Inter, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-    background: linear-gradient(180deg,var(--bg-start),var(--bg-end));
-    color:var(--text);
-    min-height:100vh;display:flex;gap:var(--gap);
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
   }
 
-  /* SIDEBAR */
-  .sidebar{
-    width:var(--sidebar-width);min-width:var(--sidebar-width);
-    position:fixed;left:0;top:0;bottom:0;padding:22px 14px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-    border-right:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;
+  body {
+    background: linear-gradient(to bottom right, #0f0f0f, #1a1a1a);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background 0.5s, color 0.5s;
   }
-  .brand{display:flex;align-items:center;gap:10px;padding-bottom:6px}
-  .logo-mark{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg, rgba(255,215,130,0.12), rgba(200,140,40,0.06));display:grid;place-items:center;color:var(--accent);font-weight:800;font-size:18px;border:1px solid rgba(255,255,255,0.03)}
-  .brand h1{font-size:16px;margin:0;color:var(--accent);letter-spacing:0.4px}
-  .brand p{margin:0;font-size:11px;color:var(--muted)}
-  nav.side-menu{display:flex;flex-direction:column;gap:6px;margin-top:12px}
-  nav.side-menu button{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;text-align:left;transition:all .12s}
-  nav.side-menu button:hover{transform:translateX(6px);background:rgba(255,255,255,0.01)}
-  nav.side-menu button.active{color:var(--accent);background:linear-gradient(90deg, rgba(255,215,130,0.03), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(197,155,38,0.03)}
-  .spacer{flex:1}
-  .sidebar-footer{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02)}
-  .admin-btn{margin-top:10px;padding:8px;border-radius:8px;border:1px dashed rgba(255,255,255,0.03);background:transparent;color:var(--muted);cursor:pointer}
 
-  /* MAIN */
-  .main-wrap{margin-left:calc(var(--sidebar-width) + var(--gap));padding:26px;flex:1;min-height:100vh}
-  .home-header{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:12px}
-  .site-title{font-size:48px;font-weight:900;color:var(--accent);letter-spacing:0.6px;text-shadow:0 10px 40px rgba(0,0,0,0.6);line-height:1}
-  .site-tag{font-size:13px;color:var(--muted)}
-
-  /* CLOUDY SHORT SEARCH */
-  .search-wrap{width:100%;display:flex;justify-content:center}
-  .search-bar{
-    width:min(640px,52%);
-    display:flex;align-items:center;border-radius:999px;padding:12px 16px;
-    background:var(--glass);backdrop-filter: blur(10px);
-    border:1px solid rgba(255,255,255,0.04);box-shadow:0 10px 30px rgba(0,0,0,0.6);
-    transition: transform .18s;
+  header {
+    text-align: center;
+    padding: 60px 20px 20px;
   }
-  .search-bar:active,.search-bar:focus-within{transform: translateY(-4px)}
-  .search-bar input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-size:15px;padding:6px 8px}
-  .voice-btn{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:18px;padding:6px;border-radius:10px}
 
-  /* SERVICES GRID */
-  .services-grid{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-  .service-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:var(--card-shadow);display:flex;flex-direction:column;gap:12px;position:relative;transition:transform .18s,box-shadow .18s;cursor:pointer}
-  .service-card:hover{transform:translateY(-6px);box-shadow:0 26px 60px rgba(0,0,0,0.6)}
-  .service-head{display:flex;gap:12px;align-items:center}
-  .service-head .mark{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:grid;place-items:center;color:var(--muted);font-weight:700}
-  .service-card h3{margin:0;font-size:16px;color:var(--svc-title-color)}
-  .svc-desc{font-size:13px;color:var(--muted)}
-  .order-row{display:flex;gap:10px;margin-top:auto;align-items:center}
-  .order-btn{padding:10px 12px;border-radius:10px;border:0;background:var(--accent);color:#070707;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,0.5)}
-
-  /* Fullscreen modal */
-  .fs-modal{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:linear-gradient(180deg, rgba(0,0,0,0.78), rgba(0,0,0,0.9));z-index:1800;padding:20px}
-  .fs-modal.show{display:flex}
-  .fs-panel{width:100%;max-width:1200px;height:90vh;background:linear-gradient(180deg,#0b0b0d,#111214);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-  .fs-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.02)}
-  .fs-title{font-size:20px;color:var(--accent);font-weight:700}
-  .fs-close{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:8px;border-radius:8px}
-  .fs-body{flex:1;display:flex;gap:12px;padding:16px;overflow:auto}
-  .fs-gallery{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;align-content:start}
-  .fs-thumb{background:#0b0b0d;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
-  .fs-thumb img{width:100%;height:180px;object-fit:cover;display:block}
-  .fs-side{width:360px;min-width:240px;padding:12px;border-left:1px solid rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:12px}
-  .fs-side .order-big{margin-top:auto;padding:12px;border-radius:12px;border:0;background:var(--accent);color:#070707;font-weight:800;cursor:pointer}
-  .fs-side .order-small{display:flex;gap:8px;flex-wrap:wrap}
-  .fs-side .order-small button{padding:10px;border-radius:10px;border:0;background:linear-gradient(180deg,var(--accent), #ffd36f);cursor:pointer;color:#000;font-weight:700}
-
-  .fs-upload{padding:10px;border-radius:8px;border:1px dashed rgba(255,255,255,0.03);background:transparent;color:var(--muted);text-align:center}
-  .fs-upload input{display:none}
-
-  /* SETTINGS */
-  .settings-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-  .card-panel{background:linear-gradient(180deg,#0b0b0d,#0f1113);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
-  .swatches{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-  .swatch{width:36px;height:28px;border-radius:8px;cursor:pointer;border:2px solid rgba(255,255,255,0.03)}
-  .wallpapers{display:flex;gap:8px;flex-wrap:wrap}
-  .wall-thumb{width:80px;height:52px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
-
-  /* PAGES */
-  .page-inner{max-width:980px;padding:12px}
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .contact-card{background:linear-gradient(180deg,#0b0b0d,#101113);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
-  .about-text{white-space:pre-wrap;line-height:1.6;color:var(--muted);margin-top:8px}
-  .translate-btn{margin-top:12px;padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#070707;cursor:pointer}
-  .footer{margin-top:16px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.02);padding-top:12px;text-align:center}
-
-  @media (max-width:1000px){
-    :root{--sidebar-width:72px}
-    .sidebar{width:72px;min-width:72px;padding:12px}
-    .brand h1,.brand p{display:none}
-    nav.side-menu button{font-size:12px;justify-content:center}
-    .main-wrap{margin-left:calc(var(--sidebar-width) + 12px);padding:16px}
-    .settings-grid{grid-template-columns:repeat(2,1fr)}
-    .site-title{font-size:32px}
-    .search-bar{width:70%}
-    .fs-side{display:none}
+  h1 {
+    font-size: 3em;
+    background: linear-gradient(90deg, #ff6b6b, #feca57, #1dd1a1, #5f27cd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px rgba(255,255,255,0.4);
+    animation: glow 5s infinite alternate;
   }
-  @media (max-width:560px){
-    .sidebar{position:static;width:100%;min-width:100%;display:flex;flex-direction:row;align-items:center;gap:8px;padding:8px 10px}
-    .main-wrap{margin-left:0;padding:12px}
-    .services-grid{grid-template-columns:1fr}
-    .contact-grid{grid-template-columns:1fr}
-    .settings-grid{grid-template-columns:1fr}
-    .fs-panel{height:92vh}
-    .fs-side{display:none}
+
+  @keyframes glow {
+    0% { text-shadow: 0 0 10px #ff6b6b; }
+    50% { text-shadow: 0 0 20px #1dd1a1; }
+    100% { text-shadow: 0 0 15px #48dbfb; }
+  }
+
+  .search-bar {
+    margin: 25px auto;
+    width: 50%;
+    position: relative;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 14px 22px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    box-shadow: 0 8px 32px rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    padding: 40px;
+  }
+
+  .service {
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    text-align: center;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(255,255,255,0.1);
+    transition: transform 0.3s;
+  }
+
+  .service:hover {
+    transform: translateY(-8px);
+  }
+
+  .service h3 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+  }
+
+  .order-btn {
+    margin-top: 15px;
+    padding: 10px 25px;
+    border: none;
+    background: linear-gradient(145deg, #ff6b6b, #feca57);
+    color: white;
+    font-weight: bold;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+  .order-btn:hover {
+    background: linear-gradient(145deg, #48dbfb, #1dd1a1);
+    transform: scale(1.1);
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: auto;
+    padding: 20px;
+  }
+
+  .tab {
+    cursor: pointer;
+    font-weight: 500;
+    color: #ccc;
+  }
+
+  .tab:hover {
+    color: white;
+  }
+
+  .settings {
+    display: none;
+    padding: 20px;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+  }
+
+  .settings-category {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 15px;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+
+  footer:hover {
+    opacity: 1;
+  }
+
+  .hidden-admin {
+    display: none;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  input[type="file"] {
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 2em; }
+    .search-bar { width: 80%; }
   }
 </style>
 </head>
 <body>
-  <!-- SIDEBAR -->
-  <aside class="sidebar" aria-label="Sidebar">
-    <div class="brand">
-      <div class="logo-mark">AD</div>
-      <div>
-        <h1>AlTa Designs</h1>
-        <p>Design Beyond Imagination</p>
-      </div>
-    </div>
 
-    <nav class="side-menu" role="navigation" aria-label="Main menu">
-      <button class="active" data-target="home">🏠 Home</button>
-      <button data-target="settings">⚙️ Settings</button>
-      <button data-target="projects">📁 My Projects</button>
-      <button data-target="chat">💬 Client Chat</button>
-      <button data-target="contact">📞 Contact</button>
-      <button data-target="about">📜 About Us</button>
-      <button data-target="inspiration">✨ Inspiration</button>
-    </nav>
-
-    <div class="spacer"></div>
-
-    <div class="sidebar-footer">
-      © 2025 <strong>AlTa Designs</strong><div style="font-size:12px;color:var(--muted)">Designed by Rao Ali</div>
-      <button class="admin-btn" id="adminToggleFooter">Admin: Off</button>
-    </div>
-  </aside>
-
-  <!-- MAIN WRAPPER -->
-  <div class="main-wrap" role="main">
-    <!-- HOME -->
-    <section id="home" class="page active">
-      <div class="home-header">
-        <div class="site-title">AlTa Designs</div>
-        <div class="site-tag">Design Beyond Imagination</div>
-
-        <div class="search-wrap" aria-hidden="false">
-          <div class="search-bar" role="search" aria-label="Search services">
-            <input id="searchInput" placeholder="Search services or samples (type or use voice)..." aria-label="Search input">
-            <button id="voiceBtn" class="voice-btn" title="Voice search">🎤</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="services-grid" id="servicesGrid" aria-live="polite"></div>
-
-      <div class="footer">© 2025 AlTa Designs — Created by <strong>Rao Ali</strong></div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section id="settings" class="page" style="display:none">
-      <h2 style="color:var(--accent)">Settings</h2>
-      <div class="settings-grid" style="margin-top:12px">
-        <!-- Theme -->
-        <div class="card-panel">
-          <h4 style="margin:0;color:var(--muted)">Theme</h4>
-          <p style="color:var(--muted);margin-top:8px;font-size:13px">Select Light or Dark mode. Site adapts automatically.</p>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button onclick="setTheme('dark')">Dark</button>
-            <button onclick="setTheme('light')">Light</button>
-          </div>
-        </div>
-
-        <!-- Wallpapers (33) -->
-        <div class="card-panel">
-          <h4 style="margin:0;color:var(--muted)">Wallpapers (33)</h4>
-          <div class="wallpapers" id="wallpapers" style="margin-top:10px;max-height:300px;overflow:auto"></div>
-          <div style="display:flex;gap:8px;margin-top:10px">
-            <button onclick="removeWallpaper()">Remove Wallpaper</button>
-            <button onclick="useDefaultWallpaper()">Use Default</button>
-          </div>
-        </div>
-
-        <!-- Accent Colors -->
-        <div class="card-panel">
-          <h4 style="margin:0;color:var(--muted)">Accent Colors</h4>
-          <div class="swatches" id="swatches"></div>
-          <div style="font-size:12px;color:var(--muted);margin-top:8px">Click a color to apply as accent.</div>
-        </div>
-
-        <!-- Service Title Colors -->
-        <div class="card-panel">
-          <h4 style="margin:0;color:var(--muted)">Service Title Colors</h4>
-          <div class="swatches" id="titleSwatches"></div>
-          <div style="font-size:12px;color:var(--muted);margin-top:8px">Click to change service titles colour.</div>
-        </div>
-
-        <!-- Admin -->
-        <div class="card-panel" style="grid-column:1 / -1; margin-top:8px;">
-          <h4 style="margin:0;color:var(--muted)">Admin</h4>
-          <p style="color:var(--muted);font-size:13px;margin-top:6px">Admin mode allows uploading samples (stored locally). Only you should use Admin mode.</p>
-          <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
-            <input id="adminPass" placeholder="enter admin password" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
-            <button onclick="adminLogin()">Admin Login</button>
-            <button onclick="adminLogout()">Admin Logout</button>
-          </div>
-          <div style="font-size:12px;color:var(--muted);margin-top:8px">Admin password: <strong>Ali ray555</strong></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="page" style="display:none">
-      <h2 style="color:var(--accent)">My Projects</h2>
-      <div class="page-inner">
-        <p style="color:var(--muted)">Your uploaded projects appear here. Click a project to view details.</p>
-        <div id="projectsGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px"></div>
-      </div>
-    </section>
-
-    <!-- CLIENT CHAT -->
-    <section id="chat" class="page" style="display:none">
-      <h2 style="color:var(--accent)">Client Chat</h2>
-      <div class="page-inner">
-        <div class="contact-grid">
-          <div class="contact-card">
-            <h4>Chat</h4>
-            <div style="margin-top:8px">WhatsApp: <strong>+92 303 2792947</strong></div>
-            <div style="margin-top:8px">Telegram: <strong>@+923032792947</strong></div>
-            <div style="margin-top:8px">Email: <strong>muhammadaliorangzaibrao@gmail.com</strong></div>
-            <div style="margin-top:12px">
-              <button onclick="openWhatsApp()">Open WhatsApp</button>
-              <button onclick="openTelegram()">Open Telegram</button>
-              <button onclick="openMail()">Send Email</button>
-            </div>
-          </div>
-          <div class="contact-card">
-            <h4>Notes</h4>
-            <p style="color:var(--muted);margin-top:8px">Use these channels to contact clients, share samples, and finalize orders.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="page" style="display:none">
-      <h2 style="color:var(--accent)">Contact</h2>
-      <div class="page-inner">
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div class="contact-card">
-            <h4>Emails</h4>
-            <ul style="margin-top:10px;padding-left:0;list-style:none">
-              <li style="color:var(--muted);padding:6px 0">muhammadaliorangzaibrao@gmail.com</li>
-              <li style="color:var(--muted);padding:6px 0">abug2572@gmail.com</li>
-              <li style="color:var(--muted);padding:6px 0">ra3275867@gmail.com</li>
-              <li style="color:var(--muted);padding:6px 0">naeemshahzad112324@gmail.com</li>
-            </ul>
-          </div>
-          <div class="contact-card">
-            <h4>Phone & Chat</h4>
-            <ul style="margin-top:10px;padding-left:0;list-style:none">
-              <li style="color:var(--muted);padding:6px 0">WhatsApp / Telegram: +92 303 2792947</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="page" style="display:none">
-      <h2 style="color:var(--accent)">About Us</h2>
-      <div class="page-inner">
-        <div id="aboutContent" class="about-text"></div>
-        <button class="translate-btn" id="translateBtn">Translate to Urdu</button>
-      </div>
-    </section>
-
-    <!-- INSPIRATION -->
-    <section id="inspiration" class="page" style="display:none">
-      <h2 style="color:var(--accent)">Inspiration</h2>
-      <div class="page-inner">
-        <p style="color:var(--muted)">Curated sample ideas & trending templates. (You will add later.)</p>
-        <div id="inspirationGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px"></div>
-      </div>
-    </section>
+<header>
+  <h1>AlTa Design</h1>
+  <div class="search-bar">
+    <input type="text" placeholder="Search your design idea... ☁️">
   </div>
+</header>
 
-  <!-- Fullscreen Modal for service samples -->
-  <div class="fs-modal" id="fsModal" aria-hidden="true">
-    <div class="fs-panel" role="dialog" aria-modal="true" aria-label="Service Samples">
-      <div class="fs-top">
-        <div class="fs-title" id="fsTitle">Service</div>
-        <div>
-          <button class="fs-close" onclick="closeFsModal()">✕ Close</button>
-        </div>
-      </div>
-      <div class="fs-body">
-        <div class="fs-gallery" id="fsGallery" aria-live="polite"></div>
-        <div class="fs-side">
-          <div style="color:var(--muted);font-size:14px">Order this service</div>
-          <button class="order-big" id="fsOrderBig">Order Now</button>
-          <div style="color:var(--muted);margin-top:8px">Quick order options</div>
-          <div class="order-small">
-            <button id="fsOrderWhats">Order on WhatsApp</button>
-            <button id="fsOrderTele">Order on Telegram</button>
-          </div>
+<section class="services" id="services">
+  <div class="service"><h3>Youtube Thumbnail</h3><button class="order-btn">Order Now</button></div>
+  <div class="service"><h3>Social Media Post</h3><button class="order-btn">Order Now</button></div>
+  <div class="service"><h3>3D Wooden Logo</h3><button class="order-btn">Order Now</button></div>
+  <div class="service"><h3>Wedding Invitation</h3><button class="order-btn">Order Now</button></div>
+  <div class="service"><h3>3D Logo</h3><button class="order-btn">Order Now</button></div>
+  <div class="service"><h3>Packaging Design</h3><button class="order-btn">Order Now</button></div>
+  <div class="service"><h3>T-Shirt Design</h3><button class="order-btn">Order Now</button></div>
+  <div class="service"><h3>Business Card</h3><button class="order-btn">Order Now</button></div>
+</section>
 
-          <div id="fsAdminUpload" style="display:none">
-            <div class="fs-upload">
-              <div style="font-size:13px;color:var(--muted)">Admin Upload — drag & drop or click to add (images)</div>
-              <label class="upload-label" style="display:block;margin-top:8px;cursor:pointer;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02)">
-                <input type="file" id="fsFileInput" accept="image/*" multiple> Click to choose images
-              </label>
-            </div>
-          </div>
-
-          <div style="font-size:12px;color:var(--muted);margin-top:20px">Tip: Press Esc or click outside to exit modal</div>
-        </div>
-      </div>
-    </div>
+<section class="settings" id="settings">
+  <div class="settings-grid">
+    <div class="settings-category"><h3>Theme Mode</h3></div>
+    <div class="settings-category"><h3>Wallpapers</h3></div>
+    <div class="settings-category"><h3>Accent Colors</h3></div>
+    <div class="settings-category"><h3>Title Colors</h3></div>
   </div>
+</section>
+
+<div class="hidden-admin" id="adminPanel">
+  <h3>Admin Upload Section</h3>
+  <input type="file" multiple>
+</div>
+
+<footer id="footerC">© AlTa Design (C)</footer>
 
 <script>
-/* ===========================
-   CONFIG & DATA
-   =========================== */
-const PHONE = '923032792947'; // for wa.me
-const TG_LINK = 'https://t.me/+923032792947';
-const ADMIN_PASSWORD = 'Ali ray555';
-const LS_SAMPLES = 'altag_samples_final';
-const LS_SETTINGS = 'altag_settings_final';
+  const footer = document.getElementById("footerC");
+  const adminPanel = document.getElementById("adminPanel");
 
-const SERVICES = [
-  '3D Logo',
-  '3D Wooden Logo',
-  'T-Shirt Design',
-  'Social Media Posts',
-  'Packaging Design',
-  'Marriage Invitation Card',
-  'Business Card',
-  'YouTube Thumbnails'
-];
-
-/* load samples from localStorage or set placeholders */
-let samples = JSON.parse(localStorage.getItem(LS_SAMPLES) || 'null');
-if(!samples){
-  samples = {};
-  SERVICES.forEach(s => samples[s] = [
-    'https://via.placeholder.com/1600x1000?text='+encodeURIComponent(s+' Sample 1'),
-    'https://via.placeholder.com/1600x1000?text='+encodeURIComponent(s+' Sample 2'),
-    'https://via.placeholder.com/1600x1000?text='+encodeURIComponent(s+' Sample 3')
-  ]);
-  samples['Inspiration'] = [
-    'https://via.placeholder.com/1600x1000?text=Inspiration+1',
-    'https://via.placeholder.com/1600x1000?text=Inspiration+2'
-  ];
-  localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
-}
-
-/* settings defaults */
-let settings = JSON.parse(localStorage.getItem(LS_SETTINGS) || 'null');
-if(!settings){
-  settings = { theme:'dark', accent: '#d4af37', titleColor:'#ffffff', wallpaper: null };
-  localStorage.setItem(LS_SETTINGS, JSON.stringify(settings));
-}
-let isAdmin = false;
-
-/* ===========================
-   BUILD HOME: service cards
-   =========================== */
-const servicesGrid = document.getElementById('servicesGrid');
-
-function buildServiceCards(){
-  servicesGrid.innerHTML = '';
-  SERVICES.forEach(svc=>{
-    const card = document.createElement('div');
-    card.className = 'service-card';
-    card.dataset.service = svc;
-    card.innerHTML = `
-      <div class="service-head">
-        <div class="mark">${svc.split(' ').map(x=>x[0]).slice(0,2).join('')}</div>
-        <div style="flex:1">
-          <h3 class="svc-title" data-service="${svc}">${svc}</h3>
-          <div class="svc-desc">${svc} — premium design samples</div>
-        </div>
-      </div>
-      <div style="height:6px"></div>
-      <div class="order-row">
-        <button class="order-btn">Order Now</button>
-      </div>
-    `;
-    servicesGrid.appendChild(card);
-
-    // events: clicking title or card opens fullscreen modal
-    card.addEventListener('click', (e)=> {
-      // ignore clicks on buttons inside card that should have same action
-      openFsForService(svc);
-    });
-    card.querySelector('.order-btn').addEventListener('click', (e)=>{
-      e.stopPropagation();
-      openFsForService(svc, true);
-    });
+  footer.addEventListener("click", () => {
+    const pass = prompt("Enter admin password:");
+    if (pass === "Ali ray555") {
+      adminPanel.style.display = "block";
+      alert("Admin mode activated ✅");
+    } else {
+      alert("Incorrect password ❌");
+    }
   });
-}
-
-/* ===========================
-   Fullscreen modal logic
-   =========================== */
-const fsModal = document.getElementById('fsModal');
-const fsTitle = document.getElementById('fsTitle');
-const fsGallery = document.getElementById('fsGallery');
-const fsAdminUpload = document.getElementById('fsAdminUpload');
-const fsFileInput = document.getElementById('fsFileInput');
-let currentService = null;
-
-function openFsForService(service, openForOrder=false){
-  currentService = service;
-  fsTitle.textContent = service;
-  renderFsGallery(service);
-  fsAdminUpload.style.display = isAdmin ? 'block' : 'none';
-  fsModal.classList.add('show');
-  fsModal.setAttribute('aria-hidden','false');
-}
-
-function renderFsGallery(service){
-  fsGallery.innerHTML = '';
-  const arr = samples[service] || [];
-  if(arr.length === 0){
-    fsGallery.innerHTML = '<div style="color:var(--muted);padding:12px">No samples yet.</div>';
-    return;
-  }
-  arr.forEach(url=>{
-    const d = document.createElement('div'); d.className = 'fs-thumb';
-    d.innerHTML = `<img src="${url}" alt="${service} sample">`;
-    // open image in new tab on click
-    d.addEventListener('click', ()=> window.open(url, '_blank'));
-    fsGallery.appendChild(d);
-  });
-}
-
-function closeFsModal(){
-  fsModal.classList.remove('show');
-  fsModal.setAttribute('aria-hidden','true');
-  currentService = null;
-}
-
-/* order handlers */
-document.getElementById('fsOrderWhats').addEventListener('click', ()=> {
-  if(!currentService) return;
-  window.open('https://wa.me/'+PHONE + '?text=' + encodeURIComponent('I want to order: ' + currentService), '_blank');
-});
-document.getElementById('fsOrderTele').addEventListener('click', ()=> {
-  if(!currentService) return;
-  window.open(TG_LINK, '_blank');
-});
-document.getElementById('fsOrderBig').addEventListener('click', ()=> {
-  if(!currentService) return;
-  const r = confirm('Order on WhatsApp (OK) or Telegram (Cancel)?');
-  if(r) window.open('https://wa.me/'+PHONE + '?text=' + encodeURIComponent('I want to order: ' + currentService), '_blank');
-  else window.open(TG_LINK, '_blank');
-});
-
-/* admin upload logic */
-fsFileInput.addEventListener('change', ()=> {
-  const files = Array.from(fsFileInput.files || []);
-  if(files.length) handleFilesUpload(files, currentService);
-  fsFileInput.value = '';
-});
-fsGallery.addEventListener('dragover', e=> { e.preventDefault(); fsGallery.style.outline = '2px dashed rgba(255,255,255,0.06)';});
-fsGallery.addEventListener('dragleave', e=> { fsGallery.style.outline = 'none';});
-fsGallery.addEventListener('drop', e=> {
-  e.preventDefault(); fsGallery.style.outline = 'none';
-  if(!isAdmin){ alert('Admin only upload.'); return; }
-  const files = Array.from(e.dataTransfer.files || []);
-  handleFilesUpload(files, currentService);
-});
-
-function handleFilesUpload(files, svc){
-  const imgs = files.filter(f => f.type && f.type.startsWith('image/'));
-  if(imgs.length === 0){ alert('Please upload images only.'); return; }
-  let done = 0;
-  imgs.forEach(file=>{
-    const reader = new FileReader();
-    reader.onload = (ev)=>{
-      samples[svc] = samples[svc] || [];
-      samples[svc].unshift(ev.target.result);
-      localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
-      done++;
-      if(done === imgs.length){
-        if(currentService === svc) renderFsGallery(svc);
-        buildInspirationAndProjects();
-        alert('Uploaded to "'+svc+'" samples.');
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-/* close modal on esc or click outside */
-document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeFsModal(); });
-fsModal.addEventListener('click', (e)=> { if(e.target === fsModal) closeFsModal(); });
-
-/* ===========================
-   Settings: colors & wallpapers (33) and swatches
-   =========================== */
-const ACCENT_COLORS = [
-  '#d4af37','#c59b26','#9b59b6','#e07b7b','#2ecc71','#e67e22',
-  '#ff4d6d','#00bcd4','#ffb86b','#7c4dff','#ff6bcb','#4caf50',
-  '#f39c12','#8e44ad','#16a085','#d35400','#bdc3c7','#34495e',
-  '#e84393','#f1c40f','#00a8ff','#ff6f00'
-];
-
-const swatchesEl = document.getElementById('swatches');
-ACCENT_COLORS.forEach(c=>{
-  const s = document.createElement('div'); s.className='swatch'; s.style.background=c;
-  s.title=c; s.addEventListener('click', ()=> setAccent(c));
-  swatchesEl.appendChild(s);
-});
-
-/* title color swatches */
-const titleSwatches = document.getElementById('titleSwatches');
-const TITLE_COLS = ['#ffffff','#ff0077','#00ffcc','#ffea00','#f5f5f5','#ffd6a5','#00e0ff'];
-TITLE_COLS.forEach(c=>{
-  const s = document.createElement('div'); s.className='swatch'; s.style.background=c;
-  s.title=c; s.addEventListener('click', ()=> setTitleColor(c));
-  titleSwatches.appendChild(s);
-});
-
-/* 33 wallpapers - mix of light & dark gradients */
-const wallpapers = [
-  'none',
-  'linear-gradient(180deg,#fffdf8,#fff6e6)',
-  'linear-gradient(180deg,#f6f7fa,#eef2f6)',
-  'linear-gradient(120deg,#fffbf0,#fff8ea)',
-  'radial-gradient(circle at 10% 10%, rgba(255,240,200,0.08), transparent), linear-gradient(180deg,#f6f7fa,#eef2f6)',
-  'linear-gradient(180deg,#070708,#0b0b0d)',
-  'radial-gradient(circle at 90% 10%, rgba(155,89,182,0.06), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
-  'radial-gradient(circle at 50% 20%, rgba(0,180,170,0.05), transparent), linear-gradient(180deg,#f8fbff,#eef7f8)',
-  'linear-gradient(120deg,#0b0b0d,#0a1020 60%)',
-  'linear-gradient(90deg,#0b0b0d,#1a0b1a)',
-  'radial-gradient(circle at 30% 70%, rgba(244,214,115,0.03), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
-  'linear-gradient(90deg,#f5f7fb,#f0f5ff)',
-  'radial-gradient(circle at 40% 40%, rgba(255,105,180,0.03), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
-  'repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 6px), linear-gradient(180deg,#070708,#0b0b0d)',
-  'linear-gradient(180deg,#fff9f0,#fff2e6)',
-  'linear-gradient(180deg,#0b1320,#071021)',
-  'radial-gradient(circle at 20% 20%, rgba(255,200,150,0.04), transparent), linear-gradient(180deg,#f7fbff,#eef8ff)',
-  'linear-gradient(120deg,#06202a,#00181f)',
-  'linear-gradient(120deg,#0b1020,#12121e)',
-  'linear-gradient(180deg,#f9fbff,#f0f6ff)',
-  'linear-gradient(90deg,#1b1b2f,#0b0b0d)',
-  'linear-gradient(120deg,#021025,#04122b)',
-  'radial-gradient(circle at 70% 30%, rgba(200,180,120,0.03), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
-  'linear-gradient(180deg,#fffdf0,#fff6e8)',
-  'linear-gradient(90deg,#f3f7fa,#eef6f9)',
-  'linear-gradient(180deg,#101216,#0c0b0d)',
-  'radial-gradient(circle at 40% 10%, rgba(0,200,180,0.03), transparent), linear-gradient(180deg,#f4fbff,#eef9ff)',
-  'linear-gradient(90deg,#0b0b0d,#071026)',
-  'linear-gradient(120deg,#0d0f21,#071021)',
-  'linear-gradient(180deg,#fffdf8,#fff9f0)',
-  'radial-gradient(circle at 60% 70%, rgba(255,150,150,0.03), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
-  'linear-gradient(90deg,#f7f8fb,#f0f5ff)',
-  'linear-gradient(180deg,#0b0b0d,#14121a)'
-];
-
-const wallpapersEl = document.getElementById('wallpapers');
-wallpapers.forEach((w,i)=>{
-  const thumb = document.createElement('div'); thumb.className='wall-thumb';
-  thumb.style.background = (w==='none') ? '#111' : w;
-  thumb.title = (i===0)?'none':'Wallpaper '+i;
-  thumb.addEventListener('click', ()=> setWallpaper(w));
-  wallpapersEl.appendChild(thumb);
-});
-
-function removeWallpaper(){ document.body.style.background = settings.theme === 'light' ? 'linear-gradient(180deg,#f5f7fb,#eef6ff)' : 'linear-gradient(180deg,#070708,#0b0b0d)'; settings.wallpaper = null; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
-function useDefaultWallpaper(){ settings.wallpaper = null; applySettingsToUI(); localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
-function setWallpaper(w){ if(w==='none'){ removeWallpaper(); return; } document.body.style.background = w; settings.wallpaper = w; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
-
-function setAccent(c){ document.documentElement.style.setProperty('--accent', c); settings.accent = c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
-function setTitleColor(c){ document.documentElement.style.setProperty('--svc-title-color', c); settings.titleColor = c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
-
-function setTheme(mode){ settings.theme = mode; applySettingsToUI(); localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
-function applySettingsToUI(){
-  const s = settings;
-  document.documentElement.style.setProperty('--accent', s.accent || '#d4af37');
-  document.documentElement.style.setProperty('--svc-title-color', s.titleColor || '#ffffff');
-  if(s.wallpaper) document.body.style.background = s.wallpaper;
-  else document.body.style.background = (s.theme === 'light') ? 'linear-gradient(180deg,#f5f7fb,#eef6ff)' : 'linear-gradient(180deg,#070708,#0b0b0d)';
-  if(s.theme === 'light'){
-    document.documentElement.style.setProperty('--muted', '#5b6b78');
-    document.documentElement.style.setProperty('--text', '#111827');
-  } else {
-    document.documentElement.style.setProperty('--muted', '#9aa0a6');
-    document.documentElement.style.setProperty('--text', '#e8eef6');
-  }
-}
-
-/* ===========================
-   ADMIN login / logout
-   =========================== */
-function adminLogin(){
-  const pass = document.getElementById('adminPass').value.trim();
-  if(pass === ADMIN_PASSWORD){
-    isAdmin = true;
-    document.getElementById('adminToggleFooter').textContent = 'Admin: On';
-    document.getElementById('fsAdminUpload').style.display = 'block';
-    alert('Admin enabled. You can now upload samples in each service (open a service and use upload area in fullscreen).');
-  } else alert('Wrong admin password.');
-}
-function adminLogout(){ isAdmin = false; document.getElementById('adminToggleFooter').textContent = 'Admin: Off'; document.getElementById('fsAdminUpload').style.display = 'none'; alert('Admin logged out.'); }
-
-document.getElementById('adminToggleFooter').addEventListener('click', ()=>{
-  if(!isAdmin){
-    const p = prompt('Enter admin password:');
-    if(p === ADMIN_PASSWORD){ isAdmin = true; document.getElementById('adminToggleFooter').textContent = 'Admin: On'; document.getElementById('fsAdminUpload').style.display = 'block'; alert('Admin ON'); }
-    else alert('Wrong password');
-  } else { adminLogout(); }
-});
-
-/* ===========================
-   ABOUT content & translate
-   =========================== */
-const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali. With years of practical experience in branding and visual communication, we deliver premium design solutions tailored for businesses and creators. Our services range from three-dimensional logo creation, wooden logo concepts, t-shirt designs, social media graphics, packaging layouts, marriage invitation cards, business card designs, to attention-grabbing YouTube thumbnails.
-
-Our process is collaborative and professional: we listen to your needs, present multiple concept samples, and refine designs with prompt revisions until the final artwork perfectly matches your brand's identity. We prioritize quality, clarity, and originality in every project, ensuring that each visual asset increases audience engagement and presents your brand with authenticity.
-
-Clients who work with AlTa Designs experience:
-- Fast and clear communication
-- Multiple concept samples for each order
-- Smooth revision rounds and delivery in preferred formats (PNG, JPG, PDF, source files)
-- Dedicated support through WhatsApp, Telegram, and Email
-
-We are proud to support Pakistan's creative economy by helping individuals and businesses present their best visual selves. With a strong focus on strategy and aesthetics, AlTa Designs aims to make Pakistani design talent known across the world. Trust, quality, and creativity form the pillars of our studio.
-
-(AlTa Designs — Professional Graphic Design Services, Pakistan)`;
-
-const aboutUrdu = `AlTa Designs ایک ممتاز گرافک ڈیزائن اسٹوڈیو ہے جس کی قیادت راؤ علی کر رہے ہیں۔ وسیع تجربے کے ساتھ، ہم برانڈنگ اور بصری مواصلات کے لیے پریمیم ڈیزائن حل فراہم کرتے ہیں۔ ہماری خدمات میں تھری ڈائمینشنل لوگو، ووڈن لوگو تصورات، ٹی شرٹ ڈیزائن، سوشل میڈیا گرافکس، پیکیجنگ لے آؤٹس، شادی کے دعوت نامے، بزنس کارڈ ڈیزائن اور دل کھینچنے والی یوٹیوب تھمب نیل شامل ہیں۔
-
-ہمارا عمل باہمی تعاون اور پیشہ ورانہ ہے: ہم آپ کی ضروریات سنتے ہیں، متعدد کانسپٹ نمونے پیش کرتے ہیں، اور تیزی سے نظر ثانی کے ساتھ ڈیزائن کو حتمی شکل دیتے ہیں جب تک کہ یہ آپ کے برانڈ کی شناخت سے بالکل مطابقت نہ رکھے۔ ہر پروجیکٹ میں معیار، وضاحت اور اصالت کو اہمیت دی جاتی ہے، تاکہ آپ کے بصری مواد کی تعامل بڑھے اور آپ کا برانڈ بہترین انداز میں ظاہر ہو۔
-
-AlTa Designs کے ساتھ کام کرنے والے کلائنٹس کو ملتا ہے:
-- تیز اور واضح مواصلت
-- ہر آرڈر کے لیے متعدد نمونہ کانسپٹس
-- آرام دہ ریویژن چکر اور حسبِ منشاء فارمیٹس میں ڈیلیوری (PNG, JPG, PDF, source files)
-- واٹس ایپ، ٹیلیگرام اور ای میل کے ذریعے دھیان دینے والی سپورٹ
-
-ہم پاکستان کی تخلیقی معیشت کی تائید پر فخر کرتے ہیں اور مقامی ٹیلنٹ کو عالمی سطح پر معروف کرنے کا عزم رکھتے ہیں۔`;
-
-document.getElementById('aboutContent').textContent = aboutEng;
-let aboutIsUrdu = false;
-document.getElementById('translateBtn').addEventListener('click', ()=>{
-  if(!aboutIsUrdu){ document.getElementById('aboutContent').textContent = aboutUrdu; document.getElementById('translateBtn').textContent = 'Translate to English'; aboutIsUrdu = true; }
-  else { document.getElementById('aboutContent').textContent = aboutEng; document.getElementById('translateBtn').textContent = 'Translate to Urdu'; aboutIsUrdu = false; }
-});
-
-/* ===========================
-   SEARCH + VOICE
-   =========================== */
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('input', ()=>performSearch(searchInput.value));
-function performSearch(q){
-  q = (q||'').toLowerCase().trim();
-  document.querySelectorAll('.service-card').forEach(card=>{
-    const svc = card.dataset.service.toLowerCase();
-    card.style.display = (!q || svc.includes(q)) ? 'flex' : 'none';
-  });
-}
-const voiceBtn = document.getElementById('voiceBtn');
-voiceBtn.addEventListener('click', ()=>{
-  if(!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)){ alert('Voice search not supported in this browser.'); return; }
-  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const r = new Rec();
-  r.lang = 'en-US'; r.interimResults = false; r.maxAlternatives = 1; r.start();
-  voiceBtn.textContent = '🎙️';
-  r.onresult = (e)=> { const text = e.results[0][0].transcript; searchInput.value = text; performSearch(text); };
-  r.onend = ()=> voiceBtn.textContent = '🎤'; r.onerror = ()=> voiceBtn.textContent = '🎤';
-});
-
-/* ===========================
-   SIDEBAR NAV
-   =========================== */
-document.querySelectorAll('nav.side-menu button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('nav.side-menu button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const target = btn.dataset.target;
-    showPage(target);
-  });
-});
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
-  const el = document.getElementById(id);
-  if(el) el.style.display = 'block';
-  // ensure home visible by default
-  if(id === 'home') document.querySelector('.main-wrap .footer').scrollIntoView({behavior:'smooth'});
-  closeFsModal();
-}
-
-/* ===========================
-   BUILD inspiration/projects lists
-   =========================== */
-function buildInspirationAndProjects(){
-  const insp = document.getElementById('inspirationGrid'); insp.innerHTML = '';
-  (samples['Inspiration'] || []).forEach(url=>{
-    const d = document.createElement('div'); d.className='fs-thumb'; d.style.height='120px'; d.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover">`; insp.appendChild(d);
-  });
-  const projGrid = document.getElementById('projectsGrid'); projGrid.innerHTML = '';
-  const proj = JSON.parse(localStorage.getItem('altag_projects') || '[]');
-  proj.forEach((p,i)=>{
-    const c = document.createElement('div'); c.className='service-card'; c.style.minHeight='130px';
-    c.innerHTML = `<h3>Project ${i+1}</h3><div style="margin-top:8px;color:var(--muted)">${p.name || 'Client project'}</div>`;
-    projGrid.appendChild(c);
-  });
-}
-
-/* ===========================
-   CONTACT HELPERS
-   =========================== */
-function openWhatsApp(){ window.open('https://wa.me/'+PHONE,'_blank'); }
-function openTelegram(){ window.open(TG_LINK,'_blank'); }
-function openMail(){ window.location.href = 'mailto:muhammadaliorangzaibrao@gmail.com'; }
-
-/* ===========================
-   INIT
-   =========================== */
-applySettingsToUI();
-buildServiceCards();
-buildInspirationAndProjects();
-
-/* ensure swatches reflect settings */
-document.documentElement.style.setProperty('--accent', settings.accent);
-document.documentElement.style.setProperty('--svc-title-color', settings.titleColor);
-
-/* click image thumb open new tab */
-fsGallery.addEventListener('click', e=>{
-  const img = e.target.closest('.fs-thumb')?.querySelector('img');
-  if(img) window.open(img.src, '_blank');
-});
-
-/* save settings on unload */
-window.addEventListener('beforeunload', ()=> localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)));
 </script>
+
 </body>
 </html>
