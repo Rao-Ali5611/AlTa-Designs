@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AlTa Designs — Final V2</title>
+<title>AlTa Designs — Final V3</title>
 <style>
   :root{
     --sidebar-width:220px;
@@ -74,7 +74,6 @@
   .svc-desc{font-size:13px;color:var(--muted)}
   .order-row{display:flex;gap:10px;margin-top:auto;align-items:center}
   .order-btn{padding:10px 12px;border-radius:10px;border:0;background:var(--accent);color:#070707;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,0.5)}
-  .view-samples{font-size:13px;color:var(--muted);text-decoration:none;cursor:pointer;padding-left:8px}
 
   /* Fullscreen modal for samples */
   .fs-modal{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.9));z-index:1500;padding:20px}
@@ -345,13 +344,6 @@
     </div>
   </div>
 
-  <template id="inlineOrderTpl">
-    <div class="inline-order" style="display:flex;gap:8px;margin-top:12px">
-      <button class="waBtn">WhatsApp</button>
-      <button class="tgBtn">Telegram</button>
-    </div>
-  </template>
-
 <script>
 /* ===========================
    CONFIG & DATA
@@ -419,14 +411,12 @@ function buildServiceCards(){
       <div style="height:8px"></div>
       <div class="order-row">
         <button class="order-btn">Order Now</button>
-        <a class="view-samples">View Samples</a>
       </div>
     `;
     servicesGrid.appendChild(card);
 
-    // events
+    // events: click title opens fullscreen modal; Order button also opens modal
     card.querySelector('.svc-title').addEventListener('click', ()=> openFsForService(svc));
-    card.querySelector('.view-samples').addEventListener('click', ()=> openFsForService(svc));
     card.querySelector('.order-btn').addEventListener('click', ()=> openFsForService(svc, true));
   });
 }
