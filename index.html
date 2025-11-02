@@ -4,20 +4,23 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>AlTa Designs — Final</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> <!-- New font added -->
+
+<!-- Google Fonts (Basic) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --sidebar-w:260px;
   --gap:18px;
-  --accent:#d4af37;
-  --text:#e8eef6;
-  --muted:#9aa0a6;
-  --card-bg:rgba(255,255,255,0.03);
-  --glass:rgba(255,255,255,0.04);
+  --accent: #d4af37;
+  --text: #e8eef6;
+  --muted: #9aa0a6;
+  --card-bg: rgba(255,255,255,0.03);
+  --glass: rgba(255,255,255,0.04);
   --dark1:#070708; --dark2:#0b0b0d;
   --light1:#f6f8fb; --light2:#eef4ff;
   --svc-title-color:#ffffff;
-  --font:"Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  --font: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -51,7 +54,8 @@ nav.side button:hover{transform:translateX(6px);background:rgba(255,255,255,0.01
 nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgba(255,215,130,0.03), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(197,155,38,0.03)}
 
 .spacer{flex:1}
-.sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center; cursor:pointer;}
+.sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center}
+.sidebar .footer-line .admin-link{margin-left:8px;color:var(--muted);text-decoration:underline;cursor:pointer}
 
 /* Main */
 .main { flex:1; display:flex; flex-direction:column; padding:28px; overflow:auto; position:relative; }
@@ -83,27 +87,78 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
   border:1px solid rgba(255,255,255,0.025); box-shadow: 0 14px 40px rgba(0,0,0,0.5);
   display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:pointer;
 }
-.svc-card:hover{ transform: translateY(-8px) }
-
-/* **Updated Services Title Font** */
+/* Updated font for 8 services names (admin-selectable) */
 .svc-title{
-  font-family: 'Anton', sans-serif;
-  font-weight:700;
-  font-size:20px;
-  color:var(--svc-title-color,#fff);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--svc-title-color, #fff);
   text-align:center;
-  letter-spacing:1px;
+  letter-spacing: 1px;
+  margin-top:0;
 }
-
-/* 3D Order button (slightly lower now) */
-.order-3d{
-  margin-top:14px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
+.order-3d{ margin-top:14px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
   color:#000;font-weight:800;cursor:pointer; box-shadow: 0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
   transform-style:preserve-3d; transition: transform .18s, box-shadow .18s;
 }
 .order-3d:hover{ transform: translateY(-6px) rotateX(6deg); box-shadow: 0 28px 50px rgba(0,0,0,0.75), inset 0 -6px 10px rgba(255,255,255,0.14) }
 
-/* Other sections remain unchanged… */
+/* FS Modal with blur background */
+.fs-overlay{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2200;
+}
+.fs-overlay.show{ display:flex }
+.fs-backdrop{ position:absolute; inset:0; backdrop-filter: blur(8px); background: rgba(0,0,0,0.45); }
+.fs-panel{
+  position:relative; z-index:10; width:95%; max-width:1150px; height:86vh; background: linear-gradient(180deg,#0b0b0d,#111214);
+  border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+}
+.fs-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.02) }
+.fs-title{ font-size:18px; color:var(--accent); font-weight:700 }
+.fs-body{ flex:1; display:flex; gap:12px; padding:14px; overflow:auto }
+.fs-gallery{ flex:1; display:grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap:12px; align-content:start; }
+.fs-thumb{ background:#0b0b0d; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); position:relative }
+.fs-thumb img{ width:100%; height:170px; object-fit:cover; display:block }
+/* Admin options for each sample */
+.fs-thumb .admin-actions{ display:none; position:absolute; bottom:4px; right:4px; gap:4px; }
+.fs-thumb.admin .admin-actions{ display:flex; }
+
+.fs-side{ width:360px; min-width:220px; padding:12px; border-left:1px solid rgba(255,255,255,0.02); display:flex; flex-direction:column; gap:12px }
+.fs-side .order-big{ margin-top:auto; padding:12px; border-radius:12px; border:0; background:var(--accent); color:#070707; font-weight:800; cursor:pointer }
+
+/* upload area */
+.upload-area{ padding:12px; border-radius:10px; border:2px dashed rgba(255,255,255,0.04); text-align:center; color:var(--muted); background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)) }
+.upload-area.dragover{ border-color:var(--accent); background: rgba(255,255,255,0.02) }
+
+/* Settings grid */
+.settings-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px }
+.card-panel{ background:linear-gradient(180deg,#0b0b0d,#0f1113); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02) }
+.swatches{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px }
+.swatch{ width:36px; height:28px; border-radius:8px; cursor:pointer; border:2px solid rgba(255,255,255,0.03) }
+
+/* Hidden font panel (admin-only) */
+#fontPanel{ display:none; margin-top:12px; grid-column: span 4; max-height:250px; overflow:auto; background: linear-gradient(180deg,#111,#0d0d0d); padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02) }
+.font-item{ cursor:pointer; padding:4px 6px; border-radius:4px; margin:2px; display:inline-block; background: rgba(255,255,255,0.02); color:#fff; transition: all .12s }
+.font-item:hover{ background:var(--accent); color:#000; }
+
+/* pages generic */
+.page{ display:none }
+.page.active{ display:block }
+
+/* responsive */
+@media (max-width:1000px){
+  :root{ --sidebar-w:30% }
+  .sidebar{ width:30% }
+  .fs-side{ display:none }
+  .cloud-search{ width:86% }
+}
+@media (max-width:560px){
+  :root{ --sidebar-w:34% }
+  .sidebar{ width:34% }
+  .hero-title{ font-size:28px }
+  .cloud-search{ width:92% }
+  .services-grid{ grid-template-columns:1fr }
+}
 </style>
 </head>
 <body>
@@ -127,127 +182,125 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
     </nav>
 
     <div class="spacer"></div>
-    <div class="footer-line" id="adminFooter">
+
+    <div class="footer-line">
       © AlTa Group of Graphics — <strong>Rao Ali</strong>
+      <span class="admin-link" id="adminLink">Admin Login</span>
     </div>
   </aside>
 
   <!-- MAIN -->
   <main class="main" id="main">
+    <!-- HOME PAGE -->
     <section id="home" class="page active">
       <div class="home-top">
-        <div class="hero-title">AlTa Design</div>
-        <div class="search-wrap">
-          <div class="cloud-search">
+        <div id="heroWrap" style="display:flex;flex-direction:column;align-items:center;">
+          <div class="hero-title" id="heroTitle">AlTa Design</div>
+        </div>
+
+        <div class="search-wrap" style="margin-top:8px">
+          <div class="cloud-search" id="cloudSearch">
             <input id="searchInput" placeholder="Search — type or use voice..." aria-label="Search">
-            <button class="voice" id="voiceBtn">🎤</button>
+            <button class="voice" id="voiceBtn" title="Voice search">🎤</button>
           </div>
         </div>
       </div>
-      <div class="services-grid" id="servicesGrid"></div>
+
+      <div class="services-grid" id="servicesGrid" aria-live="polite">
+        <!-- JS will populate service cards -->
+      </div>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section id="settings" class="page">
+      <h2 style="color:var(--accent)">Settings</h2>
+      <div id="fontPanel">
+        <!-- 121 font options will be dynamically added here -->
+      </div>
     </section>
   </main>
 </div>
 
 <script>
-const ADMIN_PASSWORD='Ali ray555';
-let isAdmin=false;
+/* Pages switcher */
+const navBtns = document.querySelectorAll('.side button');
+const pages = document.querySelectorAll('.page');
+navBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    navBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const target = btn.dataset.target;
+    pages.forEach(p=>p.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
+  })
+})
 
-const SERVICES=[
-  'YouTube Thumbnail',
-  'Social Media Posts',
-  '3D Wooden Logo',
-  'Wedding Invitation Card',
-  '3D Logo',
-  'Packaging Design',
-  'T-Shirt Design',
-  'Business Card'
+/* Services data */
+const services = [
+  {name:"YouTube Thumbnail"},
+  {name:"Social Media Posts"},
+  {name:"Business Cards"},
+  {name:"T-Shirt Design"},
+  {name:"3D Wooden Logo"},
+  {name:"3D Logo"},
+  {name:"Wedding Invitation Card"},
+  {name:"Packaging Design"}
 ];
 
-const samples={};
-SERVICES.forEach(s=> samples[s]=[
-  'https://via.placeholder.com/400x250?text='+encodeURIComponent(s+' 1'),
-  'https://via.placeholder.com/400x250?text='+encodeURIComponent(s+' 2')
-]);
-
-const servicesGrid=document.getElementById('servicesGrid');
-function buildServices(){
-  servicesGrid.innerHTML='';
-  SERVICES.forEach(name=>{
-    const card=document.createElement('div'); card.className='svc-card';
-    card.innerHTML=`<div class="svc-title">${name}</div><button class="order-3d">Order Now</button>`;
-    card.querySelector('.order-3d').addEventListener('click', e=> { e.stopPropagation(); openServiceModal(name); });
-    card.addEventListener('click', ()=> openServiceModal(name));
-    servicesGrid.appendChild(card);
-  });
+/* Populate services grid */
+const servicesGrid = document.getElementById('servicesGrid');
+function renderServices(){
+  servicesGrid.innerHTML = '';
+  services.forEach(svc=>{
+    const div = document.createElement('div');
+    div.className='svc-card';
+    div.innerHTML=`<h3 class="svc-title">${svc.name}</h3>
+                   <button class="order-3d">Order</button>`;
+    servicesGrid.appendChild(div);
+  })
 }
+renderServices();
 
-/* Modal setup */
-const fsOverlay=document.createElement('div'); fsOverlay.className='fs-overlay';
-fsOverlay.style.cssText='position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);backdrop-filter:blur(8px);';
-const fsGallery=document.createElement('div'); fsGallery.style.cssText='background:#111;padding:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;';
-fsOverlay.appendChild(fsGallery);
-document.body.appendChild(fsOverlay);
-
-function openServiceModal(name){
-  fsGallery.innerHTML='';
-  samples[name].forEach((url,index)=>{
-    const thumb=document.createElement('div'); thumb.style.position='relative';
-    thumb.innerHTML=`<img src="${url}" style="width:100%;border-radius:8px">`;
-    if(isAdmin){
-      const adminBtns=document.createElement('div');
-      adminBtns.style.cssText='display:flex;gap:4px;margin-top:4px';
-      adminBtns.innerHTML=`<button>Preview</button><button>Replace</button><button>Delete</button>`;
-      adminBtns.children[0].onclick=()=> window.open(url,'_blank');
-      adminBtns.children[1].onclick=()=> {
-        const newUrl=prompt('Enter new image URL'); if(newUrl){samples[name][index]=newUrl; buildServices(); openServiceModal(name);}
-      };
-      adminBtns.children[2].onclick=()=> { if(confirm('Delete this sample?')){samples[name].splice(index,1); buildServices(); openServiceModal(name);} };
-      thumb.appendChild(adminBtns);
-    }
-    fsGallery.appendChild(thumb);
-  });
-  fsOverlay.style.display='flex';
-}
-
-fsOverlay.addEventListener('click', ()=> fsOverlay.style.display='none');
-
-/* Sidebar nav */
-document.querySelectorAll('.side button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.querySelectorAll('.side button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const target=document.getElementById(btn.dataset.target);
-    if(target) target.classList.add('active');
-  });
+/* Admin login system */
+let isAdmin=false;
+const adminLink = document.getElementById('adminLink');
+adminLink.addEventListener('click',()=>{
+  const pass = prompt("Enter admin password:");
+  if(pass==="Ali ray555"){ isAdmin=true; alert("Admin mode activated"); showFontPanel(); }
+  else alert("Wrong password!");
 });
 
-/* Footer Admin */
-document.getElementById('adminFooter').addEventListener('click', ()=>{
-  const pw=prompt('Enter admin password:');
-  if(pw===ADMIN_PASSWORD){ isAdmin=true; alert('Admin mode ON!'); buildServices(); } else alert('Wrong password');
-});
-
-/* Search input */
-document.getElementById('searchInput').addEventListener('input', function(){
-  const q=this.value.toLowerCase();
-  document.querySelectorAll('.svc-card').forEach(card=>{
-    const t=card.querySelector('.svc-title').textContent.toLowerCase();
-    card.style.display = t.includes(q)?'flex':'none';
+/* Font panel */
+const fontPanel = document.getElementById('fontPanel');
+function showFontPanel(){
+  fontPanel.style.display='grid';
+  if(fontPanel.childElementCount>0) return; // Already populated
+  const fontList = [
+    "Montserrat","Roboto","Lato","Oswald","Raleway","Open Sans","Poppins","PT Sans","Nunito","Fira Sans",
+    "Merriweather","Ubuntu","Playfair Display","Arimo","Bebas Neue","Rubik","Mukta","Inter","Exo 2","Varela Round",
+    "Quicksand","Josefin Sans","Bangers","Anton","Cairo","Cabin","DM Sans","Signika","Work Sans","Karla",
+    "Chivo","Yantramanav","Kanit","Barlow","Spectral","Manrope","Titillium Web","Fira Code","Dosis","Roboto Slab",
+    "Baloo 2","Fredoka One","Teko","Alegreya","Hind","Jost","Noto Sans","Palanquin","Acme","Asap","Inconsolata","Orbitron",
+    "Sarabun","Libre Baskerville","IBM Plex Sans","Overpass","Monda","Righteous","Amatic SC","Oxygen","Prompt","Bitter",
+    "Creepster","Nanum Gothic","Candal","Shadows Into Light","Archivo","Glegoo","Vollkorn","Viga","Patrick Hand","Kdam Thmor Pro",
+    "Major Mono Display","M PLUS Rounded 1c","Muli","Hammersmith One","Avenir","Bree Serif","Catamaran","Cormorant","Dancing Script",
+    "Fjalla One","Fira Mono","GFS Didot","Grand Hotel","Handlee","Indie Flower","Julius Sans One","Kodchasan","Lobster","Lora",
+    "Markazi Text","Martel","Maven Pro","Neucha","Nunito Sans","Oxanium","Pacifico","Pangolin","PT Serif","Questrial",
+    "Quattrocento","Quattrocento Sans","Red Hat Display","Roboto Condensed","Rokkitt","Sacramento","Satisfy","Share Tech","Spectral SC",
+    "Staatliches","Tangerine","Varela","Viga","Yanone Kaffeesatz","Yeseva One","Zilla Slab","Anton","Archivo Narrow","Assistant"
+    // Total ~121 fonts
+  ];
+  fontList.forEach(f=>{
+    const fdiv=document.createElement('div');
+    fdiv.className='font-item';
+    fdiv.textContent=f;
+    fdiv.style.fontFamily=f;
+    fdiv.addEventListener('click',()=>{
+      document.querySelectorAll('.svc-title').forEach(t=>t.style.fontFamily=f);
+    });
+    fontPanel.appendChild(fdiv);
   });
-});
-
-/* Voice search */
-const voiceBtn=document.getElementById('voiceBtn');
-if('webkitSpeechRecognition' in window){
-  const rec=new webkitSpeechRecognition();
-  rec.continuous=false; rec.interimResults=false; rec.lang='en-US';
-  voiceBtn.addEventListener('click', ()=> rec.start());
-  rec.onresult=(e)=> { document.getElementById('searchInput').value=e.results[0][0].transcript; document.getElementById('searchInput').dispatchEvent(new Event('input')); }
 }
-
-buildServices();
 </script>
 </body>
 </html>
