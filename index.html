@@ -3,23 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AlTa Designs — Final</title>
+<title>AlTa Designs — Final V2</title>
 <style>
   :root{
-    --bg-dark: #070708;
-    --bg-panel: #0f1113;
-    --muted: #9aa0a6;
-    --accent: #d4af37;
-    --card: #121316;
-    --text: #e8eef6;
-    --sidebar-width: 220px;
-    --gap: 20px;
-    --svc-title-color: #ffffff;
+    --sidebar-width:220px;
+    --gap:20px;
+    --accent:#d4af37;
+    --svc-title-color:#ffffff;
+    --muted:#9aa0a6;
+    --bg-start:#070708;
+    --bg-end:#0b0b0d;
+    --card-bg: rgba(255,255,255,0.02);
+    --glass: rgba(255,255,255,0.03);
+    --text:#e8eef6;
   }
   *{box-sizing:border-box}
   body{
-    margin:0;font-family:Inter, "Poppins", system-ui, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg,#070708,#0b0b0d);
+    margin:0;font-family:Inter, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    background: linear-gradient(180deg,var(--bg-start),var(--bg-end));
     color:var(--text);
     min-height:100vh;display:flex;gap:var(--gap);
     -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
@@ -49,10 +50,19 @@
   .home-header{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:12px}
   .site-title{font-size:44px;font-weight:800;color:var(--accent);letter-spacing:0.6px;text-shadow:0 6px 30px rgba(0,0,0,0.6)}
   .site-tag{font-size:13px;color:var(--muted)}
+
+  /* CLOUDY SHORT SEARCH (approx 50-55% width) */
   .search-wrap{width:100%;display:flex;justify-content:center}
-  .search-bar{width:min(980px,94%);display:flex;align-items:center;border-radius:14px;padding:14px 16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02);box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:translateY(-6px)}
-  .search-bar input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-size:16px;padding-right:8px}
-  .voice-btn{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:18px;padding:8px;border-radius:10px}
+  .search-bar{
+    width:min(680px,55%);
+    display:flex;align-items:center;border-radius:999px;padding:12px 14px;
+    background:var(--glass);backdrop-filter: blur(8px);
+    border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 22px rgba(0,0,0,0.6);
+    transition: transform .18s;
+  }
+  .search-bar:active,.search-bar:focus-within{transform: translateY(-4px)}
+  .search-bar input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-size:15px;padding:6px 8px;text-align:left}
+  .voice-btn{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:18px;padding:6px;border-radius:10px}
 
   /* SERVICES */
   .services-grid{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
@@ -66,8 +76,8 @@
   .order-btn{padding:10px 12px;border-radius:10px;border:0;background:var(--accent);color:#070707;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,0.5)}
   .view-samples{font-size:13px;color:var(--muted);text-decoration:none;cursor:pointer;padding-left:8px}
 
-  /* Fullscreen modal for samples (new requirement) */
-  .fs-modal{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:linear-gradient(180deg, rgba(0,0,0,0.75), rgba(0,0,0,0.85));z-index:1500;padding:20px}
+  /* Fullscreen modal for samples */
+  .fs-modal{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.9));z-index:1500;padding:20px}
   .fs-panel{width:100%;max-width:1200px;height:90vh;background:linear-gradient(180deg,#0b0b0d,#111214);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
   .fs-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.02)}
   .fs-title{font-size:18px;color:var(--accent);font-weight:700}
@@ -81,7 +91,6 @@
   .fs-side .order-small{display:flex;gap:8px;flex-wrap:wrap}
   .fs-side .order-small button{padding:8px;border-radius:8px;border:0;background:linear-gradient(180deg,var(--accent), #ffd36f);cursor:pointer;color:#000;font-weight:700}
 
-  /* admin upload small inside modal */
   .fs-upload{padding:10px;border-radius:8px;border:1px dashed rgba(255,255,255,0.03);background:transparent;color:var(--muted);text-align:center}
   .fs-upload input{display:none}
 
@@ -93,14 +102,13 @@
   .wallpapers{display:flex;gap:8px;flex-wrap:wrap}
   .wall-thumb{width:80px;height:52px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
 
-  /* CONTACT, CHAT, ABOUT */
+  /* pages */
   .page-inner{max-width:980px;padding:12px}
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .contact-card{background:linear-gradient(180deg,#0b0b0d,#101113);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
   .about-text{white-space:pre-wrap;line-height:1.6;color:var(--muted);margin-top:8px}
 
   .translate-btn{margin-top:12px;padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#070707;cursor:pointer}
-
   .footer{margin-top:16px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.02);padding-top:12px;text-align:center}
 
   @media (max-width:1000px){
@@ -111,7 +119,7 @@
     .main-wrap{margin-left:calc(var(--sidebar-width) + 12px);padding:16px}
     .settings-grid{grid-template-columns:repeat(2,1fr)}
     .site-title{font-size:28px}
-    .search-bar{width:100%}
+    .search-bar{width:70%}
   }
   @media (max-width:560px){
     .sidebar{position:static;width:100%;min-width:100%;display:flex;flex-direction:row;align-items:center;gap:8px;padding:8px 10px}
@@ -178,50 +186,50 @@
     <section id="settings" class="page">
       <h2 style="color:var(--accent)">Settings</h2>
       <div class="settings-grid" style="margin-top:12px">
-        <!-- Column 1: Theme -->
+        <!-- Theme -->
         <div class="card-panel">
           <h4 style="margin:0;color:var(--muted)">Theme</h4>
-          <p style="color:var(--muted);margin-top:8px;font-size:13px">Select Light or Dark mode. Site will adapt automatically.</p>
+          <p style="color:var(--muted);margin-top:8px;font-size:13px">Select Light or Dark mode. Site adapts automatically.</p>
           <div style="display:flex;gap:8px;margin-top:8px">
             <button onclick="setTheme('dark')">Dark</button>
             <button onclick="setTheme('light')">Light</button>
           </div>
         </div>
 
-        <!-- Column 2: Wallpapers -->
+        <!-- Wallpapers (33) -->
         <div class="card-panel">
-          <h4 style="margin:0;color:var(--muted)">Wallpaper / Background</h4>
-          <div class="wallpapers" id="wallpapers" style="margin-top:10px"></div>
+          <h4 style="margin:0;color:var(--muted)">Wallpapers (33)</h4>
+          <div class="wallpapers" id="wallpapers" style="margin-top:10px;max-height:240px;overflow:auto"></div>
           <div style="display:flex;gap:8px;margin-top:10px">
             <button onclick="removeWallpaper()">Remove Wallpaper</button>
             <button onclick="useDefaultWallpaper()">Use Default</button>
           </div>
         </div>
 
-        <!-- Column 3: Accent Colors -->
+        <!-- Accent Colors -->
         <div class="card-panel">
           <h4 style="margin:0;color:var(--muted)">Accent Colors</h4>
           <div class="swatches" id="swatches"></div>
           <div style="font-size:12px;color:var(--muted);margin-top:8px">Click a color to apply as accent.</div>
         </div>
 
-        <!-- Column 4: Service Title Colors -->
+        <!-- Service Title Colors -->
         <div class="card-panel">
           <h4 style="margin:0;color:var(--muted)">Service Title Colors</h4>
           <div class="swatches" id="titleSwatches"></div>
           <div style="font-size:12px;color:var(--muted);margin-top:8px">Click to change service titles color.</div>
         </div>
 
-        <!-- Admin card -->
+        <!-- Admin -->
         <div class="card-panel" style="grid-column:1 / -1; margin-top:8px;">
           <h4 style="margin:0;color:var(--muted)">Admin</h4>
-          <p style="color:var(--muted);font-size:13px;margin-top:6px">Admin mode allows uploading samples (stored locally in your browser). Only you should use Admin mode.</p>
+          <p style="color:var(--muted);font-size:13px;margin-top:6px">Admin mode allows uploading samples (stored locally). Only you should use Admin mode.</p>
           <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
             <input id="adminPass" placeholder="enter admin password" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
             <button onclick="adminLogin()">Admin Login</button>
             <button onclick="adminLogout()">Admin Logout</button>
           </div>
-          <div style="font-size:12px;color:var(--muted);margin-top:8px">Default admin password has been set as requested. (You can change inside code later)</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px">Admin password is set as you requested.</div>
         </div>
       </div>
     </section>
@@ -337,7 +345,6 @@
     </div>
   </div>
 
-  <!-- inline template (not visible) -->
   <template id="inlineOrderTpl">
     <div class="inline-order" style="display:flex;gap:8px;margin-top:12px">
       <button class="waBtn">WhatsApp</button>
@@ -349,12 +356,12 @@
 /* ===========================
    CONFIG & DATA
    =========================== */
-const PHONE = '923032792947'; // without + for wa.me
+const PHONE = '923032792947';
 const TG_LINK = 'https://t.me/+923032792947';
-const ADMIN_PASSWORD = 'Ali ray555'; // <- set as requested
-const LS_SAMPLES = 'altag_samples_v2';
-const LS_PROJECTS = 'altag_projects_v2';
-const LS_SETTINGS = 'altag_settings_v2';
+const ADMIN_PASSWORD = 'Ali ray555';
+const LS_SAMPLES = 'altag_samples_v3';
+const LS_PROJECTS = 'altag_projects_v3';
+const LS_SETTINGS = 'altag_settings_v3';
 
 const SERVICES = [
   '3D Logo',
@@ -367,37 +374,34 @@ const SERVICES = [
   'YouTube Thumbnails'
 ];
 
-/* default placeholders if none in storage */
+/* load or create defaults */
 let samples = JSON.parse(localStorage.getItem(LS_SAMPLES) || 'null');
 if(!samples){
   samples = {};
   SERVICES.forEach(s => samples[s] = [
-    'https://via.placeholder.com/900x560?text='+encodeURIComponent(s+' Sample 1'),
-    'https://via.placeholder.com/900x560?text='+encodeURIComponent(s+' Sample 2'),
-    'https://via.placeholder.com/900x560?text='+encodeURIComponent(s+' Sample 3')
+    'https://via.placeholder.com/1200x800?text='+encodeURIComponent(s+' Sample 1'),
+    'https://via.placeholder.com/1200x800?text='+encodeURIComponent(s+' Sample 2'),
+    'https://via.placeholder.com/1200x800?text='+encodeURIComponent(s+' Sample 3')
   ]);
   samples['Inspiration'] = [
-    'https://via.placeholder.com/900x560?text=Inspiration+1',
-    'https://via.placeholder.com/900x560?text=Inspiration+2'
+    'https://via.placeholder.com/1200x800?text=Inspiration+1',
+    'https://via.placeholder.com/1200x800?text=Inspiration+2'
   ];
   localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
 }
 
-/* default settings */
+/* settings */
 let settings = JSON.parse(localStorage.getItem(LS_SETTINGS) || 'null');
 if(!settings){
   settings = { theme:'dark', accent: '#d4af37', titleColor:'#ffffff', wallpaper: null };
   localStorage.setItem(LS_SETTINGS, JSON.stringify(settings));
 }
-
-/* admin state */
 let isAdmin = false;
 
 /* ===========================
-   UI BUILD
+   Build UI: services
    =========================== */
 const servicesGrid = document.getElementById('servicesGrid');
-
 function buildServiceCards(){
   servicesGrid.innerHTML = '';
   SERVICES.forEach(svc=>{
@@ -409,7 +413,7 @@ function buildServiceCards(){
         <div class="mark">${svc.split(' ').map(x=>x[0]).slice(0,2).join('')}</div>
         <div style="flex:1">
           <h3 class="svc-title" data-service="${svc}">${svc}</h3>
-          <div class="svc-desc">${svc} services — high quality samples & mockups</div>
+          <div class="svc-desc">${svc} services — premium samples & mockups</div>
         </div>
       </div>
       <div style="height:8px"></div>
@@ -420,7 +424,7 @@ function buildServiceCards(){
     `;
     servicesGrid.appendChild(card);
 
-    // Events
+    // events
     card.querySelector('.svc-title').addEventListener('click', ()=> openFsForService(svc));
     card.querySelector('.view-samples').addEventListener('click', ()=> openFsForService(svc));
     card.querySelector('.order-btn').addEventListener('click', ()=> openFsForService(svc, true));
@@ -428,12 +432,11 @@ function buildServiceCards(){
 }
 
 /* ===========================
-   Fullscreen modal (samples + order)
+   Fullscreen modal logic
    =========================== */
 const fsModal = document.getElementById('fsModal');
 const fsTitle = document.getElementById('fsTitle');
 const fsGallery = document.getElementById('fsGallery');
-const fsSide = document.querySelector('.fs-side');
 const fsAdminUpload = document.getElementById('fsAdminUpload');
 const fsFileInput = document.getElementById('fsFileInput');
 let currentService = null;
@@ -453,27 +456,15 @@ function openFsForService(service, openForOrder=false){
     });
   }
 
-  // admin upload visibility
   fsAdminUpload.style.display = isAdmin ? 'block' : 'none';
-
-  // open modal
   fsModal.style.display = 'flex';
   fsModal.setAttribute('aria-hidden','false');
-
-  // if openForOrder, scroll side order into view
-  if(openForOrder){
-    // nothing specific, user sees order buttons on side
-  }
 }
 
-/* close modal */
-function closeFsModal(){
-  fsModal.style.display = 'none';
-  fsModal.setAttribute('aria-hidden','true');
-  currentService = null;
-}
+/* close */
+function closeFsModal(){ fsModal.style.display = 'none'; fsModal.setAttribute('aria-hidden','true'); currentService = null; }
 
-/* modal order buttons */
+/* order buttons */
 document.getElementById('fsOrderWhats').addEventListener('click', ()=> {
   if(!currentService) return;
   window.open('https://wa.me/'+PHONE + '?text=' + encodeURIComponent('I want to order: ' + currentService), '_blank');
@@ -483,31 +474,31 @@ document.getElementById('fsOrderTele').addEventListener('click', ()=> {
   window.open(TG_LINK, '_blank');
 });
 document.getElementById('fsOrderBig').addEventListener('click', ()=> {
-  // show choices similarly
+  if(!currentService) return;
   const r = confirm('Order on WhatsApp (OK) or Telegram (Cancel)?');
   if(r) window.open('https://wa.me/'+PHONE + '?text=' + encodeURIComponent('I want to order: ' + currentService), '_blank');
   else window.open(TG_LINK, '_blank');
 });
 
-/* admin upload inside modal */
+/* admin upload from file input */
 fsFileInput.addEventListener('change', ()=> {
   const files = Array.from(fsFileInput.files || []);
-  if(files.length) handleFilesUpload(files, currentService, true);
+  if(files.length) handleFilesUpload(files, currentService);
   fsFileInput.value = '';
 });
 
-/* support drag-and-drop into fs-gallery for admin */
+/* drag-drop to gallery for admin */
 fsGallery.addEventListener('dragover', e=> { e.preventDefault(); fsGallery.style.outline = '2px dashed rgba(255,255,255,0.06)';});
 fsGallery.addEventListener('dragleave', e=> { fsGallery.style.outline = 'none';});
 fsGallery.addEventListener('drop', e=> {
   e.preventDefault(); fsGallery.style.outline = 'none';
   if(!isAdmin){ alert('Admin only upload.'); return; }
   const files = Array.from(e.dataTransfer.files || []);
-  handleFilesUpload(files, currentService, true);
+  handleFilesUpload(files, currentService);
 });
 
-/* file upload -> convert to base64 dataURL and store in samples */
-function handleFilesUpload(files, svc, showAlert=true){
+/* convert files to dataURL and store */
+function handleFilesUpload(files, svc){
   const imgs = files.filter(f => f.type && f.type.startsWith('image/'));
   if(imgs.length === 0){ alert('Please upload images only.'); return; }
   let done = 0;
@@ -519,22 +510,21 @@ function handleFilesUpload(files, svc, showAlert=true){
       localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
       done++;
       if(done === imgs.length){
-        // re-render gallery if modal open on same service
         if(currentService === svc) openFsForService(svc);
         buildInspirationAndProjects();
-        if(showAlert) alert('Uploaded to "'+svc+'" samples.');
+        alert('Uploaded to "'+svc+'" samples.');
       }
     };
     reader.readAsDataURL(file);
   });
 }
 
-/* Close modal on Esc or click outside */
+/* close modal on esc or click outside */
 document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeFsModal(); });
 fsModal.addEventListener('click', (e)=> { if(e.target === fsModal) closeFsModal(); });
 
 /* ===========================
-   Settings: colors & wallpapers
+   Settings: colors & wallpapers (33)
    =========================== */
 const ACCENT_COLORS = [
   '#d4af37','#c59b26','#9b59b6','#e07b7b','#2ecc71','#e67e22',
@@ -550,7 +540,6 @@ ACCENT_COLORS.forEach(c=>{
   swatchesEl.appendChild(s);
 });
 
-/* title color swatches */
 const titleSwatches = document.getElementById('titleSwatches');
 const TITLE_COLS = ['#ffffff','#ff0077','#00ffcc','#ffea00','#f5f5f5','#ffd6a5','#00e0ff'];
 TITLE_COLS.forEach(c=>{
@@ -559,19 +548,41 @@ TITLE_COLS.forEach(c=>{
   titleSwatches.appendChild(s);
 });
 
-/* wallpapers (mix dark + light) */
+/* 33 wallpapers - mix of light & dark gradients */
 const wallpapers = [
   'none',
+  'linear-gradient(180deg,#fffdf8,#fff6e6)',
+  'linear-gradient(180deg,#f6f7fa,#eef2f6)',
+  'linear-gradient(120deg,#fffbf0,#fff8ea)',
   'radial-gradient(circle at 10% 10%, rgba(255,240,200,0.08), transparent), linear-gradient(180deg,#f6f7fa,#eef2f6)',
+  'linear-gradient(180deg,#070708,#0b0b0d)',
   'radial-gradient(circle at 90% 10%, rgba(155,89,182,0.06), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
   'radial-gradient(circle at 50% 20%, rgba(0,180,170,0.05), transparent), linear-gradient(180deg,#f8fbff,#eef7f8)',
-  'linear-gradient(120deg,#fffbf0,#fff8ea)',
-  'linear-gradient(120deg,#0b0b0d,#0a1020 50%)',
+  'linear-gradient(120deg,#0b0b0d,#0a1020 60%)',
+  'linear-gradient(90deg,#0b0b0d,#1a0b1a)',
   'radial-gradient(circle at 30% 70%, rgba(244,214,115,0.03), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
   'linear-gradient(90deg,#f5f7fb,#f0f5ff)',
   'radial-gradient(circle at 40% 40%, rgba(255,105,180,0.03), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
   'repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 6px), linear-gradient(180deg,#070708,#0b0b0d)',
-  'linear-gradient(180deg,#fffdf8,#fff6e6)'
+  'linear-gradient(180deg,#fff9f0,#fff2e6)',
+  'linear-gradient(180deg,#0b1320,#071021)',
+  'radial-gradient(circle at 20% 20%, rgba(255,200,150,0.04), transparent), linear-gradient(180deg,#f7fbff,#eef8ff)',
+  'linear-gradient(120deg,#06202a,#00181f)',
+  'linear-gradient(120deg,#0b1020,#12121e)',
+  'linear-gradient(180deg,#f9fbff,#f0f6ff)',
+  'linear-gradient(90deg,#1b1b2f,#0b0b0d)',
+  'linear-gradient(120deg,#021025,#04122b)',
+  'radial-gradient(circle at 70% 30%, rgba(200,180,120,0.03), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
+  'linear-gradient(180deg,#fffdf0,#fff6e8)',
+  'linear-gradient(90deg,#f3f7fa,#eef6f9)',
+  'linear-gradient(180deg,#101216,#0c0b0d)',
+  'radial-gradient(circle at 40% 10%, rgba(0,200,180,0.03), transparent), linear-gradient(180deg,#f4fbff,#eef9ff)',
+  'linear-gradient(90deg,#0b0b0d,#071026)',
+  'linear-gradient(120deg,#0d0f21,#071021)',
+  'linear-gradient(180deg,#fffdf8,#fff9f0)',
+  'radial-gradient(circle at 60% 70%, rgba(255,150,150,0.03), transparent), linear-gradient(180deg,#070708,#0b0b0d)',
+  'linear-gradient(90deg,#f7f8fb,#f0f5ff)',
+  'linear-gradient(180deg,#0b0b0d,#14121a)'
 ];
 
 const wallpapersEl = document.getElementById('wallpapers');
@@ -583,17 +594,14 @@ wallpapers.forEach((w,i)=>{
   wallpapersEl.appendChild(thumb);
 });
 
-function removeWallpaper(){ document.body.style.background = settings.theme === 'light' ? '#f5f7fb' : 'linear-gradient(180deg,#070708,#0b0b0d)'; settings.wallpaper = null; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
+function removeWallpaper(){ document.body.style.background = settings.theme === 'light' ? 'linear-gradient(180deg,#f5f7fb,#eef6ff)' : 'linear-gradient(180deg,#070708,#0b0b0d)'; settings.wallpaper = null; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
 function useDefaultWallpaper(){ settings.wallpaper = null; applySettingsToUI(); localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
 function setWallpaper(w){ if(w==='none'){ removeWallpaper(); return; } document.body.style.background = w; settings.wallpaper = w; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
 
 function setAccent(c){ document.documentElement.style.setProperty('--accent', c); settings.accent = c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
 function setTitleColor(c){ document.documentElement.style.setProperty('--svc-title-color', c); settings.titleColor = c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
 
-/* theme */
-function setTheme(mode){
-  settings.theme = mode; applySettingsToUI(); localStorage.setItem(LS_SETTINGS, JSON.stringify(settings));
-}
+function setTheme(mode){ settings.theme = mode; applySettingsToUI(); localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); }
 function applySettingsToUI(){
   const s = settings;
   document.documentElement.style.setProperty('--accent', s.accent || '#d4af37');
@@ -601,20 +609,16 @@ function applySettingsToUI(){
   if(s.wallpaper) document.body.style.background = s.wallpaper;
   else document.body.style.background = (s.theme === 'light') ? 'linear-gradient(180deg,#f5f7fb,#eef6ff)' : 'linear-gradient(180deg,#070708,#0b0b0d)';
   if(s.theme === 'light'){
-    document.documentElement.style.setProperty('--bg-dark', '#f5f7fb');
-    document.documentElement.style.setProperty('--bg-panel', '#ffffff');
     document.documentElement.style.setProperty('--muted', '#5b6b78');
     document.documentElement.style.setProperty('--text', '#111827');
   } else {
-    document.documentElement.style.setProperty('--bg-dark', '#070708');
-    document.documentElement.style.setProperty('--bg-panel', '#0f1113');
     document.documentElement.style.setProperty('--muted', '#9aa0a6');
     document.documentElement.style.setProperty('--text', '#e8eef6');
   }
 }
 
 /* ===========================
-   ADMIN Login / Logout
+   Admin login / logout
    =========================== */
 function adminLogin(){
   const pass = document.getElementById('adminPass').value.trim();
@@ -626,7 +630,6 @@ function adminLogin(){
 }
 function adminLogout(){ isAdmin = false; document.getElementById('adminToggleFooter').textContent = 'Admin: Off'; alert('Admin logged out.'); }
 
-/* also footer admin button toggle prompt */
 document.getElementById('adminToggleFooter').addEventListener('click', ()=>{
   if(!isAdmin){
     const p = prompt('Enter admin password:');
@@ -636,7 +639,44 @@ document.getElementById('adminToggleFooter').addEventListener('click', ()=>{
 });
 
 /* ===========================
-   Build other UI parts
+   About text (English + Urdu)
+   =========================== */
+const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali. With years of practical experience in branding and visual communication, we deliver premium design solutions tailored for businesses and creators. Our services range from three-dimensional logo creation, wooden logo concepts, t-shirt designs, social media graphics, packaging layouts, marriage invitation cards, business card designs, to attention-grabbing YouTube thumbnails.
+
+Our process is collaborative and professional: we listen to your needs, present multiple concept samples, and refine designs with prompt revisions until the final artwork perfectly matches your brand's identity. We prioritize quality, clarity, and originality in every project, ensuring that each visual asset increases audience engagement and presents your brand with authenticity.
+
+Clients who work with AlTa Designs experience:
+- Fast and clear communication
+- Multiple concept samples for each order
+- Smooth revision rounds and delivery in preferred formats (PNG, JPG, PDF, source files)
+- Dedicated support through WhatsApp, Telegram, and Email
+
+We are proud to support Pakistan's creative economy by helping individuals and businesses present their best visual selves. With a strong focus on strategy and aesthetics, AlTa Designs aims to make Pakistani design talent known across the world. Trust, quality, and creativity form the pillars of our studio.
+
+(AlTa Designs — Professional Graphic Design Services, Pakistan)`;
+
+const aboutUrdu = `AlTa Designs ایک ممتاز گرافک ڈیزائن اسٹوڈیو ہے جس کی قیادت راؤ علی کر رہے ہیں۔ وسیع تجربے کے ساتھ، ہم برانڈنگ اور بصری مواصلات کے لیے پریمیم ڈیزائن حل فراہم کرتے ہیں۔ ہماری خدمات میں تھری ڈائمینشنل لوگو، ووڈن لوگو تصورات، ٹی شرٹ ڈیزائن، سوشل میڈیا گرافکس، پیکیجنگ لے آؤٹس، شادی کے دعوت نامے، بزنس کارڈ ڈیزائن اور دل کھینچنے والی یوٹیوب تھمب نیل شامل ہیں۔
+
+ہمارا عمل باہمی تعاون اور پیشہ ورانہ ہے: ہم آپ کی ضروریات سنتے ہیں، متعدد کانسپٹ نمونے پیش کرتے ہیں، اور تیزی سے نظر ثانی کے ساتھ ڈیزائن کو حتمی شکل دیتے ہیں جب تک کہ یہ آپ کے برانڈ کی شناخت سے بالکل مطابقت نہ رکھے۔ ہر پروجیکٹ میں معیار، وضاحت اور اصالت کو اہمیت دی جاتی ہے، تاکہ آپ کے بصری مواد کی تعامل بڑھے اور آپ کا برانڈ بہترین انداز میں ظاہر ہو۔
+
+AlTa Designs کے ساتھ کام کرنے والے کلائنٹس کو ملتا ہے:
+- تیز اور واضح مواصلت
+- ہر آرڈر کے لیے متعدد نمونہ کانسپٹس
+- آرام دہ ریویژن چکر اور حسبِ منشاء فارمیٹس میں ڈیلیوری (PNG, JPG, PDF, source files)
+- واٹس ایپ، ٹیلیگرام اور ای میل کے ذریعے دھیان دینے والی سپورٹ
+
+ہم پاکستان کی تخلیقی معیشت کی تائید پر فخر کرتے ہیں اور مقامی ٹیلنٹ کو عالمی سطح پر معروف کرنے کا عزم رکھتے ہیں۔`;
+
+/* populate about */
+document.getElementById('aboutContent').textContent = aboutEng;
+let aboutIsUrdu = false;
+document.getElementById('translateBtn').addEventListener('click', ()=>{
+  if(!aboutIsUrdu){ document.getElementById('aboutContent').textContent = aboutUrdu; document.getElementById('translateBtn').textContent = 'Translate to English'; aboutIsUrdu = true; }
+  else { document.getElementById('aboutContent').textContent = aboutEng; document.getElementById('translateBtn').textContent = 'Translate to Urdu'; aboutIsUrdu = false; }
+});
+
+/* ===========================
+   Helpers: search & voice
    =========================== */
 function buildInspirationAndProjects(){
   const insp = document.getElementById('inspirationGrid'); insp.innerHTML = '';
@@ -664,7 +704,7 @@ function performSearch(q){
   });
 }
 
-/* Voice search */
+/* Voice */
 const voiceBtn = document.getElementById('voiceBtn');
 voiceBtn.addEventListener('click', ()=>{
   if(!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)){ alert('Voice search not supported in this browser.'); return; }
@@ -676,7 +716,7 @@ voiceBtn.addEventListener('click', ()=>{
   r.onend = ()=> voiceBtn.textContent = '🎤'; r.onerror = ()=> voiceBtn.textContent = '🎤';
 });
 
-/* click sidebar to show page */
+/* sidebar buttons show pages */
 document.querySelectorAll('nav.side-menu button').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('nav.side-menu button').forEach(b=>b.classList.remove('active'));
@@ -688,66 +728,28 @@ document.querySelectorAll('nav.side-menu button').forEach(btn=>{
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  // close modal if open
   closeFsModal();
 }
 
-/* Contact quick open */
+/* contact helpers */
 function openWhatsApp(){ window.open('https://wa.me/'+PHONE,'_blank'); }
 function openTelegram(){ window.open(TG_LINK,'_blank'); }
 function openMail(){ window.location.href = 'mailto:muhammadaliorangzaibrao@gmail.com'; }
 
-/* ABOUT content & translate */
-const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali. With years of practical experience in branding and visual communication, we deliver premium design solutions tailored for businesses and creators. Our services range from three-dimensional logo creation, wooden logo concepts, t-shirt designs, social media graphics, packaging layouts, marriage invitation cards, business card designs, to attention-grabbing YouTube thumbnails.
-
-Our process is collaborative and professional: we listen to your needs, present multiple concept samples, and refine designs with prompt revisions until the final artwork perfectly matches your brand's identity. We prioritize quality, clarity, and originality in every project, ensuring that each visual asset increases audience engagement and presents your brand with authenticity.
-
-Clients who work with AlTa Designs experience:
-- Fast and clear communication
-- Multiple concept samples for each order
-- Smooth revision rounds and delivery in preferred formats (PNG, JPG, PDF, source files)
-- Dedicated support through WhatsApp, Telegram, and Email
-
-We are proud to support Pakistan's creative economy by helping individuals and businesses present their best visual selves. With a strong focus on strategy and aesthetics, AlTa Designs aims to make Pakistani design talent known across the world. Trust, quality, and creativity form the pillars of our studio.`;
-
-const aboutUrdu = `AlTa Designs ایک ممتاز گرافک ڈیزائن اسٹوڈیو ہے جس کی قیادت راؤ علی کر رہے ہیں۔ وسیع تجربے کے ساتھ، ہم برانڈنگ اور بصری مواصلات کے لیے پریمیم ڈیزائن حل فراہم کرتے ہیں۔ ہماری خدمات میں تھری ڈائمینشنل لوگو، ووڈن لوگو تصورات، ٹی شرٹ ڈیزائن، سوشل میڈیا گرافکس، پیکیجنگ لے آؤٹس، شادی کے دعوت نامے، بزنس کارڈ ڈیزائن اور دل کھینچنے والی یوٹیوب تھمب نیل شامل ہیں۔
-
-ہمارا عمل باہمی تعاون اور پیشہ ورانہ ہے: ہم آپ کی ضروریات سنتے ہیں، متعدد کانسپٹ نمونے پیش کرتے ہیں، اور تیزی سے نظر ثانی کے ساتھ ڈیزائن کو حتمی شکل دیتے ہیں جب تک کہ یہ آپ کے برانڈ کی شناخت سے بالکل مطابقت نہ رکھے۔ ہر پروجیکٹ میں معیار، وضاحت اور اصالت کو اہمیت دی جاتی ہے، تاکہ آپ کے بصری مواد کی متعاملت بڑھے اور آپ کا برانڈ بہترین انداز میں ظاہر ہو۔
-
-AlTa Designs کے ساتھ کام کرنے والے کلائنٹس کو ملتا ہے:
-- تیز اور واضح مواصلت
-- ہر آرڈر کے لیے متعدد نمونہ کانسپٹس
-- آرام دہ ریویژن چکر اور حسبِ منشاء فارمیٹس میں ڈیلیوری (PNG, JPG, PDF, source files)
-- واٹس ایپ، ٹیلیگرام اور ای میل کے ذریعے دھیان دینے والی سپورٹ
-
-ہم پاکستان کی تخلیقی معیشت کی تائید پر فخر کرتے ہیں اور مقامی ٹیلنٹ کو عالمی سطح پر معروف کرنے کا عزم رکھتے ہیں۔ اعتماد، معیار اور تخلیقیت ہمارے اسٹوڈیو کے ستون ہیں۔`;
-
-document.getElementById('aboutContent').textContent = aboutEng;
-let aboutIsUrdu = false;
-document.getElementById('translateBtn').addEventListener('click', ()=>{
-  if(!aboutIsUrdu){ document.getElementById('aboutContent').textContent = aboutUrdu; document.getElementById('translateBtn').textContent = 'Translate to English'; aboutIsUrdu = true; }
-  else { document.getElementById('aboutContent').textContent = aboutEng; document.getElementById('translateBtn').textContent = 'Translate to Urdu'; aboutIsUrdu = false; }
-});
-
-/* ===========================
-   Init and render
-   =========================== */
+/* build UI and init */
 applySettingsToUI();
 buildServiceCards();
 buildInspirationAndProjects();
 
-/* render swatches default apply */
+/* ensure swatches reflect settings */
 document.documentElement.style.setProperty('--accent', settings.accent);
 document.documentElement.style.setProperty('--svc-title-color', settings.titleColor);
 
-/* small helpful UX: clicking a sample thumb in modal opens image in new tab */
-fsGallery.addEventListener('click', e=>{
+/* click thumb open new tab */
+document.getElementById('fsGallery').addEventListener('click', e=>{
   const img = e.target.closest('.fs-thumb')?.querySelector('img');
   if(img) window.open(img.src, '_blank');
 });
-
-/* keyboard esc closes modal */
-document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') { closeFsModal(); } });
 
 /* save settings on unload */
 window.addEventListener('beforeunload', ()=> localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)));
