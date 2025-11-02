@@ -247,4 +247,67 @@ function buildServices(){
 }
 
 const fsOverlay=document.getElementById('fsOverlay');
-const fsTitle=document.getElementById('fs
+const fsTitle=document.getElementById('fsTitle');
+const fsGallery=document.getElementById('fsGallery');
+const fsClose=document.getElementById('fsClose');
+
+function openServiceModal(name){
+  fsTitle.innerText=name;
+  fsGallery.innerHTML='';
+  samples[name].forEach((url,index)=>{
+    const thumb=document.createElement('div'); thumb.className='fs-thumb';
+    thumb.innerHTML=`<img src="${url}" alt="${name} Sample ${index+1}">`;
+    if(isAdmin){
+      const adminBtns=document.createElement('div'); adminBtns.className='admin-btns';
+      adminBtns.innerHTML=`
+        <button class="preview">Preview</button>
+        <button class="replace">Replace</button>
+        <button class="delete">Delete</button>`;
+      adminBtns.querySelector('.preview').addEventListener('click', ()=> window.open(url,'_blank'));
+      adminBtns.querySelector('.replace').addEventListener('click', ()=> {
+        const newUrl=prompt('Enter new image URL:'); if(newUrl){samples[name][index]=newUrl; buildServices(); openServiceModal(name);}
+      });
+      adminBtns.querySelector('.delete').addEventListener('click', ()=> { if(confirm('Delete this sample?')){samples[name].splice(index,1); buildServices(); openServiceModal(name);} });
+      thumb.appendChild(adminBtns);
+    }
+    fsGallery.appendChild(thumb);
+  });
+  fsOverlay.classList.add('show');
+}
+fsClose.addEventListener('click', ()=> fsOverlay.classList.remove('show'));
+
+/* Sidebar nav */
+document.querySelectorAll('.side button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.side button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const target=document.getElementById(btn.dataset.target);
+    if(target) target.classList.add('active');
+  });
+});
+
+/* Footer Admin */
+document.getElementById('adminFooter').addEventListener('click', ()=>{
+  const pw=prompt('Enter admin password:');
+  if(pw===ADMIN_PASSWORD){
+    isAdmin=true; alert('Admin mode ON! You can now edit samples.');
+    buildServices();
+  } else alert('Wrong password');
+});
+
+buildServices();
+
+/* Voice search */
+const searchInput=document.getElementById('searchInput');
+const voiceBtn=document.getElementById('voiceBtn');
+if('webkitSpeechRecognition' in window){
+  const recognition=new webkitSpeechRecognition();
+  recognition.continuous=false; recognition.interimResults=false;
+  recognition.lang='en-US';
+  voiceBtn.addEventListener('click', ()=> recognition.start());
+  recognition.onresult=(e)=> searchInput.value=e.results[0][0].transcript;
+}
+</script>
+</body>
+</html>
