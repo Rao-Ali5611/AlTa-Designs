@@ -8,26 +8,27 @@
 :root{
   --sidebar-w:260px;
   --gap:18px;
-  --accent:#d4af37;
-  --text:#e8eef6;
-  --muted:#9aa0a6;
-  --card-bg:rgba(255,255,255,0.03);
-  --glass:rgba(255,255,255,0.04);
+  --accent: #d4af37;
+  --text: #e8eef6;
+  --muted: #9aa0a6;
+  --card-bg: rgba(255,255,255,0.03);
+  --glass: rgba(255,255,255,0.04);
   --dark1:#070708; --dark2:#0b0b0d;
   --light1:#f6f8fb; --light2:#eef4ff;
-  --svc-title-color:rgba(255,255,255,0.5);
+  --svc-title-color:#ffffff;
   --font: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  --bg-wallpaper:url('wallpaper26.jpg'); /* 26th wallpaper */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
   font-family:var(--font);
   color:var(--text);
-  background:var(--bg-wallpaper) center/cover no-repeat, linear-gradient(180deg,var(--dark1),var(--dark2));
+  background:linear-gradient(180deg,var(--dark1),var(--dark2));
   transition:background .3s,color .3s;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
 }
+
+/* Layout */
 .app { display:flex; height:100vh; gap:var(--gap); align-items:stretch; overflow:hidden; }
 .sidebar {
   width:var(--sidebar-w); min-width:var(--sidebar-w);
@@ -41,28 +42,26 @@ body{
 }
 .brand h1{font-size:18px;color:var(--accent); margin:0}
 .brand p{font-size:11px;color:var(--muted);margin:0}
+
+/* Sidebar nav */
 nav.side{margin-top:12px;display:flex;flex-direction:column;gap:6px}
 nav.side button{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;text-align:left;transition:all .12s}
 nav.side button:hover{transform:translateX(6px);background:rgba(255,255,255,0.01)}
 nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgba(255,215,130,0.03), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(197,155,38,0.03)}
+
 .spacer{flex:1}
+.sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center}
+.sidebar .footer-line .admin-link{margin-left:8px;color:var(--muted);text-decoration:underline;cursor:pointer}
 
-/* FOOTER CENTERED */
-.sidebar .footer-line{
-  position:fixed; bottom:12px; left:50%; transform:translateX(-50%);
-  font-size:12px;color:var(--muted); text-align:center;
-}
-.sidebar .footer-line .admin-link{
-  display:none; color:var(--muted); cursor:pointer;
-}
-
-/* MAIN */
+/* Main */
 .main { flex:1; display:flex; flex-direction:column; padding:28px; overflow:auto; position:relative; }
 
 /* HOME: title, cloud search, services */
 .home-top { display:flex; flex-direction:column; align-items:center; gap:12px; margin-bottom:18px; margin-top:12px }
 .hero-title{ font-size:64px; font-weight:900; color:var(--accent); letter-spacing:.4px; text-shadow:0 12px 40px rgba(0,0,0,0.6); transition: font-size .2s, transform .2s }
 @media (max-width:900px){ .hero-title{ font-size:36px } }
+
+/* Cloud-shaped search */
 .search-wrap{ width:100%; display:flex; justify-content:center; }
 .cloud-search{
   width:min(760px,64%); position:relative; border-radius:999px; padding:16px 20px;
@@ -77,141 +76,536 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
 .cloud-search input{ position:relative; z-index:2; width:100%; border:0; outline:0; background:transparent; color:var(--text); font-size:17px; padding:6px 8px; }
 .cloud-search .voice{ position:absolute; right:12px; top:50%; transform:translateY(-50%); background:transparent; border:0; color:var(--muted); font-size:18px; cursor:pointer; z-index:3 }
 
-/* Services grid - enlarged */
-.services-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; margin-top:18px; align-items:start }
+/* Services grid */
+.services-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px; margin-top:18px; align-items:start }
 .svc-card{
-  border-radius:14px; padding:28px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius:14px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
   border:1px solid rgba(255,255,255,0.025); box-shadow: 0 14px 40px rgba(0,0,0,0.5);
-  display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:default;
-  position:relative;
+  display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:pointer;
 }
-.svc-card:hover{ transform: translateY(-6px) }
-.svc-title{ font-size:18px; font-weight:700; color:var(--svc-title-color); text-align:center }
+.svc-card:hover{ transform: translateY(-8px) }
+.svc-title{ font-size:16px; font-weight:700; color:var(--svc-title-color, #fff); text-align:center }
 
-/* Order button - explicit click only */
+/* 3D Order button */
 .order-3d{
-  margin-top:12px; padding:14px 26px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
+  margin-top:8px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
   color:#000;font-weight:800;cursor:pointer; box-shadow: 0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
   transform-style:preserve-3d; transition: transform .18s, box-shadow .18s;
 }
 .order-3d:hover{ transform: translateY(-6px) rotateX(6deg); box-shadow: 0 28px 50px rgba(0,0,0,0.75), inset 0 -6px 10px rgba(255,255,255,0.14) }
 
-/* Sample delete menu */
-.sample-delete{ position:absolute; top:6px; right:6px; cursor:pointer; font-size:18px; color:#fff; display:none; }
-.svc-card.admin-show .sample-delete{ display:block; }
+/* FS Modal with blur background */
+.fs-overlay{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2200;
+}
+.fs-overlay.show{ display:flex }
+.fs-backdrop{ position:absolute; inset:0; backdrop-filter: blur(8px); background: rgba(0,0,0,0.45); }
+.fs-panel{
+  position:relative; z-index:10; width:95%; max-width:1150px; height:86vh; background: linear-gradient(180deg,#0b0b0d,#111214);
+  border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+}
+.fs-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.02) }
+.fs-title{ font-size:18px; color:var(--accent); font-weight:700 }
+.fs-body{ flex:1; display:flex; gap:12px; padding:14px; overflow:auto }
+.fs-gallery{ flex:1; display:grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap:12px; align-content:start; }
+.fs-thumb{ background:#0b0b0d; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.03) }
+.fs-thumb img{ width:100%; height:170px; object-fit:cover; display:block }
 
-/* FONT SETTINGS PANEL (hidden by default) */
-#fontSettingsPanel{ display:none; margin-top:24px; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02); background:linear-gradient(180deg,#0b0b0d,#0f1113); }
-#fontSelector{ width:100%; padding:6px; border-radius:6px; }
+/* fs-side */
+.fs-side{ width:360px; min-width:220px; padding:12px; border-left:1px solid rgba(255,255,255,0.02); display:flex; flex-direction:column; gap:12px }
+.fs-side .order-big{ margin-top:auto; padding:12px; border-radius:12px; border:0; background:var(--accent); color:#070707; font-weight:800; cursor:pointer }
 
-/* Admin Login prompt */
-#adminPassword{display:none; margin-top:12px; padding:6px 8px; border-radius:6px; border:1px solid #888; width:200px;}
-#adminConfirm{padding:6px 12px; border-radius:6px; border:none; background:var(--accent); color:#000; cursor:pointer;}
+/* upload area */
+.upload-area{ padding:12px; border-radius:10px; border:2px dashed rgba(255,255,255,0.04); text-align:center; color:var(--muted); background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)) }
+.upload-area.dragover{ border-color:var(--accent); background: rgba(255,255,255,0.02) }
 
+/* settings */
+.settings-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px }
+.card-panel{ background:linear-gradient(180deg,#0b0b0d,#0f1113); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02) }
+.swatches{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px }
+.swatch{ width:36px; height:28px; border-radius:8px; cursor:pointer; border:2px solid rgba(255,255,255,0.03) }
+
+/* pages generic */
+.page{ display:none }
+.page.active{ display:block }
+
+/* responsive */
+@media (max-width:1000px){
+  :root{ --sidebar-w:30% }
+  .sidebar{ width:30% }
+  .fs-side{ display:none }
+  .cloud-search{ width:86% }
+}
+@media (max-width:560px){
+  :root{ --sidebar-w:34% }
+  .sidebar{ width:34% }
+  .hero-title{ font-size:28px }
+  .cloud-search{ width:92% }
+  .services-grid{ grid-template-columns:1fr }
+}
 </style>
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo-mark">AD</div>
-      <h1>AlTa Designs</h1>
-      <p>Creative Hub</p>
+      <h1>AlTa Design</h1>
+      <p>Group of Graphics</p>
     </div>
-    <nav class="side">
-      <button class="active">Home</button>
-      <button>Gallery</button>
-      <button>Settings</button>
+
+    <nav class="side" role="navigation" aria-label="Main menu">
+      <button class="active" data-target="home">🏠 Home</button>
+      <button data-target="settings">⚙️ Settings</button>
+      <button data-target="projects">📁 My Projects</button>
+      <button data-target="chat">💬 Client Chat</button>
+      <button data-target="contact">📞 Contact</button>
+      <button data-target="about">📜 About Us</button>
+      <button data-target="inspiration">✨ Inspiration</button>
     </nav>
+
     <div class="spacer"></div>
+
     <div class="footer-line">
-      © 2025 AlTa Designs
-      <span class="admin-link" id="adminLink">Admin</span>
+      © AlTa Group of Graphics — <strong>Rao Ali</strong>
+      <span class="admin-link" id="adminLink">Admin Login</span>
     </div>
   </aside>
 
-  <main class="main">
-    <div class="home-top">
-      <h1 class="hero-title" id="heroTitle">AlTa Designs</h1>
-      <div class="search-wrap">
-        <div class="cloud-search">
-          <input type="text" placeholder="Search services...">
-          <button class="voice">🎤</button>
+  <!-- MAIN -->
+  <main class="main" id="main">
+    <!-- HOME PAGE -->
+    <section id="home" class="page active">
+      <div class="home-top">
+        <div id="heroWrap" style="display:flex;flex-direction:column;align-items:center;">
+          <div class="hero-title" id="heroTitle">AlTa Design</div>
+        </div>
+
+        <div class="search-wrap" style="margin-top:8px">
+          <div class="cloud-search" id="cloudSearch">
+            <input id="searchInput" placeholder="Search — type or use voice..." aria-label="Search">
+            <button class="voice" id="voiceBtn" title="Voice search">🎤</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="services-grid" id="servicesGrid">
-      <div class="svc-card"><div class="svc-title">Logo Design</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
-      <div class="svc-card"><div class="svc-title">Web Design</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
-      <div class="svc-card"><div class="svc-title">UI/UX Design</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
-      <div class="svc-card"><div class="svc-title">3D Modeling</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
-      <div class="svc-card"><div class="svc-title">Animation</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
-      <div class="svc-card"><div class="svc-title">Branding</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
-      <div class="svc-card"><div class="svc-title">Social Media</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
-      <div class="svc-card"><div class="svc-title">Print Design</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
-    </div>
+      <div class="services-grid" id="servicesGrid" aria-live="polite">
+        <!-- JS will populate service cards -->
+      </div>
+    </section>
 
-    <!-- ADMIN PASSWORD INPUT -->
-    <input type="password" id="adminPassword" placeholder="Enter admin password">
-    <button id="adminConfirm">Login</button>
+    <!-- SETTINGS -->
+    <section id="settings" class="page">
+      <h2 style="color:var(--accent)">Settings</h2>
+      <div class="settings-grid" id="settingsGrid">
+        <div class="card-panel">
+          <h4 style="color:var(--muted)">Theme</h4>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button onclick="setTheme('dark')">Dark</button>
+            <button onclick="setTheme('light')">Light</button>
+          </div>
+        </div>
 
-    <!-- FONT SETTINGS PANEL -->
-    <div class="card-panel" id="fontSettingsPanel">
-      <h4 style="color:var(--muted)">Service & Hero Font</h4>
-      <select id="fontSelector"></select>
-    </div>
+        <div class="card-panel">
+          <h4 style="color:var(--muted)">Wallpapers (generated)</h4>
+          <div id="wallpapers" style="margin-top:10px;max-height:260px;overflow:auto"></div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button onclick="removeWallpaper()">Remove</button>
+            <button onclick="useDefaultWallpaper()">Default</button>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <h4 style="color:var(--muted)">Accent Colors</h4>
+          <div class="swatches" id="accentSwatches"></div>
+        </div>
+
+        <div class="card-panel">
+          <h4 style="color:var(--muted)">Service Title Colors</h4>
+          <div class="swatches" id="titleSwatches"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="page">
+      <h2 style="color:var(--accent)">My Projects</h2>
+      <div id="projectsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px"></div>
+    </section>
+
+    <!-- CLIENT CHAT -->
+    <section id="chat" class="page">
+      <h2 style="color:var(--accent)">Client Chat</h2>
+      <div style="color:var(--muted);margin-top:8px">
+        WhatsApp / Telegram: <strong>+92 303 2792947</strong><br/>
+        Emails:<br/>
+        muhammadaliorangzaibrao@gmail.com<br/>
+        abug2572@gmail.com<br/>
+        ra3275867@gmail.com<br/>
+        naeemshahzad112324@gmail.com
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="page">
+      <h2 style="color:var(--accent)">Contact</h2>
+      <div style="color:var(--muted);margin-top:8px">
+        <p>WhatsApp / Telegram: <strong>+92 303 2792947</strong></p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="page">
+      <h2 style="color:var(--accent)">About Us</h2>
+      <div id="aboutContent" style="color:var(--muted);margin-top:8px;white-space:pre-wrap"></div>
+      <button id="translateBtn" style="margin-top:12px;padding:8px;border-radius:8px;border:0;background:var(--accent);cursor:pointer;color:#000">Translate to Urdu</button>
+    </section>
+
+    <!-- INSPIRATION -->
+    <section id="inspiration" class="page">
+      <h2 style="color:var(--accent)">Inspiration</h2>
+      <div id="inspirationGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px"></div>
+    </section>
+
   </main>
 </div>
 
+<!-- Fullscreen Modal (same-screen overlay with blur) -->
+<div class="fs-overlay" id="fsOverlay" aria-hidden="true">
+  <div class="fs-backdrop"></div>
+  <div class="fs-panel" role="dialog" aria-modal="true" aria-label="Service Samples">
+    <div class="fs-top">
+      <div class="fs-title" id="fsTitle">Service</div>
+      <div>
+        <button id="fsClose">✕</button>
+      </div>
+    </div>
+    <div class="fs-body">
+      <div class="fs-gallery" id="fsGallery"></div>
+      <div class="fs-side">
+        <div style="color:var(--muted)">Order this service</div>
+        <button class="order-big" id="fsOrder">Order Now</button>
+
+        <div style="margin-top:8px;color:var(--muted)">Quick order</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button id="fsWhats">WhatsApp</button>
+          <button id="fsTele">Telegram</button>
+        </div>
+
+        <div id="uploadBlock" style="display:none;margin-top:12px">
+          <div class="upload-area" id="uploadArea">
+            <div id="uploadText">Drag & drop images here or <button id="chooseFileBtn">Choose files</button></div>
+            <input type="file" id="uploadInput" accept="image/*" multiple style="display:none">
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px">Admin uploads are saved locally and show to visitors.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-// Random Accent from central blue-yellow palette
-const accentColors=["#3b82f6","#60a5fa","#facc15","#eab308","#fef08a","#fcd34d","#fbbf24"];
-document.documentElement.style.setProperty('--accent', accentColors[Math.floor(Math.random()*accentColors.length)]);
+/* =======================
+   Config & Local Storage keys
+   ======================= */
+const ADMIN_PASSWORD = 'Ali ray555';
+const PHONE = '923032792947';
+const TG_LINK = 'https://t.me/+923032792947';
+const LS_SAMPLES = 'altadesigns_samples_v2';
+const LS_PROJECTS = 'altadesigns_projects_v2';
+const LS_SETTINGS = 'altadesigns_settings_v2';
 
-// Admin Login
-const adminLink = document.getElementById('adminLink');
-const passwordInput = document.getElementById('adminPassword');
-const confirmBtn = document.getElementById('adminConfirm');
-const fontPanel = document.getElementById('fontSettingsPanel');
-const fontSelector = document.getElementById('fontSelector');
+const SERVICES = [
+  'YouTube Thumbnail',
+  'Social Media Posts',
+  '3D Wooden Logo',
+  'Wedding Invitation Card',
+  '3D Logo',
+  'Packaging Design',
+  'T-Shirt Design',
+  'Business Card'
+];
+
+/* Load or init samples */
+let samples = JSON.parse(localStorage.getItem(LS_SAMPLES) || 'null');
+if(!samples){
+  samples = {};
+  SERVICES.forEach(s => samples[s] = [
+    'https://via.placeholder.com/1400x900?text='+encodeURIComponent(s+' Sample 1'),
+    'https://via.placeholder.com/1400x900?text='+encodeURIComponent(s+' Sample 2')
+  ]);
+  localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
+}
+
+/* Load settings */
+let settings = JSON.parse(localStorage.getItem(LS_SETTINGS) || 'null');
+if(!settings){
+  settings = { theme:'dark', accent:'#d4af37', svcTitleColor:'#ffffff', wallpaper: null };
+  localStorage.setItem(LS_SETTINGS, JSON.stringify(settings));
+}
+
+/* Admin state */
 let isAdmin = false;
+let currentService = null;
 
-adminLink.addEventListener('click',()=>{ passwordInput.style.display='inline'; confirmBtn.style.display='inline'; });
+/* ============= Apply theme & wallpaper ============= */
+function applySettings(){
+  document.documentElement.style.setProperty('--accent', settings.accent || '#d4af37');
+  document.documentElement.style.setProperty('--svc-title-color', settings.svcTitleColor || '#ffffff');
 
-confirmBtn.addEventListener('click',()=>{
-  if(passwordInput.value==="Ali ray555"){
-    isAdmin=true;
-    alert("Admin mode enabled!");
-    fontPanel.style.display='block';
-    document.querySelectorAll('.svc-card').forEach(card=>card.classList.add('admin-show'));
-    passwordInput.style.display='none'; confirmBtn.style.display='none';
+  if(settings.wallpaper){
+    document.body.style.background = settings.wallpaper;
+    document.getElementById('sidebar').style.background = settings.wallpaper;
   } else {
-    alert("Wrong password!");
+    if(settings.theme === 'dark'){
+      document.body.style.background = 'linear-gradient(180deg,#070708,#0b0b0d)';
+      document.getElementById('sidebar').style.background = 'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))';
+      document.documentElement.style.setProperty('--text','#e8eef6');
+      document.documentElement.style.setProperty('--muted','#9aa0a6');
+    } else {
+      document.body.style.background = 'linear-gradient(180deg,#f6f8fb,#eef4ff)';
+      document.getElementById('sidebar').style.background = 'linear-gradient(180deg,#ffffff,#f1f5f9)';
+      document.documentElement.style.setProperty('--text','#0b1220');
+      document.documentElement.style.setProperty('--muted','#475569');
+    }
   }
+}
+
+/* ============= Build services on home ============= */
+const servicesGrid = document.getElementById('servicesGrid');
+function buildServices(){
+  servicesGrid.innerHTML = '';
+  SERVICES.forEach(name=>{
+    const card = document.createElement('div');
+    card.className = 'svc-card';
+    card.innerHTML = `<div class="svc-title">${name}</div><button class="order-3d" data-service="${name}">Order Now</button>`;
+    // click opens modal for service (view samples)
+    card.addEventListener('click', ()=> openServiceModal(name) );
+    // also make order button open modal
+    card.querySelector('.order-3d').addEventListener('click', (e)=> { e.stopPropagation(); openServiceModal(name); });
+    servicesGrid.appendChild(card);
+  });
+}
+
+/* ============= Service modal (same-screen overlay) ============= */
+const fsOverlay = document.getElementById('fsOverlay');
+const fsTitle = document.getElementById('fsTitle');
+const fsGallery = document.getElementById('fsGallery');
+const fsClose = document.getElementById('fsClose');
+const uploadBlock = document.getElementById('uploadBlock');
+const uploadArea = document.getElementById('uploadArea');
+const uploadInput = document.getElementById('uploadInput');
+const chooseFileBtn = document.getElementById('chooseFileBtn');
+
+function openServiceModal(service){
+  currentService = service;
+  fsTitle.innerText = service;
+  renderGallery(service);
+  fsOverlay.classList.add('show'); fsOverlay.setAttribute('aria-hidden','false');
+  // show upload if admin
+  uploadBlock.style.display = isAdmin ? 'block' : 'none';
+}
+function closeServiceModal(){ fsOverlay.classList.remove('show'); fsOverlay.setAttribute('aria-hidden','true'); currentService=null; }
+
+fsClose.addEventListener('click', closeServiceModal);
+fsOverlay.addEventListener('click', (e)=> { if(e.target === fsOverlay) closeServiceModal(); });
+document.addEventListener('keydown', e=> { if(e.key === 'Escape') closeServiceModal(); });
+
+function renderGallery(service){
+  fsGallery.innerHTML = '';
+  const arr = samples[service] || [];
+  if(arr.length === 0){
+    fsGallery.innerHTML = '<div style="color:var(--muted);padding:12px">No samples yet.</div>';
+    return;
+  }
+  arr.forEach(url=>{
+    const card = document.createElement('div'); card.className='fs-thumb';
+    card.innerHTML = `<img src="${url}" alt="${service} sample">`;
+    card.addEventListener('click', ()=> window.open(url,'_blank'));
+    fsGallery.appendChild(card);
+  });
+}
+
+/* ============= Upload / Drag & Drop for Admin ============= */
+chooseFileBtn.addEventListener('click', ()=> uploadInput.click());
+uploadInput.addEventListener('change', (e)=> {
+  const files = Array.from(e.target.files || []);
+  if(files.length) handleUploadFiles(files, currentService);
+  uploadInput.value = '';
+});
+uploadArea.addEventListener('dragover', (e)=> { e.preventDefault(); uploadArea.classList.add('dragover'); });
+uploadArea.addEventListener('dragleave', ()=> uploadArea.classList.remove('dragover'));
+uploadArea.addEventListener('drop', (e)=> {
+  e.preventDefault(); uploadArea.classList.remove('dragover');
+  const files = Array.from(e.dataTransfer.files || []);
+  if(!isAdmin){ alert('Admin only upload'); return; }
+  handleUploadFiles(files, currentService);
 });
 
-// 121 Fonts hardcoded
-const fonts=["Arial","Verdana","Helvetica","Tahoma","Trebuchet MS","Impact","Georgia","Garamond","Courier New","Brush Script MT","Comic Sans MS","Lucida Console","Palatino Linotype","Times New Roman","Franklin Gothic Medium","Gill Sans","Century Gothic","Candara","Segoe UI","Optima","Futura","Calibri","Cambria","Didot","Monaco","Baskerville","Consolas","Copperplate","Cochin","Avant Garde","Book Antiqua","Bell MT","Perpetua","Rockwell","Lucida Bright","MS Sans Serif","MS Serif","Segoe Print","Segoe Script","Stencil","Zapfino","Charter","Geneva","Andale Mono","Palatino","Nimbus Sans","PT Sans","PT Serif","Lobster","Oswald","Roboto","Open Sans","Montserrat","Raleway","Lato","Ubuntu","Merriweather","Noto Sans","Noto Serif","Playfair Display","Source Sans Pro","PT Mono","Inconsolata","Droid Sans","Droid Serif","Anton","Bebas Neue","Exo","Fira Sans","Karla","Libre Baskerville","Muli","Oxygen","Poppins","Quicksand","Raleway Dots","Roboto Condensed","Righteous","Titillium Web","Yanone Kaffeesatz","Zilla Slab","Comfortaa","Arvo","Cabin","Cairo","DM Sans","DM Serif Display","Josefin Sans","Josefin Slab","Mukta","Mukta Mahee","Nanum Gothic","Nanum Myeongjo","PT Sans Narrow","PT Serif Caption","Ropa Sans","Rubik","Signika","Varela Round","Work Sans","Dosis","Hind","Hind Siliguri","Hind Vadodara","Nunito","Nunito Sans","Play","Manrope","Exo 2","Fira Sans Condensed","Archivo","Archivo Narrow","Barlow","Barlow Condensed","Belleza","Chivo","Encode Sans","Exo 2 Condensed","Hind Guntur","Inter","Inter Tight","Lexend","Mukta Vaani","Red Hat Display","Red Hat Text","Spectral","Teko"];
-fonts.forEach(f=>{
-  const opt = document.createElement('option');
-  opt.value=f; opt.textContent=f; fontSelector.appendChild(opt);
+function handleUploadFiles(files, svc){
+  const imgs = files.filter(f=> f.type && f.type.startsWith('image/'));
+  if(imgs.length === 0){ alert('Please upload images only'); return; }
+  let count=0;
+  imgs.forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      samples[svc] = samples[svc] || [];
+      samples[svc].unshift(ev.target.result);
+      localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
+      count++;
+      if(count === imgs.length){
+        renderGallery(svc);
+        buildProjects(); // update projects view if using
+        alert('Uploaded '+count+' image(s) to '+svc);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ============= Orders quick actions ============= */
+document.getElementById('fsWhats').addEventListener('click', ()=> {
+  if(!currentService) return; window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent('I want to order: '+currentService),'_blank');
+});
+document.getElementById('fsTele').addEventListener('click', ()=> {
+  if(!currentService) return; window.open(TG_LINK,'_blank');
+});
+document.getElementById('fsOrder').addEventListener('click', ()=> {
+  if(!currentService) return;
+  const ok = confirm('Order on WhatsApp (OK) or Telegram (Cancel)?');
+  if(ok) window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent('I want to order: '+currentService),'_blank');
+  else window.open(TG_LINK,'_blank');
 });
 
-// Apply selected font to hero and service titles
-fontSelector.addEventListener('change',()=>{
-  const val = fontSelector.value;
-  document.getElementById('heroTitle').style.fontFamily=val;
-  document.querySelectorAll('.svc-title').forEach(t=>t.style.fontFamily=val);
+/* ============= Settings: wallpapers & colors generation ============= */
+const wallpapersEl = document.getElementById('wallpapers');
+const accentSwatches = document.getElementById('accentSwatches');
+const titleSwatches = document.getElementById('titleSwatches');
+
+const genWallpapers = [];
+for(let i=0;i<55;i++){
+  const h1 = Math.round((i*37) % 360);
+  const h2 = (h1 + 30) % 360;
+  const light = i % 2 === 0;
+  const g = light ? `linear-gradient(135deg, hsl(${h1} 80% 95%), hsl(${h2} 70% 90%))` : `linear-gradient(135deg, hsl(${h1} 40% 12%), hsl(${h2} 40% 18%))`;
+  genWallpapers.push(g);
+}
+genWallpapers.forEach((w,i)=>{
+  const d = document.createElement('div');
+  d.style.height='64px'; d.style.borderRadius='8px'; d.style.margin='6px'; d.style.cursor='pointer';
+  d.style.background = w; d.title = 'Wallpaper '+(i+1);
+  d.addEventListener('click', ()=> { settings.wallpaper = w; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); });
+  wallpapersEl.appendChild(d);
 });
 
-// Delete sample option
-document.querySelectorAll('.sample-delete').forEach(del=>{
-  del.addEventListener('click',()=>{
-    if(isAdmin && confirm("Delete this sample?")) del.parentElement.remove();
+// accent colors
+const genColors = [];
+for(let i=0;i<55;i++){
+  const h = Math.round(i*360/55);
+  genColors.push(`hsl(${h} 70% 50%)`);
+}
+genColors.forEach(c=>{
+  const s = document.createElement('div'); s.className='swatch'; s.style.background = c; s.title=c;
+  s.addEventListener('click', ()=> { settings.accent = c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); });
+  accentSwatches.appendChild(s);
+});
+genColors.forEach(c=>{
+  const s = document.createElement('div'); s.className='swatch'; s.style.background = c; s.title=c;
+  s.addEventListener('click', ()=> { settings.svcTitleColor = c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); });
+  titleSwatches.appendChild(s);
+});
+
+/* remove wallpaper / default */
+function removeWallpaper(){ settings.wallpaper = null; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
+function useDefaultWallpaper(){ settings.wallpaper = null; applySettings(); }
+
+/* theme setter */
+function setTheme(t){ settings.theme = t; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
+
+/* ============= Sidebar nav behavior ============= */
+document.querySelectorAll('nav.side button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.side button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const target = btn.dataset.target;
+    showPage(target);
   });
 });
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el = document.getElementById(id);
+  if(el) el.classList.add('active');
+  // scroll top
+  document.getElementById('main').scrollTop = 0;
+  closeServiceModal(); // close modal if open
+}
 
+/* ============= Admin login via footer link ============= */
+document.getElementById('adminLink').addEventListener('click', ()=>{
+  const p = prompt('Enter admin password:');
+  if(p === ADMIN_PASSWORD){
+    isAdmin = true;
+    alert('Admin mode ON — you can now upload samples in services.');
+    uploadBlock.style.display = 'block';
+  } else alert('Wrong password.');
+});
+
+/* ============= About content translate ============= */
+const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali... (shortened for demo)`;
+const aboutUr = `AlTa Designs ایک ممتاز گرافک ڈیزائن اسٹوڈیو ہے...`;
+document.getElementById('aboutContent').textContent = aboutEng;
+let isUr = false;
+document.getElementById('translateBtn').addEventListener('click', ()=>{
+  if(!isUr){ document.getElementById('aboutContent').textContent = aboutUr; document.getElementById('translateBtn').textContent='Translate to English'; isUr=true; }
+  else { document.getElementById('aboutContent').textContent = aboutEng; document.getElementById('translateBtn').textContent='Translate to Urdu'; isUr=false; }
+});
+
+/* ============= Search & Voice ============= */
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', ()=> {
+  const q = (searchInput.value||'').toLowerCase().trim();
+  document.querySelectorAll('.svc-card').forEach(card=>{
+    const txt = card.querySelector('.svc-title').textContent.toLowerCase();
+    card.style.display = (!q || txt.includes(q)) ? 'flex' : 'none';
+  });
+});
+document.getElementById('voiceBtn').addEventListener('click', ()=>{
+  if(!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)){ alert('Voice search not supported'); return; }
+  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const r = new Rec(); r.lang='en-US'; r.interimResults=false; r.maxAlternatives=1; r.start();
+  r.onresult = (e)=> { searchInput.value = e.results[0][0].transcript; searchInput.dispatchEvent(new Event('input')); };
+});
+
+/* ============= Projects builder (thumbnail from samples) ============= */
+function buildProjects(){
+  const pg = document.getElementById('projectsGrid');
+  pg.innerHTML = '';
+  // simple: show first sample of each service as a project tile if exists
+  SERVICES.forEach(s=>{
+    const arr = samples[s] || [];
+    if(arr.length){
+      const d = document.createElement('div'); d.className='svc-card'; d.style.minHeight='120px';
+      d.innerHTML = `<div style="font-weight:700">${s}</div><div style="margin-top:8px;color:var(--muted)">${arr.length} samples</div>`;
+      pg.appendChild(d);
+    }
+  });
+}
+
+/* ============= Init UI ============= */
+applySettings();
+buildServices();
+buildProjects();
+
+/* render first service gallery on load to warm cache (optional) */
+// renderGallery(SERVICES[0]); // not needed now
+
+/* Save settings before unload */
+window.addEventListener('beforeunload', ()=> {
+  localStorage.setItem(LS_SETTINGS, JSON.stringify(settings));
+  localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
+});
 </script>
 </body>
 </html>
