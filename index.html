@@ -4,10 +4,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>AlTa Designs — Final</title>
-
-<!-- Google Fonts (Basic) -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@800&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --sidebar-w:260px;
@@ -31,8 +27,6 @@ body{
   transition:background .3s,color .3s;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
 }
-
-/* Layout */
 .app { display:flex; height:100vh; gap:var(--gap); align-items:stretch; overflow:hidden; }
 .sidebar {
   width:var(--sidebar-w); min-width:var(--sidebar-w);
@@ -46,26 +40,21 @@ body{
 }
 .brand h1{font-size:18px;color:var(--accent); margin:0}
 .brand p{font-size:11px;color:var(--muted);margin:0}
-
-/* Sidebar nav */
 nav.side{margin-top:12px;display:flex;flex-direction:column;gap:6px}
 nav.side button{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;text-align:left;transition:all .12s}
 nav.side button:hover{transform:translateX(6px);background:rgba(255,255,255,0.01)}
 nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgba(255,215,130,0.03), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(197,155,38,0.03)}
-
 .spacer{flex:1}
 .sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center}
 .sidebar .footer-line .admin-link{margin-left:8px;color:var(--muted);text-decoration:underline;cursor:pointer}
 
-/* Main */
+/* MAIN */
 .main { flex:1; display:flex; flex-direction:column; padding:28px; overflow:auto; position:relative; }
 
 /* HOME: title, cloud search, services */
 .home-top { display:flex; flex-direction:column; align-items:center; gap:12px; margin-bottom:18px; margin-top:12px }
 .hero-title{ font-size:64px; font-weight:900; color:var(--accent); letter-spacing:.4px; text-shadow:0 12px 40px rgba(0,0,0,0.6); transition: font-size .2s, transform .2s }
 @media (max-width:900px){ .hero-title{ font-size:36px } }
-
-/* Cloud-shaped search */
 .search-wrap{ width:100%; display:flex; justify-content:center; }
 .cloud-search{
   width:min(760px,64%); position:relative; border-radius:999px; padding:16px 20px;
@@ -87,220 +76,120 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
   border:1px solid rgba(255,255,255,0.025); box-shadow: 0 14px 40px rgba(0,0,0,0.5);
   display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:pointer;
 }
-/* Updated font for 8 services names (admin-selectable) */
-.svc-title{
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  color: var(--svc-title-color, #fff);
-  text-align:center;
-  letter-spacing: 1px;
-  margin-top:0;
-}
-.order-3d{ margin-top:14px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
+.svc-card:hover{ transform: translateY(-8px) }
+.svc-title{ font-size:16px; font-weight:700; color:var(--svc-title-color, #fff); text-align:center }
+
+/* 3D Order button */
+.order-3d{
+  margin-top:8px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
   color:#000;font-weight:800;cursor:pointer; box-shadow: 0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
   transform-style:preserve-3d; transition: transform .18s, box-shadow .18s;
 }
 .order-3d:hover{ transform: translateY(-6px) rotateX(6deg); box-shadow: 0 28px 50px rgba(0,0,0,0.75), inset 0 -6px 10px rgba(255,255,255,0.14) }
 
-/* FS Modal with blur background */
-.fs-overlay{
-  position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2200;
-}
-.fs-overlay.show{ display:flex }
-.fs-backdrop{ position:absolute; inset:0; backdrop-filter: blur(8px); background: rgba(0,0,0,0.45); }
-.fs-panel{
-  position:relative; z-index:10; width:95%; max-width:1150px; height:86vh; background: linear-gradient(180deg,#0b0b0d,#111214);
-  border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-}
-.fs-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.02) }
-.fs-title{ font-size:18px; color:var(--accent); font-weight:700 }
-.fs-body{ flex:1; display:flex; gap:12px; padding:14px; overflow:auto }
-.fs-gallery{ flex:1; display:grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap:12px; align-content:start; }
-.fs-thumb{ background:#0b0b0d; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); position:relative }
-.fs-thumb img{ width:100%; height:170px; object-fit:cover; display:block }
-/* Admin options for each sample */
-.fs-thumb .admin-actions{ display:none; position:absolute; bottom:4px; right:4px; gap:4px; }
-.fs-thumb.admin .admin-actions{ display:flex; }
+/* FONT SETTINGS PANEL (hidden by default) */
+.card-panel{ background:linear-gradient(180deg,#0b0b0d,#0f1113); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02); display:none; margin-top:12px }
+.card-panel select{ width:100%; padding:6px; border-radius:6px }
 
-.fs-side{ width:360px; min-width:220px; padding:12px; border-left:1px solid rgba(255,255,255,0.02); display:flex; flex-direction:column; gap:12px }
-.fs-side .order-big{ margin-top:auto; padding:12px; border-radius:12px; border:0; background:var(--accent); color:#070707; font-weight:800; cursor:pointer }
-
-/* upload area */
-.upload-area{ padding:12px; border-radius:10px; border:2px dashed rgba(255,255,255,0.04); text-align:center; color:var(--muted); background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)) }
-.upload-area.dragover{ border-color:var(--accent); background: rgba(255,255,255,0.02) }
-
-/* Settings grid */
-.settings-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px }
-.card-panel{ background:linear-gradient(180deg,#0b0b0d,#0f1113); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02) }
-.swatches{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px }
-.swatch{ width:36px; height:28px; border-radius:8px; cursor:pointer; border:2px solid rgba(255,255,255,0.03) }
-
-/* Hidden font panel (admin-only) */
-#fontPanel{ display:none; margin-top:12px; grid-column: span 4; max-height:250px; overflow:auto; background: linear-gradient(180deg,#111,#0d0d0d); padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02) }
-.font-item{ cursor:pointer; padding:4px 6px; border-radius:4px; margin:2px; display:inline-block; background: rgba(255,255,255,0.02); color:#fff; transition: all .12s }
-.font-item:hover{ background:var(--accent); color:#000; }
-
-/* pages generic */
-.page{ display:none }
-.page.active{ display:block }
-
-/* responsive */
-@media (max-width:1000px){
-  :root{ --sidebar-w:30% }
-  .sidebar{ width:30% }
-  .fs-side{ display:none }
-  .cloud-search{ width:86% }
-}
-@media (max-width:560px){
-  :root{ --sidebar-w:34% }
-  .sidebar{ width:34% }
-  .hero-title{ font-size:28px }
-  .cloud-search{ width:92% }
-  .services-grid{ grid-template-columns:1fr }
-}
 </style>
 </head>
 <body>
 <div class="app">
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar">
     <div class="brand">
       <div class="logo-mark">AD</div>
-      <h1>AlTa Design</h1>
-      <p>Group of Graphics</p>
+      <h1>AlTa Designs</h1>
+      <p>Creative Hub</p>
     </div>
-
-    <nav class="side" role="navigation" aria-label="Main menu">
-      <button class="active" data-target="home">🏠 Home</button>
-      <button data-target="settings">⚙️ Settings</button>
-      <button data-target="projects">📁 My Projects</button>
-      <button data-target="chat">💬 Client Chat</button>
-      <button data-target="contact">📞 Contact</button>
-      <button data-target="about">📜 About Us</button>
-      <button data-target="inspiration">✨ Inspiration</button>
+    <nav class="side">
+      <button class="active">Home</button>
+      <button>Gallery</button>
+      <button>Settings</button>
     </nav>
-
     <div class="spacer"></div>
-
     <div class="footer-line">
-      © AlTa Group of Graphics — <strong>Rao Ali</strong>
-      <span class="admin-link" id="adminLink">Admin Login</span>
+      © 2025 AlTa Designs
+      <span class="admin-link" id="adminLink">Hidden</span>
     </div>
   </aside>
 
-  <!-- MAIN -->
-  <main class="main" id="main">
-    <!-- HOME PAGE -->
-    <section id="home" class="page active">
-      <div class="home-top">
-        <div id="heroWrap" style="display:flex;flex-direction:column;align-items:center;">
-          <div class="hero-title" id="heroTitle">AlTa Design</div>
-        </div>
-
-        <div class="search-wrap" style="margin-top:8px">
-          <div class="cloud-search" id="cloudSearch">
-            <input id="searchInput" placeholder="Search — type or use voice..." aria-label="Search">
-            <button class="voice" id="voiceBtn" title="Voice search">🎤</button>
-          </div>
+  <main class="main">
+    <div class="home-top">
+      <h1 class="hero-title" id="heroTitle">AlTa Designs</h1>
+      <div class="search-wrap">
+        <div class="cloud-search">
+          <input type="text" placeholder="Search services...">
+          <button class="voice">🎤</button>
         </div>
       </div>
+    </div>
 
-      <div class="services-grid" id="servicesGrid" aria-live="polite">
-        <!-- JS will populate service cards -->
-      </div>
-    </section>
+    <div class="services-grid">
+      <div class="svc-card"><div class="svc-title">Logo Design</div><button class="order-3d">Order</button></div>
+      <div class="svc-card"><div class="svc-title">Web Design</div><button class="order-3d">Order</button></div>
+      <div class="svc-card"><div class="svc-title">UI/UX Design</div><button class="order-3d">Order</button></div>
+      <div class="svc-card"><div class="svc-title">3D Modeling</div><button class="order-3d">Order</button></div>
+      <div class="svc-card"><div class="svc-title">Animation</div><button class="order-3d">Order</button></div>
+      <div class="svc-card"><div class="svc-title">Branding</div><button class="order-3d">Order</button></div>
+      <div class="svc-card"><div class="svc-title">Social Media</div><button class="order-3d">Order</button></div>
+      <div class="svc-card"><div class="svc-title">Print Design</div><button class="order-3d">Order</button></div>
+    </div>
 
-    <!-- SETTINGS PAGE -->
-    <section id="settings" class="page">
-      <h2 style="color:var(--accent)">Settings</h2>
-      <div id="fontPanel">
-        <!-- 121 font options will be dynamically added here -->
-      </div>
-    </section>
+    <!-- FONT SETTINGS PANEL -->
+    <div class="card-panel" id="fontSettingsPanel">
+      <h4 style="color:var(--muted)">Service & Hero Font</h4>
+      <select id="fontSelector"></select>
+    </div>
+
   </main>
 </div>
 
 <script>
-/* Pages switcher */
-const navBtns = document.querySelectorAll('.side button');
-const pages = document.querySelectorAll('.page');
-navBtns.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    navBtns.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const target = btn.dataset.target;
-    pages.forEach(p=>p.classList.remove('active'));
-    document.getElementById(target).classList.add('active');
-  })
-})
-
-/* Services data */
-const services = [
-  {name:"YouTube Thumbnail"},
-  {name:"Social Media Posts"},
-  {name:"Business Cards"},
-  {name:"T-Shirt Design"},
-  {name:"3D Wooden Logo"},
-  {name:"3D Logo"},
-  {name:"Wedding Invitation Card"},
-  {name:"Packaging Design"}
+// 121 hardcoded fonts
+const fonts = [
+"Arial","Verdana","Helvetica","Tahoma","Trebuchet MS","Times New Roman","Georgia","Garamond","Courier New","Brush Script MT",
+"Impact","Lucida Sans","Palatino","Comic Sans MS","Candara","Century Gothic","Franklin Gothic Medium","Calibri","Cambria","Consolas",
+"Didot","Futura","Gill Sans","Lucida Console","Monaco","Optima","Rockwell","Segoe UI","Perpetua","Baskerville","Charter","Copperplate",
+"Avant Garde","Bookman","Avenir","American Typewriter","Big Caslon","Bradley Hand","Century Schoolbook","Chalkboard","Marker Felt","Snell Roundhand",
+"Arial Black","Bell MT","Berlin Sans FB","Bodoni MT","Book Antiqua","Bookman Old Style","Brush Script Std","Calisto MT","Century","Corbel","Courier",
+"Elephant","Engravers MT","Footlight MT Light","Freestyle Script","Futura PT","Garamond Premr Pro","Georgia Pro","Goudy Old Style","Harrington","Helvetica Neue",
+"Hoefler Text","Lucida Bright","Lucida Handwriting","Luminari","Menlo","Minion Pro","Monotype Corsiva","New Baskerville","News Gothic MT","OCR A Std",
+"Old English Text MT","Papyrus","Perpetua Titling MT","Rockwell Extra Bold","Savoye LET","Segoe Print","Segoe Script","Staatliches","Stencil","Superclarendon",
+"Symbol","Tahoma Bold","Times","Times New Roman PS","Trajan Pro","Trebuchet","Univers","Verdana Bold","Viner Hand","Vivaldi","Zapf Chancery","Zapf Dingbats",
+"Gill Sans MT","Gill Sans MT Condensed","Goudy Stout","Helvetica Light","Helvetica Bold","Courier Std","Courier Prime","Courier Prime Code","Courier Prime Sans","Courier Prime Serif",
+"Arial Narrow","Arial Rounded MT Bold","Arial Unicode MS","Arial Black","Bahnschrift","Californian FB","Cambria Math","Candara","Constantia","Consolas"
 ];
 
-/* Populate services grid */
-const servicesGrid = document.getElementById('servicesGrid');
-function renderServices(){
-  servicesGrid.innerHTML = '';
-  services.forEach(svc=>{
-    const div = document.createElement('div');
-    div.className='svc-card';
-    div.innerHTML=`<h3 class="svc-title">${svc.name}</h3>
-                   <button class="order-3d">Order</button>`;
-    servicesGrid.appendChild(div);
-  })
-}
-renderServices();
-
-/* Admin login system */
-let isAdmin=false;
 const adminLink = document.getElementById('adminLink');
-adminLink.addEventListener('click',()=>{
-  const pass = prompt("Enter admin password:");
-  if(pass==="Ali ray555"){ isAdmin=true; alert("Admin mode activated"); showFontPanel(); }
-  else alert("Wrong password!");
+const fontPanel = document.getElementById('fontSettingsPanel');
+const fontSelector = document.getElementById('fontSelector');
+const heroTitle = document.getElementById('heroTitle');
+const serviceTitles = document.querySelectorAll('.svc-title');
+
+adminLink.addEventListener('click', ()=>{
+  const pwd = prompt("Enter admin password:");
+  if(pwd === "Ali ray555"){
+    fontPanel.style.display = "block";
+    alert("Admin Mode Activated!");
+  }else{
+    alert("Incorrect password");
+  }
 });
 
-/* Font panel */
-const fontPanel = document.getElementById('fontPanel');
-function showFontPanel(){
-  fontPanel.style.display='grid';
-  if(fontPanel.childElementCount>0) return; // Already populated
-  const fontList = [
-    "Montserrat","Roboto","Lato","Oswald","Raleway","Open Sans","Poppins","PT Sans","Nunito","Fira Sans",
-    "Merriweather","Ubuntu","Playfair Display","Arimo","Bebas Neue","Rubik","Mukta","Inter","Exo 2","Varela Round",
-    "Quicksand","Josefin Sans","Bangers","Anton","Cairo","Cabin","DM Sans","Signika","Work Sans","Karla",
-    "Chivo","Yantramanav","Kanit","Barlow","Spectral","Manrope","Titillium Web","Fira Code","Dosis","Roboto Slab",
-    "Baloo 2","Fredoka One","Teko","Alegreya","Hind","Jost","Noto Sans","Palanquin","Acme","Asap","Inconsolata","Orbitron",
-    "Sarabun","Libre Baskerville","IBM Plex Sans","Overpass","Monda","Righteous","Amatic SC","Oxygen","Prompt","Bitter",
-    "Creepster","Nanum Gothic","Candal","Shadows Into Light","Archivo","Glegoo","Vollkorn","Viga","Patrick Hand","Kdam Thmor Pro",
-    "Major Mono Display","M PLUS Rounded 1c","Muli","Hammersmith One","Avenir","Bree Serif","Catamaran","Cormorant","Dancing Script",
-    "Fjalla One","Fira Mono","GFS Didot","Grand Hotel","Handlee","Indie Flower","Julius Sans One","Kodchasan","Lobster","Lora",
-    "Markazi Text","Martel","Maven Pro","Neucha","Nunito Sans","Oxanium","Pacifico","Pangolin","PT Serif","Questrial",
-    "Quattrocento","Quattrocento Sans","Red Hat Display","Roboto Condensed","Rokkitt","Sacramento","Satisfy","Share Tech","Spectral SC",
-    "Staatliches","Tangerine","Varela","Viga","Yanone Kaffeesatz","Yeseva One","Zilla Slab","Anton","Archivo Narrow","Assistant"
-    // Total ~121 fonts
-  ];
-  fontList.forEach(f=>{
-    const fdiv=document.createElement('div');
-    fdiv.className='font-item';
-    fdiv.textContent=f;
-    fdiv.style.fontFamily=f;
-    fdiv.addEventListener('click',()=>{
-      document.querySelectorAll('.svc-title').forEach(t=>t.style.fontFamily=f);
-    });
-    fontPanel.appendChild(fdiv);
-  });
-}
+// populate fonts dropdown
+fonts.forEach(f=>{
+  const opt = document.createElement('option');
+  opt.value = f;
+  opt.innerText = f;
+  fontSelector.appendChild(opt);
+});
+
+// change fonts dynamically
+fontSelector.addEventListener('change', ()=>{
+  const selected = fontSelector.value;
+  heroTitle.style.fontFamily = selected;
+  serviceTitles.forEach(svc => svc.style.fontFamily = selected);
+});
 </script>
 </body>
 </html>
