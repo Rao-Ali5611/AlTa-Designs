@@ -8,22 +8,23 @@
 :root{
   --sidebar-w:260px;
   --gap:18px;
-  --accent: #d4af37;
-  --text: #e8eef6;
-  --muted: #9aa0a6;
-  --card-bg: rgba(255,255,255,0.03);
-  --glass: rgba(255,255,255,0.04);
+  --accent:#d4af37;
+  --text:#e8eef6;
+  --muted:#9aa0a6;
+  --card-bg:rgba(255,255,255,0.03);
+  --glass:rgba(255,255,255,0.04);
   --dark1:#070708; --dark2:#0b0b0d;
   --light1:#f6f8fb; --light2:#eef4ff;
-  --svc-title-color:#ffffff;
+  --svc-title-color:rgba(255,255,255,0.5);
   --font: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  --bg-wallpaper:url('wallpaper26.jpg'); /* 26th wallpaper */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
   font-family:var(--font);
   color:var(--text);
-  background:linear-gradient(180deg,var(--dark1),var(--dark2));
+  background:var(--bg-wallpaper) center/cover no-repeat, linear-gradient(180deg,var(--dark1),var(--dark2));
   transition:background .3s,color .3s;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
 }
@@ -45,8 +46,15 @@ nav.side button{display:flex;align-items:center;gap:10px;padding:10px;border-rad
 nav.side button:hover{transform:translateX(6px);background:rgba(255,255,255,0.01)}
 nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgba(255,215,130,0.03), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(197,155,38,0.03)}
 .spacer{flex:1}
-.sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center}
-.sidebar .footer-line .admin-link{margin-left:8px;color:var(--muted);text-decoration:underline;cursor:pointer}
+
+/* FOOTER CENTERED */
+.sidebar .footer-line{
+  position:fixed; bottom:12px; left:50%; transform:translateX(-50%);
+  font-size:12px;color:var(--muted); text-align:center;
+}
+.sidebar .footer-line .admin-link{
+  display:none; color:var(--muted); cursor:pointer;
+}
 
 /* MAIN */
 .main { flex:1; display:flex; flex-direction:column; padding:28px; overflow:auto; position:relative; }
@@ -69,27 +77,36 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
 .cloud-search input{ position:relative; z-index:2; width:100%; border:0; outline:0; background:transparent; color:var(--text); font-size:17px; padding:6px 8px; }
 .cloud-search .voice{ position:absolute; right:12px; top:50%; transform:translateY(-50%); background:transparent; border:0; color:var(--muted); font-size:18px; cursor:pointer; z-index:3 }
 
-/* Services grid */
-.services-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px; margin-top:18px; align-items:start }
+/* Services grid - enlarged */
+.services-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; margin-top:18px; align-items:start }
 .svc-card{
-  border-radius:14px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius:14px; padding:28px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
   border:1px solid rgba(255,255,255,0.025); box-shadow: 0 14px 40px rgba(0,0,0,0.5);
-  display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:default;
+  position:relative;
 }
-.svc-card:hover{ transform: translateY(-8px) }
-.svc-title{ font-size:16px; font-weight:700; color:var(--svc-title-color, #fff); text-align:center }
+.svc-card:hover{ transform: translateY(-6px) }
+.svc-title{ font-size:18px; font-weight:700; color:var(--svc-title-color); text-align:center }
 
-/* 3D Order button */
+/* Order button - explicit click only */
 .order-3d{
-  margin-top:8px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
+  margin-top:12px; padding:14px 26px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
   color:#000;font-weight:800;cursor:pointer; box-shadow: 0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
   transform-style:preserve-3d; transition: transform .18s, box-shadow .18s;
 }
 .order-3d:hover{ transform: translateY(-6px) rotateX(6deg); box-shadow: 0 28px 50px rgba(0,0,0,0.75), inset 0 -6px 10px rgba(255,255,255,0.14) }
 
+/* Sample delete menu */
+.sample-delete{ position:absolute; top:6px; right:6px; cursor:pointer; font-size:18px; color:#fff; display:none; }
+.svc-card.admin-show .sample-delete{ display:block; }
+
 /* FONT SETTINGS PANEL (hidden by default) */
-.card-panel{ background:linear-gradient(180deg,#0b0b0d,#0f1113); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02); display:none; margin-top:12px }
-.card-panel select{ width:100%; padding:6px; border-radius:6px }
+#fontSettingsPanel{ display:none; margin-top:24px; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02); background:linear-gradient(180deg,#0b0b0d,#0f1113); }
+#fontSelector{ width:100%; padding:6px; border-radius:6px; }
+
+/* Admin Login prompt */
+#adminPassword{display:none; margin-top:12px; padding:6px 8px; border-radius:6px; border:1px solid #888; width:200px;}
+#adminConfirm{padding:6px 12px; border-radius:6px; border:none; background:var(--accent); color:#000; cursor:pointer;}
 
 </style>
 </head>
@@ -109,7 +126,7 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
     <div class="spacer"></div>
     <div class="footer-line">
       © 2025 AlTa Designs
-      <span class="admin-link" id="adminLink">Hidden</span>
+      <span class="admin-link" id="adminLink">Admin</span>
     </div>
   </aside>
 
@@ -124,72 +141,77 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
       </div>
     </div>
 
-    <div class="services-grid">
-      <div class="svc-card"><div class="svc-title">Logo Design</div><button class="order-3d">Order</button></div>
-      <div class="svc-card"><div class="svc-title">Web Design</div><button class="order-3d">Order</button></div>
-      <div class="svc-card"><div class="svc-title">UI/UX Design</div><button class="order-3d">Order</button></div>
-      <div class="svc-card"><div class="svc-title">3D Modeling</div><button class="order-3d">Order</button></div>
-      <div class="svc-card"><div class="svc-title">Animation</div><button class="order-3d">Order</button></div>
-      <div class="svc-card"><div class="svc-title">Branding</div><button class="order-3d">Order</button></div>
-      <div class="svc-card"><div class="svc-title">Social Media</div><button class="order-3d">Order</button></div>
-      <div class="svc-card"><div class="svc-title">Print Design</div><button class="order-3d">Order</button></div>
+    <div class="services-grid" id="servicesGrid">
+      <div class="svc-card"><div class="svc-title">Logo Design</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
+      <div class="svc-card"><div class="svc-title">Web Design</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
+      <div class="svc-card"><div class="svc-title">UI/UX Design</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
+      <div class="svc-card"><div class="svc-title">3D Modeling</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
+      <div class="svc-card"><div class="svc-title">Animation</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
+      <div class="svc-card"><div class="svc-title">Branding</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
+      <div class="svc-card"><div class="svc-title">Social Media</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
+      <div class="svc-card"><div class="svc-title">Print Design</div><button class="order-3d">Order</button><span class="sample-delete">⋮</span></div>
     </div>
+
+    <!-- ADMIN PASSWORD INPUT -->
+    <input type="password" id="adminPassword" placeholder="Enter admin password">
+    <button id="adminConfirm">Login</button>
 
     <!-- FONT SETTINGS PANEL -->
     <div class="card-panel" id="fontSettingsPanel">
       <h4 style="color:var(--muted)">Service & Hero Font</h4>
       <select id="fontSelector"></select>
     </div>
-
   </main>
 </div>
 
 <script>
-// 121 hardcoded fonts
-const fonts = [
-"Arial","Verdana","Helvetica","Tahoma","Trebuchet MS","Times New Roman","Georgia","Garamond","Courier New","Brush Script MT",
-"Impact","Lucida Sans","Palatino","Comic Sans MS","Candara","Century Gothic","Franklin Gothic Medium","Calibri","Cambria","Consolas",
-"Didot","Futura","Gill Sans","Lucida Console","Monaco","Optima","Rockwell","Segoe UI","Perpetua","Baskerville","Charter","Copperplate",
-"Avant Garde","Bookman","Avenir","American Typewriter","Big Caslon","Bradley Hand","Century Schoolbook","Chalkboard","Marker Felt","Snell Roundhand",
-"Arial Black","Bell MT","Berlin Sans FB","Bodoni MT","Book Antiqua","Bookman Old Style","Brush Script Std","Calisto MT","Century","Corbel","Courier",
-"Elephant","Engravers MT","Footlight MT Light","Freestyle Script","Futura PT","Garamond Premr Pro","Georgia Pro","Goudy Old Style","Harrington","Helvetica Neue",
-"Hoefler Text","Lucida Bright","Lucida Handwriting","Luminari","Menlo","Minion Pro","Monotype Corsiva","New Baskerville","News Gothic MT","OCR A Std",
-"Old English Text MT","Papyrus","Perpetua Titling MT","Rockwell Extra Bold","Savoye LET","Segoe Print","Segoe Script","Staatliches","Stencil","Superclarendon",
-"Symbol","Tahoma Bold","Times","Times New Roman PS","Trajan Pro","Trebuchet","Univers","Verdana Bold","Viner Hand","Vivaldi","Zapf Chancery","Zapf Dingbats",
-"Gill Sans MT","Gill Sans MT Condensed","Goudy Stout","Helvetica Light","Helvetica Bold","Courier Std","Courier Prime","Courier Prime Code","Courier Prime Sans","Courier Prime Serif",
-"Arial Narrow","Arial Rounded MT Bold","Arial Unicode MS","Arial Black","Bahnschrift","Californian FB","Cambria Math","Candara","Constantia","Consolas"
-];
+// Random Accent from central blue-yellow palette
+const accentColors=["#3b82f6","#60a5fa","#facc15","#eab308","#fef08a","#fcd34d","#fbbf24"];
+document.documentElement.style.setProperty('--accent', accentColors[Math.floor(Math.random()*accentColors.length)]);
 
+// Admin Login
 const adminLink = document.getElementById('adminLink');
+const passwordInput = document.getElementById('adminPassword');
+const confirmBtn = document.getElementById('adminConfirm');
 const fontPanel = document.getElementById('fontSettingsPanel');
 const fontSelector = document.getElementById('fontSelector');
-const heroTitle = document.getElementById('heroTitle');
-const serviceTitles = document.querySelectorAll('.svc-title');
+let isAdmin = false;
 
-adminLink.addEventListener('click', ()=>{
-  const pwd = prompt("Enter admin password:");
-  if(pwd === "Ali ray555"){
-    fontPanel.style.display = "block";
-    alert("Admin Mode Activated!");
-  }else{
-    alert("Incorrect password");
+adminLink.addEventListener('click',()=>{ passwordInput.style.display='inline'; confirmBtn.style.display='inline'; });
+
+confirmBtn.addEventListener('click',()=>{
+  if(passwordInput.value==="Ali ray555"){
+    isAdmin=true;
+    alert("Admin mode enabled!");
+    fontPanel.style.display='block';
+    document.querySelectorAll('.svc-card').forEach(card=>card.classList.add('admin-show'));
+    passwordInput.style.display='none'; confirmBtn.style.display='none';
+  } else {
+    alert("Wrong password!");
   }
 });
 
-// populate fonts dropdown
+// 121 Fonts hardcoded
+const fonts=["Arial","Verdana","Helvetica","Tahoma","Trebuchet MS","Impact","Georgia","Garamond","Courier New","Brush Script MT","Comic Sans MS","Lucida Console","Palatino Linotype","Times New Roman","Franklin Gothic Medium","Gill Sans","Century Gothic","Candara","Segoe UI","Optima","Futura","Calibri","Cambria","Didot","Monaco","Baskerville","Consolas","Copperplate","Cochin","Avant Garde","Book Antiqua","Bell MT","Perpetua","Rockwell","Lucida Bright","MS Sans Serif","MS Serif","Segoe Print","Segoe Script","Stencil","Zapfino","Charter","Geneva","Andale Mono","Palatino","Nimbus Sans","PT Sans","PT Serif","Lobster","Oswald","Roboto","Open Sans","Montserrat","Raleway","Lato","Ubuntu","Merriweather","Noto Sans","Noto Serif","Playfair Display","Source Sans Pro","PT Mono","Inconsolata","Droid Sans","Droid Serif","Anton","Bebas Neue","Exo","Fira Sans","Karla","Libre Baskerville","Muli","Oxygen","Poppins","Quicksand","Raleway Dots","Roboto Condensed","Righteous","Titillium Web","Yanone Kaffeesatz","Zilla Slab","Comfortaa","Arvo","Cabin","Cairo","DM Sans","DM Serif Display","Josefin Sans","Josefin Slab","Mukta","Mukta Mahee","Nanum Gothic","Nanum Myeongjo","PT Sans Narrow","PT Serif Caption","Ropa Sans","Rubik","Signika","Varela Round","Work Sans","Dosis","Hind","Hind Siliguri","Hind Vadodara","Nunito","Nunito Sans","Play","Manrope","Exo 2","Fira Sans Condensed","Archivo","Archivo Narrow","Barlow","Barlow Condensed","Belleza","Chivo","Encode Sans","Exo 2 Condensed","Hind Guntur","Inter","Inter Tight","Lexend","Mukta Vaani","Red Hat Display","Red Hat Text","Spectral","Teko"];
 fonts.forEach(f=>{
   const opt = document.createElement('option');
-  opt.value = f;
-  opt.innerText = f;
-  fontSelector.appendChild(opt);
+  opt.value=f; opt.textContent=f; fontSelector.appendChild(opt);
 });
 
-// change fonts dynamically
-fontSelector.addEventListener('change', ()=>{
-  const selected = fontSelector.value;
-  heroTitle.style.fontFamily = selected;
-  serviceTitles.forEach(svc => svc.style.fontFamily = selected);
+// Apply selected font to hero and service titles
+fontSelector.addEventListener('change',()=>{
+  const val = fontSelector.value;
+  document.getElementById('heroTitle').style.fontFamily=val;
+  document.querySelectorAll('.svc-title').forEach(t=>t.style.fontFamily=val);
 });
+
+// Delete sample option
+document.querySelectorAll('.sample-delete').forEach(del=>{
+  del.addEventListener('click',()=>{
+    if(isAdmin && confirm("Delete this sample?")) del.parentElement.remove();
+  });
+});
+
 </script>
 </body>
 </html>
