@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AlTa Designs — Updated Admin</title>
+<title>AlTa Designs — Final</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700;800&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Oswald:wght@700&display=swap');
 :root{
   --sidebar-w:260px;
   --gap:18px;
@@ -17,49 +20,133 @@
   --dark1:#070708; --dark2:#0b0b0d;
   --light1:#f6f8fb; --light2:#eef4ff;
   --svc-title-color:#ffffff;
-  --font: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
-  --svc-font: 'Oswald', sans-serif;
+  --font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:var(--font);color:var(--text);background:linear-gradient(180deg,var(--dark1),var(--dark2));transition:background .3s,color .3s;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+body{
+  font-family:var(--font);
+  color:var(--text);
+  background:linear-gradient(180deg,var(--dark1),var(--dark2));
+  transition:background .3s,color .3s;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+
+/* Layout */
 .app { display:flex; height:100vh; gap:var(--gap); align-items:stretch; overflow:hidden; }
-.sidebar { width:var(--sidebar-w); min-width:var(--sidebar-w); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-right:1px solid rgba(255,255,255,0.03); padding:18px; display:flex; flex-direction:column; }
+.sidebar {
+  width:var(--sidebar-w); min-width:var(--sidebar-w);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-right:1px solid rgba(255,255,255,0.03);
+  padding:18px; display:flex; flex-direction:column;
+}
 .brand { display:flex; flex-direction:column; align-items:center; gap:6px; margin-bottom:6px }
-.logo-mark { width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:18px;color:var(--accent); background:linear-gradient(135deg, rgba(212,175,55,0.12), rgba(200,140,40,0.06)); border:1px solid rgba(255,255,255,0.03); }
-.brand h1{font-size:18px;color:var(--accent); margin:0}
-.brand p{font-size:11px;color:var(--muted);margin:0}
+.logo-mark { width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:18px;color:var(--accent);
+  background:linear-gradient(135deg, rgba(212,175,55,0.12), rgba(200,140,40,0.06)); border:1px solid rgba(255,255,255,0.03);
+}
+.brand h1{font-size:18px;color:var(--accent); margin:0; font-family:'Oswald',sans-serif;}
+.brand p{font-size:11px;color:var(--muted);margin:0;}
+
+/* Sidebar nav */
 nav.side{margin-top:12px;display:flex;flex-direction:column;gap:6px}
 nav.side button{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;text-align:left;transition:all .12s}
 nav.side button:hover{transform:translateX(6px);background:rgba(255,255,255,0.01)}
 nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgba(255,215,130,0.03), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(197,155,38,0.03)}
+
 .spacer{flex:1}
-.sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center;cursor:pointer}
+.sidebar .footer-line{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center;cursor:pointer;}
+
+/* Main */
 .main { flex:1; display:flex; flex-direction:column; padding:28px; overflow:auto; position:relative; }
+
+/* HOME: title, cloud search, services */
 .home-top { display:flex; flex-direction:column; align-items:center; gap:12px; margin-bottom:18px; margin-top:12px }
-.hero-title{ font-size:64px; font-weight:900; color:var(--accent); letter-spacing:.4px; text-shadow:0 12px 40px rgba(0,0,0,0.6); transition: font-size .2s, transform .2s; font-family:var(--svc-font) }
+.hero-title{ font-size:64px; font-weight:900; color:var(--accent); letter-spacing:.4px; text-shadow:0 12px 40px rgba(0,0,0,0.6); font-family:'Oswald',sans-serif; transition: font-size .2s, transform .2s }
 @media (max-width:900px){ .hero-title{ font-size:36px } }
-.search-wrap{ width:100%; display:flex; justify-content:center; margin-top:8px }
-.cloud-search{ width:min(760px,64%); position:relative; border-radius:999px; padding:16px 20px; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)); border:1px solid rgba(255,255,255,0.045); backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 2px 8px rgba(255,255,255,0.02); }
-.cloud-search::before{ content:""; position:absolute; inset:-18px; border-radius:999px; filter:blur(30px); opacity:0.18; background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 20%), radial-gradient(circle at 80% 60%, rgba(180,220,255,0.02), transparent 10%); }
-.cloud-search input{ position:relative; z-index:2; width:100%; border:0; outline:0; background:transparent; color:var(--text); font-size:17px; padding:6px 8px; }
+
+/* Cloud-shaped search */
+.search-wrap{ width:100%; display:flex; justify-content:center; }
+.cloud-search{
+  width:min(760px,64%); position:relative; border-radius:999px; padding:16px 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border:1px solid rgba(255,255,255,0.045); backdrop-filter: blur(12px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 2px 8px rgba(255,255,255,0.02);
+}
+.cloud-search::before{
+  content:""; position:absolute; inset:-18px; border-radius:999px; filter:blur(30px); opacity:0.18;
+  background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 20%), radial-gradient(circle at 80% 60%, rgba(180,220,255,0.02), transparent 10%);
+}
+.cloud-search input{ position:relative; z-index:2; width:100%; border:0; outline:0; background:transparent; color:var(--text); font-size:17px; padding:6px 8px; border-radius:999px; font-family:'Poppins',sans-serif; }
 .cloud-search .voice{ position:absolute; right:12px; top:50%; transform:translateY(-50%); background:transparent; border:0; color:var(--muted); font-size:18px; cursor:pointer; z-index:3 }
+
+/* Services grid */
 .services-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px; margin-top:18px; align-items:start }
-.svc-card{ border-radius:14px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.025); box-shadow: 0 14px 40px rgba(0,0,0,0.5); display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:pointer; }
+.svc-card{
+  border-radius:14px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border:1px solid rgba(255,255,255,0.025); box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+  display:flex; flex-direction:column; align-items:center; gap:12px; transition: transform .18s; cursor:pointer;
+  font-family:'Oswald',sans-serif;
+}
 .svc-card:hover{ transform: translateY(-8px) }
-.svc-title{ font-size:20px; font-weight:700; font-family:var(--svc-font); color:var(--svc-title-color); text-align:center }
-.order-3d{ margin-top:12px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f); color:#000;font-weight:800;cursor:pointer; box-shadow: 0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12); transform-style:preserve-3d; transition: transform .18s, box-shadow .18s; }
+.svc-title{ font-size:18px; font-weight:800; color:var(--svc-title-color, #fff); text-align:center }
+
+/* 3D Order button */
+.order-3d{
+  margin-top:12px; padding:12px 22px; border-radius:999px; border:0; background:linear-gradient(180deg,var(--accent), #ffd36f);
+  color:#000;font-weight:800;cursor:pointer; box-shadow: 0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
+  transform-style:preserve-3d; transition: transform .18s, box-shadow .18s;
+}
 .order-3d:hover{ transform: translateY(-6px) rotateX(6deg); box-shadow: 0 28px 50px rgba(0,0,0,0.75), inset 0 -6px 10px rgba(255,255,255,0.14) }
-.fs-overlay{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2200; backdrop-filter: blur(6px); }
+
+/* FS Modal with blur background */
+.fs-overlay{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2200;
+}
 .fs-overlay.show{ display:flex }
-.fs-panel{ position:relative; z-index:10; width:80%; max-width:1000px; height:80vh; background: linear-gradient(180deg,#0b0b0d,#111214); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
-.fs-gallery{ flex:1; display:grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap:12px; align-content:start; overflow:auto; padding:12px }
-.fs-thumb{ position:relative; background:#0b0b0d; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.03) }
-.fs-thumb img{ width:100%; height:170px; object-fit:cover; display:block }
-.admin-btns{ position:absolute; top:6px; right:6px; display:flex; gap:4px; }
-.admin-btns button{ font-size:12px; padding:2px 6px; border:none; border-radius:4px; cursor:pointer; }
+.fs-backdrop{ position:absolute; inset:0; backdrop-filter: blur(8px); background: rgba(0,0,0,0.45); }
+.fs-panel{
+  position:relative; z-index:10; width:95%; max-width:900px; height:80vh; background: linear-gradient(180deg,#0b0b0d,#111214);
+  border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+}
+.fs-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.02) }
+.fs-title{ font-size:18px; color:var(--accent); font-weight:700; font-family:'Oswald',sans-serif; }
+.fs-body{ flex:1; display:flex; gap:12px; padding:14px; overflow:auto }
+.fs-gallery{ flex:1; display:grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap:12px; align-content:start; }
+.fs-thumb{ background:#0b0b0d; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); position:relative }
+.fs-thumb img{ width:100%; height:150px; object-fit:cover; display:block }
+
+/* admin buttons on samples */
+.fs-thumb .admin-btns{ display:flex; justify-content:center; gap:4px; margin-top:4px; }
+.fs-thumb button{ font-size:12px; padding:4px 6px; border-radius:4px; border:0; cursor:pointer; font-family:'Poppins',sans-serif; }
+.fs-thumb button.preview{ background:rgba(212,175,55,0.8); color:#000; }
+.fs-thumb button.replace{ background:rgba(255,255,255,0.2); color:#fff; }
+.fs-thumb button.delete{ background:rgba(255,0,0,0.6); color:#fff; }
+
+/* upload area */
+.upload-area{ padding:12px; border-radius:10px; border:2px dashed rgba(255,255,255,0.04); text-align:center; color:var(--muted); background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)) }
+.upload-area.dragover{ border-color:var(--accent); background: rgba(255,255,255,0.02) }
+
+/* pages generic */
+.page{ display:none }
+.page.active{ display:block }
+
+/* responsive */
+@media (max-width:1000px){
+  :root{ --sidebar-w:30% }
+  .sidebar{ width:30% }
+  .fs-side{ display:none }
+  .cloud-search{ width:86% }
+}
+@media (max-width:560px){
+  :root{ --sidebar-w:34% }
+  .sidebar{ width:34% }
+  .hero-title{ font-size:28px }
+  .cloud-search{ width:92% }
+  .services-grid{ grid-template-columns:1fr }
+}
 </style>
 </head>
+
 <body>
 <div class="app">
   <!-- SIDEBAR -->
@@ -82,81 +169,82 @@ nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgb
 
     <div class="spacer"></div>
 
-    <div class="footer-line" id="footerLine">
+    <div class="footer-line" id="adminFooter">
       © AlTa Group of Graphics — <strong>Rao Ali</strong>
     </div>
   </aside>
 
   <!-- MAIN -->
   <main class="main" id="main">
+    <!-- HOME PAGE -->
     <section id="home" class="page active">
       <div class="home-top">
         <div id="heroWrap" style="display:flex;flex-direction:column;align-items:center;">
           <div class="hero-title" id="heroTitle">AlTa Design</div>
         </div>
-        <div class="search-wrap">
+
+        <div class="search-wrap" style="margin-top:8px">
           <div class="cloud-search" id="cloudSearch">
             <input id="searchInput" placeholder="Search — type or use voice..." aria-label="Search">
             <button class="voice" id="voiceBtn" title="Voice search">🎤</button>
           </div>
         </div>
       </div>
+
       <div class="services-grid" id="servicesGrid" aria-live="polite"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="page">
+      <h2 style="color:var(--accent)">Settings</h2>
+      <div class="settings-grid" id="settingsGrid"></div>
     </section>
   </main>
 </div>
+
+<!-- Fullscreen Modal -->
+<div class="fs-overlay" id="fsOverlay" aria-hidden="true">
+  <div class="fs-backdrop"></div>
+  <div class="fs-panel" role="dialog" aria-modal="true" aria-label="Service Samples">
+    <div class="fs-top">
+      <div class="fs-title" id="fsTitle">Service</div>
+      <div>
+        <button id="fsClose">✕</button>
+      </div>
+    </div>
+    <div class="fs-body">
+      <div class="fs-gallery" id="fsGallery"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 const ADMIN_PASSWORD = 'Ali ray555';
-const LS_SAMPLES = 'altadesigns_samples_v3';
+const SERVICES = [
+  'YouTube Thumbnail','Social Media Posts','3D Wooden Logo',
+  'Wedding Invitation Card','3D Logo','Packaging Design',
+  'T-Shirt Design','Business Card'
+];
 let isAdmin=false;
-const SERVICES=['YouTube Thumbnail','Social Media Posts','3D Wooden Logo','Wedding Invitation Card','3D Logo','Packaging Design','T-Shirt Design','Business Card'];
-let samples = JSON.parse(localStorage.getItem(LS_SAMPLES)||'null')||{};
-if(!Object.keys(samples).length){ SERVICES.forEach(s=>samples[s]=[]); localStorage.setItem(LS_SAMPLES,JSON.stringify(samples)); }
+let samples={};
+SERVICES.forEach(s=>samples[s]=[
+  'https://via.placeholder.com/400x300?text='+encodeURIComponent(s+' Sample 1'),
+  'https://via.placeholder.com/400x300?text='+encodeURIComponent(s+' Sample 2')
+]);
 
-const servicesGrid=document.getElementById('servicesGrid');
+const servicesGrid = document.getElementById('servicesGrid');
+
 function buildServices(){
   servicesGrid.innerHTML='';
   SERVICES.forEach(name=>{
     const card=document.createElement('div'); card.className='svc-card';
-    card.innerHTML=`<div class="svc-title">${name}</div><button class="order-3d" data-service="${name}">Order Now</button>`;
-    card.addEventListener('click',()=>openServiceModal(name));
-    card.querySelector('.order-3d').addEventListener('click',e=>{e.stopPropagation();openServiceModal(name)});
+    card.innerHTML=`<div class="svc-title">${name}</div>
+                    <button class="order-3d" data-service="${name}">Order Now</button>`;
+    card.querySelector('.order-3d').addEventListener('click', e=>{e.stopPropagation(); openServiceModal(name);});
+    card.addEventListener('click', ()=>openServiceModal(name));
     servicesGrid.appendChild(card);
   });
 }
 
-const fsOverlay=document.createElement('div'); fsOverlay.className='fs-overlay'; fsOverlay.id='fsOverlay'; document.body.appendChild(fsOverlay);
-const fsPanel=document.createElement('div'); fsPanel.className='fs-panel'; fsOverlay.appendChild(fsPanel);
-const fsGallery=document.createElement('div'); fsGallery.className='fs-gallery'; fsPanel.appendChild(fsGallery);
-function openServiceModal(service){
-  fsGallery.innerHTML='';
-  (samples[service]||[]).forEach((url,i)=>{
-    const d=document.createElement('div'); d.className='fs-thumb';
-    d.innerHTML=`<img src="${url}" alt="${service} sample">`;
-    if(isAdmin){
-      const btns=document.createElement('div'); btns.className='admin-btns';
-      btns.innerHTML=`<button onclick="window.open('${url}','_blank')">Preview</button><button onclick='replaceSample(${i},"${service}")'>Replace</button><button onclick='deleteSample(${i},"${service}")'>Delete</button>`;
-      d.appendChild(btns);
-    }
-    fsGallery.appendChild(d);
-  });
-  fsOverlay.classList.add('show');
-}
-fsOverlay.addEventListener('click',e=>{if(e.target===fsOverlay) fsOverlay.classList.remove('show');});
-
-function replaceSample(index,svc){
-  const input=document.createElement('input'); input.type='file'; input.accept='image/*';
-  input.onchange=e=>{
-    const reader=new FileReader(); reader.onload=ev=>{
-      samples[svc][index]=ev.target.result; localStorage.setItem(LS_SAMPLES,JSON.stringify(samples)); openServiceModal(svc);
-    }; reader.readAsDataURL(e.target.files[0]);
-  }; input.click();
-}
-function deleteSample(index,svc){
-  if(confirm('Delete this sample?')){ samples[svc].splice(index,1); localStorage.setItem(LS_SAMPLES,JSON.stringify(samples)); openServiceModal(svc); }
-}
-
-document.getElementById('footerLine').addEventListener('click',()=>{
-  const p=prompt('Enter admin password:');
-  if(p===ADMIN_PASSWORD){ isAdmin=true; alert('Admin mode ON'); buildServices(); }
-  else alert('Wrong
+const fsOverlay=document.getElementById('fsOverlay');
+const fsTitle=document.getElementById('fs
