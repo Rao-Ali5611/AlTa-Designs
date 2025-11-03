@@ -1,245 +1,643 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AlTa Designs</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AlTa Designs — Final</title>
 <style>
-  *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+  /* ====== RESET & ROOT ====== */
+  :root{
+    --sidebar-w: 260px;
+    --gap: 18px;
+    --accent: #d4af37;
+    --text: #e8eef6;
+    --muted: #9aa0a6;
+    --card-bg: rgba(255,255,255,0.03);
+    --glass: rgba(255,255,255,0.03);
+    --bg-dark-1: #070708;
+    --bg-dark-2: #0b0b0d;
+    --main-font: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:var(--main-font);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  body{color:var(--text);background:linear-gradient(180deg,var(--bg-dark-1),var(--bg-dark-2));}
+
+  /* ====== LAYOUT: container with left column and main panel ====== */
+  .container{display:flex;height:100vh;gap:var(--gap);align-items:stretch}
+  .sidebar{
+    width:var(--sidebar-w);min-width:var(--sidebar-w);
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-right:1px solid rgba(255,255,255,0.03);
+    padding:18px;display:flex;flex-direction:column;align-items:stretch;
+  }
+  .sidebar .brand{display:flex;flex-direction:column;align-items:center;gap:8px;padding-bottom:8px}
+  .logo-mark{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:18px;color:var(--accent);background:linear-gradient(135deg, rgba(212,175,55,0.12), rgba(200,140,40,0.06));border:1px solid rgba(255,255,255,0.03)}
+  .brand h1{font-size:18px;margin:0;color:var(--accent);letter-spacing:0.4px}
+  .brand p{margin:0;font-size:11px;color:var(--muted)}
+  nav.side{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+  nav.side button{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;text-align:left;transition:all .12s}
+  nav.side button:hover{transform:translateX(6px);background:rgba(255,255,255,0.01)}
+  nav.side button.active{color:var(--accent);background:linear-gradient(90deg, rgba(255,215,130,0.03), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(197,155,38,0.03)}
+
+  .spacer{flex:1}
+  .sidebar footer{font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02);text-align:center}
+  .footer-admin{cursor:pointer;color:var(--muted);font-size:12px;margin-top:6px}
+
+  /* MAIN */
+  .main{
+    flex:1;display:flex;flex-direction:column;padding:24px;overflow:auto;
+    background:transparent;
   }
 
-  body{
-    background:#0f0f0f;
-    color:white;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
+  /* ====== HOME: heading + cloudy search + services grid ====== */
+  .home-top{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px}
+  .hero-title{
+    font-size:48px;font-weight:900;color:var(--accent);letter-spacing:.6px;
+    text-shadow:0 12px 40px rgba(0,0,0,0.6);
+    line-height:1;
+    transition:color .25s, text-shadow .25s;
+    background-clip:text;
   }
 
-  header{
-    text-align:center;
-    margin-top:60px;
+  /* CLOUDY 3D SEARCH */
+  .search-wrap{width:100%;display:flex;justify-content:center}
+  .cloud-search{
+    width:min(720px,60%);position:relative;border-radius:999px;padding:14px 18px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.045);backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 2px 8px rgba(255,255,255,0.02);
   }
-  header h1{
-    font-size:48px;
-    font-weight:700;
-    letter-spacing:1px;
-    color:#00bcd4;
-    text-shadow:0 0 15px #00bcd4;
+  /* pseudo-cloud glow layers */
+  .cloud-search::before, .cloud-search::after{
+    content:"";position:absolute;border-radius:999px;pointer-events:none;z-index:0;filter:blur(28px);opacity:.25;
   }
+  .cloud-search::before{inset:-18px; background: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.06), transparent 20%);}
+  .cloud-search::after{inset:-34px -6px -10px -6px;background: radial-gradient(circle at 80% 60%, rgba(200,200,255,0.02), transparent 10%);}
+  .cloud-search input{
+    position:relative;z-index:1;background:transparent;border:0;outline:none;color:var(--text);width:100%;font-size:16px;padding:6px 8px;
+  }
+  .cloud-search .voice{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer;z-index:2}
 
-  .search-bar{
-    margin-top:20px;
-    width:340px;
-    height:60px;
-    border:none;
-    outline:none;
-    border-radius:50px;
-    padding:0 25px;
-    background:linear-gradient(135deg,#fff 0%,#e3f2fd 100%);
-    color:#333;
-    font-size:18px;
-    box-shadow:inset 0 0 10px rgba(0,0,0,0.2),0 4px 15px rgba(0,0,0,0.3);
+  /* SERVICES GRID */
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px}
+  .svc-card{
+    border-radius:14px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.025);box-shadow:0 14px 40px rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center;gap:12px;transition:transform .18s;
   }
+  .svc-card:hover{transform:translateY(-8px)}
+  .svc-title{font-size:16px;font-weight:700;color:var(--svc-color, #fff);text-align:center}
+  /* 3D Order Button */
+  .order-3d{
+    margin-top:6px;padding:12px 22px;border-radius:999px;border:0;background:linear-gradient(180deg, var(--accent), #ffdb8f);
+    color:#000;font-weight:800;cursor:pointer;box-shadow:0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
+    transform-style:preserve-3d;transition:transform .18s, box-shadow .18s;
+  }
+  .order-3d:hover{transform:translateY(-6px) rotateX(6deg);box-shadow:0 28px 50px rgba(0,0,0,0.75), inset 0 -6px 10px rgba(255,255,255,0.14)}
 
-  .services{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-    width:90%;
-    max-width:1200px;
-    margin:60px auto;
-  }
+  /* FULLSCREEN SERVICE CANVA-STYLE PANEL */
+  .fs-modal{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:linear-gradient(180deg, rgba(0,0,0,0.78), rgba(0,0,0,0.9));z-index:2000;padding:18px}
+  .fs-modal.show{display:flex}
+  .fs-panel{width:100%;max-width:1200px;height:88vh;background:linear-gradient(180deg,#0b0b0d,#111214);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .fs-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.02)}
+  .fs-title{font-size:18px;color:var(--accent);font-weight:700}
+  .fs-body{flex:1;display:flex;gap:12px;padding:16px;overflow:auto}
+  .fs-gallery{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;align-content:start}
+  .fs-thumb{background:#0b0b0d;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+  .fs-thumb img{width:100%;height:160px;object-fit:cover;display:block}
+  .fs-side{width:360px;min-width:220px;padding:12px;border-left:1px solid rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:12px}
+  .fs-side .order-big{margin-top:auto;padding:12px;border-radius:12px;border:0;background:var(--accent);color:#070707;font-weight:800;cursor:pointer}
+  .fs-side .order-small{display:flex;gap:8px;flex-wrap:wrap}
+  .fs-upload{padding:12px;border-radius:8px;border:1px dashed rgba(255,255,255,0.03);background:transparent;color:var(--muted);text-align:center}
+  .fs-upload input{display:none}
 
-  .service{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:20px;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 4px 20px rgba(0,0,0,0.3);
-    backdrop-filter:blur(6px);
-    transition:all .3s;
-  }
+  /* SETTINGS (column-wise) */
+  .settings-page{display:none}
+  .settings-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .card-panel{background:linear-gradient(180deg,#0b0b0d,#0f1113);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+  .swatches{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .swatch{width:36px;height:28px;border-radius:8px;cursor:pointer;border:2px solid rgba(255,255,255,0.03)}
 
-  .service:hover{
-    transform:translateY(-8px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.4);
-  }
+  /* ABOUT/CONTACT/OTHER PAGES */
+  .page{display:none}
+  .page.active{display:block}
 
-  .service h3{
-    margin-bottom:15px;
-    font-size:20px;
-    color:#fff;
-  }
+  /* FOOTER text and hidden "c" */
+  .bottom-bar{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
+  .bottom-bar .hidden-link{display:inline-block;margin-left:8px;color:var(--muted);cursor:pointer;text-decoration:underline;font-size:12px}
 
-  .order-btn{
-    margin-top:10px;
-    padding:10px 18px;
-    border:none;
-    outline:none;
-    border-radius:12px;
-    font-size:16px;
-    font-weight:600;
-    color:#fff;
-    cursor:pointer;
-    background:linear-gradient(135deg,#2196f3,#00bcd4);
-    box-shadow:0 4px 10px rgba(0,188,212,0.4);
-    transition:all .3s;
+  /* RESPONSIVE: keep left column visible on mobile and equal height */
+  @media (max-width:900px){
+    :root{--sidebar-w:28%}
+    .sidebar{width:28%}
+    .fs-side{display:none}
+    .cloud-search{width:86%}
   }
-
-  .order-btn:hover{
-    transform:scale(1.08);
-    box-shadow:0 6px 15px rgba(0,188,212,0.6);
-  }
-
-  footer{
-    margin-top:auto;
-    padding:20px;
-    text-align:center;
-    font-size:14px;
-    color:#ccc;
-  }
-
-  /* Popup overlay */
-  .popup-overlay{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.6);
-    backdrop-filter:blur(6px);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:999;
-  }
-
-  .popup{
-    background:rgba(30,30,30,0.95);
-    border-radius:20px;
-    padding:30px;
-    width:90%;
-    max-width:400px;
-    text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,0.5);
-    animation:popIn .4s ease;
-  }
-
-  @keyframes popIn{
-    from{transform:scale(0.7);opacity:0;}
-    to{transform:scale(1);opacity:1;}
-  }
-
-  .popup h2{
-    color:#fff;
-    margin-bottom:20px;
-  }
-
-  .popup button{
-    display:block;
-    width:100%;
-    margin:10px 0;
-    padding:12px 0;
-    font-size:16px;
-    border:none;
-    border-radius:12px;
-    font-weight:600;
-    cursor:pointer;
-    transition:all .3s;
-  }
-
-  .popup .whatsapp{
-    background:linear-gradient(135deg,#25D366,#128C7E);
-    color:#fff;
-  }
-  .popup .whatsapp:hover{
-    transform:scale(1.05);
-  }
-
-  .popup .telegram{
-    background:linear-gradient(135deg,#0088cc,#00aaff);
-    color:#fff;
-  }
-  .popup .telegram:hover{
-    transform:scale(1.05);
-  }
-
-  .popup .close{
-    background:rgba(255,255,255,0.1);
-    color:#ccc;
-  }
-  .popup .close:hover{
-    background:rgba(255,255,255,0.2);
-  }
-
-  @media(max-width:600px){
-    header h1{font-size:34px;}
-    .search-bar{width:80%;height:50px;font-size:16px;}
+  @media (max-width:560px){
+    .container{flex-direction:row; /* still two columns */ }
+    .sidebar{width:34%;padding:12px}
+    .main{padding:12px}
+    .hero-title{font-size:28px}
+    .cloud-search{width:92%}
+    .services-grid{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
+<div class="container">
+  <!-- SIDEBAR (left column) -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo-mark">AD</div>
+      <h1 style="margin:0;font-size:16px;color:var(--accent)">AlTa Design</h1>
+      <p style="margin:0;font-size:11px;color:var(--muted)">Group of Graphics</p>
+    </div>
 
-<header>
-  <h1>AlTa Designs</h1>
-  <input type="text" class="search-bar" placeholder="☁️ Search something...">
-</header>
+    <nav class="side" role="navigation" aria-label="Main">
+      <button class="active" data-target="home">🏠 Home</button>
+      <button data-target="settings">⚙️ Settings</button>
+      <button data-target="projects">📁 My Projects</button>
+      <button data-target="chat">💬 Client Chat</button>
+      <button data-target="contact">📞 Contact</button>
+      <button data-target="about">📜 About Us</button>
+      <button data-target="inspiration">✨ Inspiration</button>
+    </nav>
 
-<section class="services">
-  <div class="service"><h3>YouTube Thumbnail</h3><button class="order-btn">Order Now</button></div>
-  <div class="service"><h3>Social Media Posts</h3><button class="order-btn">Order Now</button></div>
-  <div class="service"><h3>3D Wooden Logo</h3><button class="order-btn">Order Now</button></div>
-  <div class="service"><h3>Wedding Invitation Card</h3><button class="order-btn">Order Now</button></div>
-  <div class="service"><h3>3D Logo</h3><button class="order-btn">Order Now</button></div>
-  <div class="service"><h3>Packaging Design</h3><button class="order-btn">Order Now</button></div>
-  <div class="service"><h3>T-Shirt Design</h3><button class="order-btn">Order Now</button></div>
-  <div class="service"><h3>Business Card</h3><button class="order-btn">Order Now</button></div>
-</section>
+    <div class="spacer"></div>
 
-<footer>
-  © 2025 AlTa Group of Graphics | Created by <b>Rao Ali</b>
-</footer>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="bottom-bar">
+        © AlTa Group of Graphics — <span style="font-weight:700">Rao Ali</span>
+        <span class="hidden-link" id="hiddenC">c</span>
+      </div>
+    </div>
+  </aside>
 
-<!-- Popup -->
-<div class="popup-overlay" id="popup">
-  <div class="popup">
-    <h2>Place Your Order</h2>
-    <button class="whatsapp" onclick="orderWhatsApp()">Order on WhatsApp</button>
-    <button class="telegram" onclick="orderTelegram()">Order on Telegram</button>
-    <button class="close" onclick="closePopup()">Close</button>
+  <!-- MAIN -->
+  <main class="main" id="main">
+    <!-- HOME PAGE -->
+    <section id="home" class="page active">
+      <div class="home-top">
+        <div class="hero-title" id="heroTitle">AlTa Design</div>
+        <div class="search-wrap">
+          <div class="cloud-search" id="cloudSearch">
+            <input id="searchInput" placeholder="Search — type or use voice..." aria-label="Search">
+            <button class="voice" id="voiceBtn" title="Voice search">🎤</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="services-grid" id="servicesGrid" role="list">
+        <!-- service cards inserted by JS -->
+      </div>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section id="settings" class="page settings-page">
+      <h2 style="color:var(--accent)">Settings</h2>
+      <div class="settings-grid" id="settingsGrid">
+        <div class="card-panel">
+          <h4 style="color:var(--muted)">Theme</h4>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button onclick="setTheme('dark')">Dark</button>
+            <button onclick="setTheme('light')">Light</button>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <h4 style="color:var(--muted)">Wallpapers (55)</h4>
+          <div style="margin-top:10px;max-height:260px;overflow:auto" id="wallpapers"></div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button onclick="removeWallpaper()">Remove</button>
+            <button onclick="useDefaultWallpaper()">Default</button>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <h4 style="color:var(--muted)">Accent Colors (55)</h4>
+          <div class="swatches" id="accentSwatches"></div>
+        </div>
+
+        <div class="card-panel">
+          <h4 style="color:var(--muted)">Service Title Colors (55)</h4>
+          <div class="swatches" id="titleSwatches"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="page">
+      <h2 style="color:var(--accent)">My Projects</h2>
+      <p style="color:var(--muted)">Your uploaded projects will appear here (admin uploads).</p>
+      <div id="projectsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px"></div>
+    </section>
+
+    <!-- CLIENT CHAT -->
+    <section id="chat" class="page">
+      <h2 style="color:var(--accent)">Client Chat</h2>
+      <div style="color:var(--muted);margin-top:8px">
+        WhatsApp / Telegram: <strong>+92 303 2792947</strong><br/>
+        Emails: <br/>
+        muhammadaliorangzaibrao@gmail.com<br/>
+        abug2572@gmail.com<br/>
+        ra3275867@gmail.com<br/>
+        naeemshahzad112324@gmail.com
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="page">
+      <h2 style="color:var(--accent)">Contact</h2>
+      <div style="color:var(--muted);margin-top:8px">
+        <p>WhatsApp / Telegram: <strong>+92 303 2792947</strong></p>
+        <p>Emails: see Client Chat tab</p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="page">
+      <h2 style="color:var(--accent)">About Us</h2>
+      <div id="aboutContent" style="color:var(--muted);margin-top:8px;white-space:pre-wrap"></div>
+      <button id="translateBtn" style="margin-top:12px;padding:8px;border-radius:8px;border:0;background:var(--accent);cursor:pointer;color:#000">Translate to Urdu</button>
+    </section>
+
+    <!-- INSPIRATION -->
+    <section id="inspiration" class="page">
+      <h2 style="color:var(--accent)">Inspiration</h2>
+      <div id="inspirationGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px"></div>
+    </section>
+  </main>
+</div>
+
+<!-- Fullscreen service modal (Canva-like) -->
+<div class="fs-modal" id="fsModal" aria-hidden="true">
+  <div class="fs-panel" role="dialog" aria-modal="true" aria-label="Service Samples">
+    <div class="fs-top">
+      <div class="fs-title" id="fsTitle">Service</div>
+      <div>
+        <button class="fs-close" id="fsCloseBtn">✕ Close</button>
+      </div>
+    </div>
+    <div class="fs-body">
+      <div class="fs-gallery" id="fsGallery"></div>
+      <div class="fs-side">
+        <div style="color:var(--muted)">Order this service</div>
+        <button class="order-big" id="fsOrderBig">Order Now</button>
+        <div style="color:var(--muted);margin-top:8px">Quick order</div>
+        <div class="order-small">
+          <button id="fsOrderWhats">WhatsApp</button>
+          <button id="fsOrderTele">Telegram</button>
+        </div>
+
+        <div id="fsAdminUpload" class="fs-upload" style="display:none">
+          <div style="font-size:13px;color:var(--muted)">Admin Upload — drag & drop or click</div>
+          <label style="display:block;margin-top:8px;cursor:pointer;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02)">
+            <input type="file" id="fsFileInput" accept="image/*" multiple> Click to choose images
+          </label>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px">Uploaded images are stored locally (this browser).</div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-  const popup = document.getElementById('popup');
-  const orderBtns = document.querySelectorAll('.order-btn');
+/* =========================
+   Data & Config
+   ========================= */
+const ADMIN_PASSWORD = 'Ali ray555';
+const PHONE = '923032792947';
+const TG_LINK = 'https://t.me/+923032792947';
+const LS_SAMPLES = 'alta_samples_v1';
+const LS_PROJECTS = 'alta_projects_v1';
+const LS_SETTINGS = 'alta_settings_v1';
 
-  orderBtns.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      popup.style.display='flex';
+const SERVICES = [
+  'YouTube Thumbnail',
+  'Social Media Posts',
+  '3D Wooden Logo',
+  'Wedding Invitation Card',
+  '3D Logo',
+  'Packaging Design',
+  'T-Shirt Design',
+  'Business Card'
+];
+
+/* Load or init samples */
+let samples = JSON.parse(localStorage.getItem(LS_SAMPLES) || 'null');
+if(!samples){
+  samples = {};
+  SERVICES.forEach(s => samples[s] = [
+    'https://via.placeholder.com/1400x900?text='+encodeURIComponent(s+' Sample 1'),
+    'https://via.placeholder.com/1400x900?text='+encodeURIComponent(s+' Sample 2')
+  ]);
+  localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
+}
+
+/* settings default */
+let settings = JSON.parse(localStorage.getItem(LS_SETTINGS) || 'null');
+if(!settings){
+  settings = { theme: 'dark', accent: '#d4af37', svcTitleColor: '#ffffff', wallpaper: null };
+  localStorage.setItem(LS_SETTINGS, JSON.stringify(settings));
+}
+
+/* admin state */
+let isAdmin = false;
+let currentService = null;
+
+/* =========================
+   Utility: apply settings
+   ========================= */
+function applySettings(){
+  document.documentElement.style.setProperty('--accent', settings.accent || '#d4af37');
+  document.documentElement.style.setProperty('--svc-color', settings.svcTitleColor || '#ffffff');
+  // background (cloudy CSS uses gradients; if wallpaper set, use it)
+  if(settings.wallpaper){
+    document.body.style.background = settings.wallpaper;
+    document.getElementById('sidebar').style.background = settings.wallpaper;
+  } else {
+    // theme dark/light
+    if(settings.theme === 'dark'){
+      document.body.style.background = 'linear-gradient(180deg,#070708,#0b0b0d)';
+      document.getElementById('sidebar').style.background = 'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))';
+    } else {
+      document.body.style.background = 'linear-gradient(180deg,#f7f8fb,#eef6ff)';
+      document.getElementById('sidebar').style.background = 'linear-gradient(180deg,#ffffff,#f1f5f9)';
+      document.documentElement.style.setProperty('--muted','#475569');
+      document.documentElement.style.setProperty('--text','#0b1220');
+    }
+  }
+}
+
+/* =========================
+   Build services grid
+   ========================= */
+const servicesGrid = document.getElementById('servicesGrid');
+function buildServices(){
+  servicesGrid.innerHTML = '';
+  SERVICES.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'svc-card';
+    card.tabIndex = 0;
+    card.innerHTML = `<div class="svc-title">${s}</div>
+                      <button class="order-3d" data-service="${s}">Order Now</button>`;
+    // open fs modal on click anywhere
+    card.addEventListener('click', (e)=>{
+      // if clicked on upload input or order button, allow default
+      openFs(s);
     });
+    servicesGrid.appendChild(card);
   });
+}
 
-  function closePopup(){
-    popup.style.display='none';
-  }
+/* =========================
+   Fullscreen modal logic
+   ========================= */
+const fsModal = document.getElementById('fsModal');
+const fsGallery = document.getElementById('fsGallery');
+const fsTitle = document.getElementById('fsTitle');
+const fsAdminUpload = document.getElementById('fsAdminUpload');
+const fsFileInput = document.getElementById('fsFileInput');
 
-  function orderWhatsApp(){
-    window.open('https://wa.me/923032792947','_blank');
-  }
+function openFs(service){
+  currentService = service;
+  fsTitle.textContent = service;
+  renderGallery(service);
+  fsAdminUpload.style.display = isAdmin ? 'block' : 'none';
+  fsModal.classList.add('show');
+  fsModal.setAttribute('aria-hidden','false');
+}
 
-  function orderTelegram(){
-    window.open('https://t.me/+923032792947','_blank');
+function renderGallery(service){
+  fsGallery.innerHTML = '';
+  const arr = samples[service] || [];
+  if(arr.length === 0){
+    fsGallery.innerHTML = '<div style="padding:12px;color:var(--muted)">No samples yet.</div>';
+    return;
   }
+  arr.forEach(url=>{
+    const d = document.createElement('div'); d.className = 'fs-thumb';
+    d.innerHTML = `<img src="${url}" alt="${service} sample">`;
+    d.addEventListener('click', ()=> window.open(url,'_blank'));
+    fsGallery.appendChild(d);
+  });
+}
+
+document.getElementById('fsCloseBtn').addEventListener('click', ()=> closeFs());
+function closeFs(){ fsModal.classList.remove('show'); fsModal.setAttribute('aria-hidden','true'); currentService = null; }
+
+/* orders */
+document.getElementById('fsOrderWhats').addEventListener('click', ()=>{
+  if(!currentService) return;
+  window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent('I want to order: '+currentService),'_blank');
+});
+document.getElementById('fsOrderTele').addEventListener('click', ()=> {
+  if(!currentService) return;
+  window.open(TG_LINK,'_blank');
+});
+document.getElementById('fsOrderBig').addEventListener('click', ()=>{
+  if(!currentService) return;
+  const ok = confirm('Order on WhatsApp (OK) or Telegram (Cancel)?');
+  if(ok) window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent('I want to order: '+currentService),'_blank');
+  else window.open(TG_LINK,'_blank');
+});
+
+/* admin upload handlers */
+fsFileInput.addEventListener('change', ()=>{
+  const files = Array.from(fsFileInput.files || []);
+  if(files.length) uploadFiles(files, currentService);
+  fsFileInput.value = '';
+});
+fsGallery.addEventListener('dragover', e=>{ e.preventDefault(); fsGallery.style.outline='2px dashed rgba(255,255,255,0.06)';});
+fsGallery.addEventListener('dragleave', e=>{ fsGallery.style.outline='none';});
+fsGallery.addEventListener('drop', e=>{ e.preventDefault(); fsGallery.style.outline='none'; if(!isAdmin){ alert('Admin only upload'); return;} const files=Array.from(e.dataTransfer.files||[]); uploadFiles(files,currentService); });
+
+function uploadFiles(files, svc){
+  const imgs = files.filter(f => f.type && f.type.startsWith('image/'));
+  if(imgs.length===0){ alert('Images only'); return; }
+  let done=0;
+  imgs.forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      samples[svc] = samples[svc] || [];
+      samples[svc].unshift(ev.target.result);
+      localStorage.setItem(LS_SAMPLES, JSON.stringify(samples));
+      done++;
+      if(done===imgs.length){
+        renderGallery(svc);
+        buildProjects(); alert('Uploaded to '+svc);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* =========================
+   Settings: generate 55 wallpapers & 55 colors
+   ========================= */
+const wallpapersEl = document.getElementById('wallpapers');
+const accentSwatches = document.getElementById('accentSwatches');
+const titleSwatches = document.getElementById('titleSwatches');
+
+// generate 55 gradient wallpapers programmatically
+const genWallpapers = [];
+for(let i=0;i<55;i++){
+  const h1 = Math.floor((i*47)%360);
+  const h2 = (h1 + 40) % 360;
+  const light = (i%2===0);
+  const g = light ?
+    `linear-gradient(135deg, hsl(${h1} 60% 95%), hsl(${h2} 60% 90%))` :
+    `linear-gradient(135deg, hsl(${h1} 30% 12%), hsl(${h2} 30% 18%))`;
+  genWallpapers.push(g);
+}
+
+// render wallpapers
+genWallpapers.forEach((w,i)=>{
+  const d = document.createElement('div');
+  d.style.height='64px'; d.style.borderRadius='8px'; d.style.margin='6px'; d.style.cursor='pointer';
+  d.style.background = w; d.title = 'Wallpaper '+(i+1);
+  d.addEventListener('click', ()=> { setWallpaper(w); });
+  wallpapersEl.appendChild(d);
+});
+
+// generate 55 accent colors (hues across wheel)
+const genColors = [];
+for(let i=0;i<55;i++){
+  const hue = Math.round((i*360/55));
+  genColors.push(`hsl(${hue} 70% 50%)`);
+}
+genColors.forEach(c=>{
+  const s = document.createElement('div'); s.className='swatch'; s.style.background=c; s.title=c;
+  s.addEventListener('click', ()=> setAccent(c));
+  accentSwatches.appendChild(s);
+});
+// title color swatches (reuse with different lightness)
+genColors.forEach(c=>{
+  const s = document.createElement('div'); s.className='swatch'; s.style.background=c; s.title=c;
+  s.addEventListener('click', ()=> setSvcTitleColor(c));
+  titleSwatches.appendChild(s);
+});
+
+/* wallpaper handlers */
+function setWallpaper(w){
+  settings.wallpaper = w; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings();
+}
+function removeWallpaper(){ settings.wallpaper=null; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
+function useDefaultWallpaper(){ settings.wallpaper=null; applySettings(); }
+
+/* color setters */
+function setAccent(c){ settings.accent=c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
+function setSvcTitleColor(c){ settings.svcTitleColor=c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
+
+/* theme */
+function setTheme(t){
+  settings.theme = t; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings();
+}
+
+/* =========================
+   Sidebar navigation behavior
+   ========================= */
+document.querySelectorAll('nav.side button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.side button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const target = btn.dataset.target;
+    showPage(target);
+  });
+});
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el = document.getElementById(id);
+  if(el) el.classList.add('active');
+  // if settings, show settings-grid block (special)
+  if(id==='settings'){ document.getElementById('settings').classList.add('active'); } else { document.getElementById('settings').classList.remove('active'); }
+  // ensure main scroll top
+  document.getElementById('main').scrollTop = 0;
+  closeFs();
+}
+
+/* =========================
+   Admin hidden 'c' in footer -> password prompt
+   ========================= */
+document.getElementById('hiddenC').addEventListener('click', ()=>{
+  const p = prompt('Enter admin password:');
+  if(p === ADMIN_PASSWORD){ isAdmin = true; alert('Admin ON'); document.getElementById('fsAdminUpload').style.display='block'; }
+  else alert('Wrong password');
+});
+
+/* =========================
+   About text and translate
+   ========================= */
+const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali. With years of practical experience in branding and visual communication, we deliver premium design solutions tailored for businesses and creators. Our services range from three-dimensional logo creation, wooden logo concepts, t-shirt designs, social media graphics, packaging layouts, marriage invitation cards, business card designs, to attention-grabbing YouTube thumbnails.
+
+Our process is collaborative and professional: we listen to your needs, present multiple concept samples, and refine designs with prompt revisions until the final artwork perfectly matches your brand's identity. We prioritize quality, clarity, and originality in every project, ensuring that each visual asset increases audience engagement and presents your brand with authenticity.
+
+Clients who work with AlTa Designs experience:
+- Fast and clear communication
+- Multiple concept samples for each order
+- Smooth revision rounds and delivery in preferred formats (PNG, JPG, PDF, source files)
+- Dedicated support through WhatsApp, Telegram, and Email
+
+We are proud to support Pakistan's creative economy by helping individuals and businesses present their best visual selves. With a strong focus on strategy and aesthetics, AlTa Designs aims to make Pakistani design talent known across the world. Trust, quality, and creativity form the pillars of our studio.`;
+const aboutUrdu = `AlTa Designs ایک ممتاز گرافک ڈیزائن اسٹوڈیو ہے جس کی قیادت راؤ علی کر رہے ہیں۔ وسیع تجربے کے ساتھ، ہم برانڈنگ اور بصری مواصلات کے لیے پریمیم ڈیزائن حل فراہم کرتے ہیں۔ ہماری خدمات میں تھری ڈائمینشنل لوگو، ووڈن لوگو تصورات، ٹی شرٹ ڈیزائن، سوشل میڈیا گرافکس، پیکیجنگ لے آؤٹس، شادی کے دعوت نامے، بزنس کارڈ ڈیزائن اور دل کھینچنے والی یوٹیوب تھمب نیل شامل ہیں۔`;
+
+document.getElementById('aboutContent').textContent = aboutEng;
+let isUrdu = false;
+document.getElementById('translateBtn').addEventListener('click', ()=>{
+  if(!isUrdu){ document.getElementById('aboutContent').textContent = aboutUrdu; document.getElementById('translateBtn').textContent='Translate to English'; isUrdu=true; }
+  else { document.getElementById('aboutContent').textContent = aboutEng; document.getElementById('translateBtn').textContent='Translate to Urdu'; isUrdu=false; }
+});
+
+/* =========================
+   Search & voice
+   ========================= */
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', ()=> {
+  const q = (searchInput.value||'').toLowerCase().trim();
+  document.querySelectorAll('.svc-card').forEach(card=>{
+    const txt = card.querySelector('.svc-title').textContent.toLowerCase();
+    card.style.display = (!q || txt.includes(q)) ? 'flex' : 'none';
+  });
+});
+// voice (if supported)
+document.getElementById('voiceBtn').addEventListener('click', ()=>{
+  if(!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)){ alert('Voice search not supported'); return; }
+  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const r = new Rec(); r.lang='en-US'; r.interimResults=false; r.maxAlternatives=1; r.start();
+  r.onresult = (e)=> { searchInput.value = e.results[0][0].transcript; searchInput.dispatchEvent(new Event('input')); };
+  r.onend = ()=>{};
+});
+
+/* =========================
+   Projects grid builder
+   ========================= */
+function buildProjects(){
+  const projGrid = document.getElementById('projectsGrid');
+  projGrid.innerHTML = '';
+  const projects = JSON.parse(localStorage.getItem(LS_PROJECTS) || '[]');
+  projects.forEach((p,i)=>{
+    const d = document.createElement('div'); d.className='svc-card'; d.style.minHeight='120px';
+    d.innerHTML = `<div style="font-weight:700">${p.name || 'Project '+(i+1)}</div><div style="color:var(--muted);margin-top:6px">${p.desc || ''}</div>`;
+    projGrid.appendChild(d);
+  });
+}
+
+/* =========================
+   Init UI
+   ========================= */
+applySettings();
+buildServices();
+buildProjects();
+renderGallery(SERVICES[0]); // pre-render one
+// showHome by default
+showPage('home');
+
+/* close modal on esc/click outside */
+document.addEventListener('keydown', e=> { if(e.key==='Escape') closeFs(); });
+document.querySelector('.fs-modal').addEventListener('click', e=> { if(e.target === document.querySelector('.fs-modal')) closeFs(); });
+
+/* Save settings on unload */
+window.addEventListener('beforeunload', ()=> localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)));
 </script>
-
 </body>
 </html>
