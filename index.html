@@ -105,61 +105,54 @@
     text-decoration: none;
   }
 
-  /* Popup styling */
-  .popup-overlay {
+  /* Fullscreen Order Screen */
+  .order-screen {
     display: none;
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     backdrop-filter: blur(10px);
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
     justify-content: center;
     align-items: center;
-    z-index: 100;
-  }
-
-  .popup {
-    background: #fff;
-    color: #333;
-    border-radius: 20px;
-    padding: 30px;
+    flex-direction: column;
     text-align: center;
-    width: 300px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
   }
 
-  .popup h2 {
-    margin-bottom: 20px;
+  .order-screen h2 {
+    color: white;
+    margin-bottom: 25px;
+    font-size: 2rem;
   }
 
-  .popup button {
-    display: block;
-    width: 100%;
+  .order-screen button {
+    width: 220px;
+    padding: 15px;
     margin: 10px 0;
-    padding: 12px;
     border: none;
-    border-radius: 25px;
-    font-size: 1rem;
+    border-radius: 30px;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: 0.3s;
   }
 
-  .popup button.whatsapp {
+  .whatsapp-btn {
     background: #25D366;
-    color: white;
+    color: #fff;
   }
 
-  .popup button.telegram {
+  .telegram-btn {
     background: #0088cc;
-    color: white;
+    color: #fff;
   }
 
-  .popup .close-btn {
+  .back-btn {
     background: #ccc;
     color: #333;
   }
 
-  .popup button:hover {
+  .order-screen button:hover {
     opacity: 0.9;
   }
 </style>
@@ -176,35 +169,35 @@
 <section class="services">
   <div class="service">
     <h3>Logo Design</h3>
-    <button class="order-btn">Order</button>
+    <button class="order-btn">Order Now</button>
   </div>
   <div class="service">
     <h3>Social Media Post</h3>
-    <button class="order-btn">Order</button>
+    <button class="order-btn">Order Now</button>
   </div>
   <div class="service">
     <h3>Business Card</h3>
-    <button class="order-btn">Order</button>
+    <button class="order-btn">Order Now</button>
   </div>
   <div class="service">
     <h3>Web Design</h3>
-    <button class="order-btn">Order</button>
+    <button class="order-btn">Order Now</button>
   </div>
   <div class="service">
     <h3>Banner Design</h3>
-    <button class="order-btn">Order</button>
+    <button class="order-btn">Order Now</button>
   </div>
   <div class="service">
     <h3>Flyer Design</h3>
-    <button class="order-btn">Order</button>
+    <button class="order-btn">Order Now</button>
   </div>
   <div class="service">
     <h3>Thumbnail Design</h3>
-    <button class="order-btn">Order</button>
+    <button class="order-btn">Order Now</button>
   </div>
   <div class="service">
     <h3>Poster Design</h3>
-    <button class="order-btn">Order</button>
+    <button class="order-btn">Order Now</button>
   </div>
 </section>
 
@@ -212,29 +205,26 @@
   © 2025 AlTaDesigns | Created by Rao Ali | <a href="#">Admin Login</a>
 </footer>
 
-<!-- Popup -->
-<div class="popup-overlay" id="popup">
-  <div class="popup">
-    <h2>Place Your Order</h2>
-    <button class="whatsapp" onclick="window.open('https://wa.me/923001234567','_blank')">Order on WhatsApp</button>
-    <button class="telegram" onclick="window.open('https://t.me/YourTelegramLink','_blank')">Order on Telegram</button>
-    <button class="close-btn" onclick="closePopup()">Close</button>
-  </div>
+<!-- Full Screen Order Section -->
+<div class="order-screen" id="orderScreen">
+  <h2>Place Your Order</h2>
+  <button class="whatsapp-btn" onclick="window.open('https://wa.me/923001234567','_blank')">Order on WhatsApp</button>
+  <button class="telegram-btn" onclick="window.open('https://t.me/YourTelegramLink','_blank')">Order on Telegram</button>
+  <button class="back-btn" onclick="closeOrderScreen()">Back</button>
 </div>
 
 <script>
-  // Popup Control
-  const orderBtns = document.querySelectorAll('.order-btn');
-  const popup = document.getElementById('popup');
+  const orderButtons = document.querySelectorAll('.order-btn');
+  const orderScreen = document.getElementById('orderScreen');
 
-  orderBtns.forEach(btn => {
+  orderButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      popup.style.display = 'flex';
+      orderScreen.style.display = 'flex';
     });
   });
 
-  function closePopup() {
-    popup.style.display = 'none';
+  function closeOrderScreen() {
+    orderScreen.style.display = 'none';
   }
 </script>
 
