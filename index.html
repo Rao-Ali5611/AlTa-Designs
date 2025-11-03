@@ -46,8 +46,7 @@
   /* MAIN */
   .main{
     flex:1;display:flex;flex-direction:column;padding:24px;overflow:auto;
-    background:transparent;
-    position:relative;
+    background:transparent;position:relative;
   }
 
   /* ====== HOME: heading + cloudy search + services grid ====== */
@@ -56,7 +55,7 @@
     font-size:48px;font-weight:900;color:var(--accent);letter-spacing:.6px;
     text-shadow:0 12px 40px rgba(0,0,0,0.6);
     line-height:1;
-    transition:color .25s, text-shadow .25s, font-family .2s;
+    transition:color .25s, text-shadow .25s;
     background-clip:text;
   }
 
@@ -68,34 +67,30 @@
     border:1px solid rgba(255,255,255,0.045);backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 2px 8px rgba(255,255,255,0.02);
   }
-  /* pseudo-cloud glow layers */
-  .cloud-search::before, .cloud-search::after{
-    content:"";position:absolute;border-radius:999px;pointer-events:none;z-index:0;filter:blur(28px);opacity:.25;
-  }
-  .cloud-search::before{inset:-18px; background: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.06), transparent 20%);}
-  .cloud-search::after{inset:-34px -6px -10px -6px;background: radial-gradient(circle at 80% 60%, rgba(200,200,255,0.02), transparent 10%);}
-  .cloud-search input{
-    position:relative;z-index:1;background:transparent;border:0;outline:none;color:var(--text);width:100%;font-size:16px;padding:6px 8px;
-  }
+  .cloud-search input{position:relative;z-index:1;background:transparent;border:0;outline:none;color:var(--text);width:100%;font-size:16px;padding:6px 8px;}
   .cloud-search .voice{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer;z-index:2}
 
   /* SERVICES GRID */
-  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px}
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:18px}
   .svc-card{
     border-radius:14px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-    border:1px solid rgba(255,255,255,0.025);box-shadow:0 14px 40px rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center;gap:12px;transition:transform .18s;
+    border:1px solid rgba(255,255,255,0.025);box-shadow:0 14px 40px rgba(0,0,0,0.6);
+    display:flex;flex-direction:column;align-items:stretch;gap:12px;transition:transform .18s;
+    min-height:240px; /* ensures space so button can be bottom-aligned */
   }
   .svc-card:hover{transform:translateY(-8px)}
-  .svc-title{font-size:16px;font-weight:700;color:var(--svc-color, #fff);text-align:center;transition:font-family .2s}
-  /* 3D Order Button */
+  .svc-content{display:flex;flex-direction:column;gap:12px;flex:1}
+  .svc-title{font-size:16px;font-weight:700;color:var(--svc-color, #fff);text-align:center}
+  /* 3D Order Button - bottom align */
   .order-3d{
-    margin-top:6px;padding:12px 22px;border-radius:999px;border:0;background:linear-gradient(180deg, var(--accent), #ffdb8f);
+    margin-top:auto;padding:12px 22px;border-radius:999px;border:0;background:linear-gradient(180deg, var(--accent), #ffdb8f);
     color:#000;font-weight:800;cursor:pointer;box-shadow:0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
     transform-style:preserve-3d;transition:transform .18s, box-shadow .18s;
+    align-self:center;
   }
   .order-3d:hover{transform:translateY(-6px) rotateX(6deg);box-shadow:0 28px 50px rgba(0,0,0,0.75), inset 0 -6px 10px rgba(255,255,255,0.14)}
 
-  /* FULLSCREEN SERVICE CANVA-STYLE PANEL */
+  /* FULLSCREEN SERVICE CANVA-STYLE PANEL (left as-is) */
   .fs-modal{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:linear-gradient(180deg, rgba(0,0,0,0.78), rgba(0,0,0,0.9));z-index:2000;padding:18px}
   .fs-modal.show{display:flex}
   .fs-panel{width:100%;max-width:1200px;height:88vh;background:linear-gradient(180deg,#0b0b0d,#111214);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
@@ -111,74 +106,49 @@
   .fs-upload{padding:12px;border-radius:8px;border:1px dashed rgba(255,255,255,0.03);background:transparent;color:var(--muted);text-align:center}
   .fs-upload input{display:none}
 
-  /* ====== NEW: Small centered order popup & blur ====== */
-  .order-popup-overlay{
-    position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:3000;
-    background:rgba(0,0,0,0.35);
-    padding:18px;
-  }
+  /* ====== ORDER POPUP & BLUR (unchanged behaviour) ====== */
+  .order-popup-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:3000;background:rgba(0,0,0,0.35);padding:18px;}
   .order-popup-overlay.show{display:flex}
-  .order-popup{
-    width:100%;max-width:420px;border-radius:14px;padding:20px;background:linear-gradient(180deg,#0f1113,#0b0b0d);border:1px solid rgba(255,255,255,0.04);
-    box-shadow:0 30px 80px rgba(0,0,0,0.7), 0 6px 18px rgba(0,0,0,0.6);
-    display:flex;flex-direction:column;gap:12px;align-items:stretch;position:relative;
-  }
+  .order-popup{width:100%;max-width:420px;border-radius:14px;padding:20px;background:linear-gradient(180deg,#0f1113,#0b0b0d);border:1px solid rgba(255,255,255,0.04);box-shadow:0 30px 80px rgba(0,0,0,0.7), 0 6px 18px rgba(0,0,0,0.6);display:flex;flex-direction:column;gap:12px;align-items:stretch;position:relative;}
   .order-popup .title{font-size:18px;color:var(--accent);font-weight:800;text-align:center}
   .order-popup .desc{color:var(--muted);font-size:13px;text-align:center}
   .order-popup .btns{display:flex;gap:10px;justify-content:center;margin-top:6px;flex-wrap:wrap}
-  .order-btn{
-    flex:1 1 160px;padding:12px 14px;border-radius:10px;border:0;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    color:var(--text);
-    transition:transform .12s, box-shadow .12s;
-  }
-  .order-btn:active{transform:translateY(2px)}
+  .order-btn{flex:1 1 160px;padding:12px 14px;border-radius:10px;border:0;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--text);transition:transform .12s, box-shadow .12s;}
   .order-btn.whats{background:linear-gradient(180deg,#25D366,#1DA851);color:#062016}
   .order-btn.tele{background:linear-gradient(180deg,#0088cc,#0077b6);color:#e8f6ff}
   .order-popup .close-x{position:absolute;right:22px;top:18px;background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer}
-
-  /* blur when overlay open - add class on body */
-  .overlay-open .container,
-  .overlay-open .fs-modal{filter:blur(6px) brightness(.9);pointer-events:none;user-select:none}
+  .overlay-open .container,.overlay-open .fs-modal{filter:blur(6px) brightness(.9);pointer-events:none;user-select:none}
   .overlay-open .order-popup-overlay{pointer-events:auto}
 
-  /* ====== NEW: Floating footer on main screen (flying animation) ====== */
-  .floating-footer{
-    position:fixed;left:50%;transform:translateX(-50%) translateY(120%);bottom:18px;z-index:2500;
-    background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-    color:var(--muted);padding:12px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);
-    display:flex;align-items:center;gap:12px;box-shadow:0 18px 40px rgba(0,0,0,0.6);
-    opacity:0; transition:transform .8s cubic-bezier(.16,.84,.32,1),opacity .6s;
-  }
+  /* ====== NEW: Sample gallery overlay (dynamic, same-page) ====== */
+  .sample-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:2800;padding:18px;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.75));}
+  .sample-overlay.show{display:flex}
+  .sample-modal{width:100%;max-width:1000px;height:78vh;background:linear-gradient(180deg,#0b0b0d,#0f1113);border-radius:12px;padding:16px;overflow:auto;border:1px solid rgba(255,255,255,0.03);position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.75)}
+  .sample-modal .head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .sample-modal .title{font-size:18px;color:var(--accent);font-weight:800}
+  .sample-modal .close-sample{background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer}
+  .sample-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .sample-thumb{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:#0b0b0d;display:flex;align-items:center;justify-content:center;min-height:140px}
+  .sample-thumb img{width:100%;height:160px;object-fit:cover;display:block}
+  .no-samples{color:var(--muted);padding:30px;text-align:center}
+
+  /* floating footer (unchanged) */
+  .floating-footer{position:fixed;left:50%;transform:translateX(-50%) translateY(120%);bottom:18px;z-index:2500;background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));color:var(--muted);padding:12px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:12px;box-shadow:0 18px 40px rgba(0,0,0,0.6);opacity:0; transition:transform .8s cubic-bezier(.16,.84,.32,1),opacity .6s;}
   .floating-footer.show{transform:translateX(-50%) translateY(0);opacity:1}
   .floating-footer .hidden-link{cursor:pointer;color:var(--muted);text-decoration:underline;font-weight:700}
-  .floating-footer .brandline{font-weight:600;color:var(--accent)}
-  /* small animation wave on hover */
   .floating-footer:hover{transform:translateX(-50%) translateY(-6px);box-shadow:0 30px 70px rgba(0,0,0,0.7)}
 
-  /* SETTINGS (column-wise) */
+  /* SETTINGS etc. (unchanged) */
   .settings-page{display:none}
   .settings-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
   .card-panel{background:linear-gradient(180deg,#0b0b0d,#0f1113);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
   .swatches{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
   .swatch{width:36px;height:28px;border-radius:8px;cursor:pointer;border:2px solid rgba(255,255,255,0.03)}
-
-  /* admin fonts panel specifics */
-  .admin-fonts{display:none;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);background:linear-gradient(180deg,#0a0b0c,#0f1113)}
-  .admin-fonts.show{display:block}
-  .admin-fonts label{color:var(--muted);font-size:13px;display:block;margin-bottom:8px}
-  .admin-fonts select{width:100%;padding:8px;border-radius:8px;border:0;background:rgba(255,255,255,0.02);color:var(--text)}
-  .admin-fonts button{margin-top:8px;padding:8px;border-radius:8px;border:0;background:var(--accent);color:#000;font-weight:700;cursor:pointer}
-
-  /* ABOUT/CONTACT/OTHER PAGES */
   .page{display:none}
   .page.active{display:block}
-
-  /* FOOTER text and hidden "c" */
   .bottom-bar{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
   .bottom-bar .hidden-link{display:inline-block;margin-left:8px;color:var(--muted);cursor:pointer;text-decoration:underline;font-size:12px}
 
-  /* RESPONSIVE: keep left column visible on mobile and equal height */
   @media (max-width:900px){
     :root{--sidebar-w:28%}
     .sidebar{width:28%}
@@ -186,7 +156,7 @@
     .cloud-search{width:86%}
   }
   @media (max-width:560px){
-    .container{flex-direction:row; /* still two columns */ }
+    .container{flex-direction:row;}
     .sidebar{width:34%;padding:12px}
     .main{padding:12px}
     .hero-title{font-size:28px}
@@ -276,12 +246,11 @@
           <div class="swatches" id="titleSwatches"></div>
         </div>
 
-        <!-- ADMIN: Fonts panel will appear here if admin -->
-        <div class="card-panel admin-fonts" id="adminFontsPanel">
+        <!-- admin fonts panel (if admin) -->
+        <div class="card-panel admin-fonts" id="adminFontsPanel" style="display:none">
           <label for="adminFontsSelect">Fonts (242) — change Hero & Service Titles</label>
           <select id="adminFontsSelect" size="6" style="height:140px"></select>
           <button id="applyFontBtn">Apply Font</button>
-          <div style="color:var(--muted);margin-top:8px;font-size:12px">Tip: First few entries are common fonts; others are placeholders you can replace with web fonts later.</div>
         </div>
 
       </div>
@@ -331,7 +300,7 @@
   </main>
 </div>
 
-<!-- Fullscreen service modal (Canva-like) -->
+<!-- Fullscreen service modal (Canva-like) - left intact -->
 <div class="fs-modal" id="fsModal" aria-hidden="true">
   <div class="fs-panel" role="dialog" aria-modal="true" aria-label="Service Samples">
     <div class="fs-top">
@@ -364,7 +333,7 @@
   </div>
 </div>
 
-<!-- NEW: small centered order popup -->
+<!-- ORDER popup (unchanged) -->
 <div class="order-popup-overlay" id="orderPopupOverlay" aria-hidden="true">
   <div class="order-popup" role="dialog" aria-modal="true" aria-label="Order Options">
     <button class="close-x" id="orderPopupClose" title="Close">✕</button>
@@ -377,7 +346,18 @@
   </div>
 </div>
 
-<!-- NEW: Floating footer on main screen (shows with animation) -->
+<!-- SAMPLE overlay (new dynamic gallery for each service) -->
+<div class="sample-overlay" id="sampleOverlay" aria-hidden="true">
+  <div class="sample-modal" role="dialog" aria-modal="true" aria-label="Service Samples">
+    <div class="head">
+      <div class="title" id="sampleTitle">Samples</div>
+      <button class="close-sample" id="closeSampleBtn">✕</button>
+    </div>
+    <div class="sample-gallery" id="sampleGallery"></div>
+  </div>
+</div>
+
+<!-- floating footer -->
 <div class="floating-footer" id="floatingFooter" aria-hidden="true">
   <div class="brandline">© AlTa Group of Graphics — <strong>Rao Ali</strong></div>
   <div style="color:var(--muted);font-size:13px"> — </div>
@@ -395,22 +375,34 @@ const LS_SAMPLES = 'alta_samples_v1';
 const LS_PROJECTS = 'alta_projects_v1';
 const LS_SETTINGS = 'alta_settings_v1';
 
+/* ---------- FINAL SERVICE NAMES (display) ---------- */
 const SERVICES = [
-  'YouTube Thumbnail',
-  'Social Media Posts',
-  '3D Wooden Logo',
-  'Wedding Invitation Card',
+  'Wooden Logo',
   '3D Logo',
+  'YouTube Thumbnails',
+  'Social Media Posts',
+  'Wedding Invitation Cards',
   'Packaging Design',
   'T-Shirt Design',
-  'Business Card'
+  'Business Cards'
 ];
 
-/* Load or init samples */
+/* utility: slugify folder name (lowercase, spaces -> -, remove unsafe chars) */
+function slug(name){
+  return name.toString().toLowerCase()
+    .replace(/&/g,'and')
+    .replace(/[\s_]+/g,'-')
+    .replace(/[^a-z0-9\-]/g,'')
+    .replace(/\-+/g,'-')
+    .replace(/^\-+|\-+$/g,'');
+}
+
+/* Load or init samples (localStorage fallback) */
 let samples = JSON.parse(localStorage.getItem(LS_SAMPLES) || 'null');
 if(!samples){
   samples = {};
   SERVICES.forEach(s => samples[s] = [
+    // placeholders only; when you add files to samples/<slug>/ these will be ignored
     'https://via.placeholder.com/1400x900?text='+encodeURIComponent(s+' Sample 1'),
     'https://via.placeholder.com/1400x900?text='+encodeURIComponent(s+' Sample 2')
   ]);
@@ -428,31 +420,20 @@ if(!settings){
 let isAdmin = false;
 let currentService = null;
 
-/* =========================
-   Utility: apply settings
-   ========================= */
+/* Apply settings */
 function applySettings(){
   document.documentElement.style.setProperty('--accent', settings.accent || '#d4af37');
   document.documentElement.style.setProperty('--svc-color', settings.svcTitleColor || '#ffffff');
-  // apply font choice if present
   if(settings.fontChoice){
     document.documentElement.style.setProperty('--main-font', settings.fontChoice);
-    // also set hero and service titles
     const hero = document.getElementById('heroTitle');
     if(hero) hero.style.fontFamily = settings.fontChoice;
     document.querySelectorAll('.svc-title').forEach(el => el.style.fontFamily = settings.fontChoice);
-  } else {
-    // fallback: ensure hero/title use var main-font
-    document.getElementById('heroTitle').style.fontFamily = getComputedStyle(document.documentElement).getPropertyValue('--main-font');
-    document.querySelectorAll('.svc-title').forEach(el => el.style.fontFamily = getComputedStyle(document.documentElement).getPropertyValue('--main-font'));
   }
-
-  // background (cloudy CSS uses gradients; if wallpaper set, use it)
   if(settings.wallpaper){
     document.body.style.background = settings.wallpaper;
     document.getElementById('sidebar').style.background = settings.wallpaper;
   } else {
-    // theme dark/light
     if(settings.theme === 'dark'){
       document.body.style.background = 'linear-gradient(180deg,#070708,#0b0b0d)';
       document.getElementById('sidebar').style.background = 'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))';
@@ -465,9 +446,7 @@ function applySettings(){
   }
 }
 
-/* =========================
-   Build services grid
-   ========================= */
+/* ========= Build services grid (cards) ========= */
 const servicesGrid = document.getElementById('servicesGrid');
 function buildServices(){
   servicesGrid.innerHTML = '';
@@ -475,28 +454,38 @@ function buildServices(){
     const card = document.createElement('div');
     card.className = 'svc-card';
     card.tabIndex = 0;
-    card.innerHTML = `<div class="svc-title">${s}</div>
-                      <button class="order-3d" data-service="${s}">Order Now</button>`;
-    // open fs modal on click anywhere except Order Now button
-    card.addEventListener('click', (e)=>{
-      if(e.target.closest('.order-3d')) return;
-      openFs(s);
+
+    // card inner structure: content + order button pushed to bottom
+    const inner = document.createElement('div');
+    inner.className = 'svc-content';
+    inner.innerHTML = `<div class="svc-title" data-service="${s}">${s}</div>
+                       <div style="color:var(--muted);font-size:13px">High-quality ${s} by AlTa Designs</div>`;
+
+    const btn = document.createElement('button');
+    btn.className = 'order-3d';
+    btn.dataset.service = s;
+    btn.textContent = 'Order Now';
+
+    // click on card content (title or content) opens sample gallery modal
+    inner.addEventListener('click', (e)=>{
+      if(e.target.closest('button')) return;
+      openSampleModal(s);
     });
 
-    // attach Order Now button to open the new small popup (NOT the fullscreen fsModal)
-    setTimeout(()=>{ // small timeout to ensure inner HTML is parsed
-      const btn = card.querySelector('.order-3d');
-      if(btn){
-        btn.addEventListener('click', (ev)=>{ ev.stopPropagation(); showOrderPopup(s); });
-      }
-    },0);
+    // order button opens the order popup (unchanged behavior)
+    btn.addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      showOrderPopup(s);
+    });
 
+    card.appendChild(inner);
+    card.appendChild(btn);
     servicesGrid.appendChild(card);
   });
 }
 
 /* =========================
-   Fullscreen modal logic
+   Fullscreen fsModal (kept intact)
    ========================= */
 const fsModal = document.getElementById('fsModal');
 const fsGallery = document.getElementById('fsGallery');
@@ -512,14 +501,10 @@ function openFs(service){
   fsModal.classList.add('show');
   fsModal.setAttribute('aria-hidden','false');
 }
-
 function renderGallery(service){
   fsGallery.innerHTML = '';
   const arr = samples[service] || [];
-  if(arr.length === 0){
-    fsGallery.innerHTML = '<div style="padding:12px;color:var(--muted)">No samples yet.</div>';
-    return;
-  }
+  if(arr.length === 0){ fsGallery.innerHTML = '<div style="padding:12px;color:var(--muted)">No samples yet.</div>'; return; }
   arr.forEach(url=>{
     const d = document.createElement('div'); d.className = 'fs-thumb';
     d.innerHTML = `<img src="${url}" alt="${service} sample">`;
@@ -527,11 +512,10 @@ function renderGallery(service){
     fsGallery.appendChild(d);
   });
 }
-
 document.getElementById('fsCloseBtn').addEventListener('click', ()=> closeFs());
 function closeFs(){ fsModal.classList.remove('show'); fsModal.setAttribute('aria-hidden','true'); currentService = null; }
 
-/* orders (inside fullscreen modal) - keep existing behavior */
+/* Orders inside fs modal (unchanged) */
 document.getElementById('fsOrderWhats').addEventListener('click', ()=>{
   if(!currentService) return;
   window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent('I want to order: '+currentService),'_blank');
@@ -548,7 +532,7 @@ document.getElementById('fsOrderBig').addEventListener('click', ()=>{
 });
 
 /* =========================
-   NEW: Order popup behavior (the change you requested)
+   ORDER popup behavior (unchanged)
    ========================= */
 const orderOverlay = document.getElementById('orderPopupOverlay');
 const orderPopupTitle = document.getElementById('orderPopupTitle');
@@ -565,39 +549,103 @@ function showOrderPopup(service){
   orderOverlay.setAttribute('aria-hidden','false');
   document.body.classList.add('overlay-open');
 }
-
 function closeOrderPopup(){
-  orderOverlay.classList.remove('show');
-  orderOverlay.setAttribute('aria-hidden','true');
-  document.body.classList.remove('overlay-open');
-  currentService = null;
+  orderOverlay.classList.remove('show'); orderOverlay.setAttribute('aria-hidden','true');
+  document.body.classList.remove('overlay-open'); currentService = null;
 }
-
 orderPopupWhats.addEventListener('click', ()=>{
   if(!currentService) return;
   const wa = 'https://wa.me/'+PHONE+'?text='+encodeURIComponent('I want to order: '+currentService);
-  window.open(wa,'_blank');
-  closeOrderPopup();
+  window.open(wa,'_blank'); closeOrderPopup();
 });
 orderPopupTele.addEventListener('click', ()=>{
   if(!currentService) return;
-  window.open(TG_LINK,'_blank');
-  closeOrderPopup();
+  window.open(TG_LINK,'_blank'); closeOrderPopup();
 });
 orderPopupClose.addEventListener('click', ()=> closeOrderPopup());
-orderOverlay.addEventListener('click', (e)=>{
-  if(e.target === orderOverlay) closeOrderPopup();
-});
+orderOverlay.addEventListener('click', (e)=>{ if(e.target === orderOverlay) closeOrderPopup(); });
 
-/* close on Escape (popup and fs modal) */
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape'){
-    if(orderOverlay.classList.contains('show')) closeOrderPopup();
-    if(fsModal.classList.contains('show')) closeFs();
+/* =========================
+   NEW: Sample modal (dynamic gallery, same-page)
+   ========================= */
+const sampleOverlay = document.getElementById('sampleOverlay');
+const sampleGallery = document.getElementById('sampleGallery');
+const sampleTitle = document.getElementById('sampleTitle');
+const closeSampleBtn = document.getElementById('closeSampleBtn');
+
+/* Attempt to load sample images from samples/<slug>/(1..6).(jpg|png) */
+function loadSamplesFor(service){
+  return new Promise((resolve)=> {
+    const found = [];
+    const folder = `samples/${slug(service)}/`; // slugified folder
+    const maxTry = 6;
+    let totalToTry = maxTry * 2; // jpg + png per index
+    let finished = 0;
+
+    for(let i=1;i<=maxTry;i++){
+      ['jpg','png'].forEach(ext=>{
+        const url = folder + i + '.' + ext;
+        const img = new Image();
+        img.onload = ()=>{
+          found.push(url);
+          finished++;
+          if(finished === totalToTry) resolve(found);
+        };
+        img.onerror = ()=>{
+          finished++;
+          if(finished === totalToTry) resolve(found);
+        };
+        img.src = url;
+      });
+    }
+    // safety timeout
+    setTimeout(()=>{ if(found.length || finished === totalToTry) resolve(found); }, 1200);
+  });
+}
+
+async function openSampleModal(service){
+  currentService = service;
+  sampleTitle.textContent = `Samples — ${service}`;
+  sampleGallery.innerHTML = '<div class="no-samples">Loading samples…</div>';
+  sampleOverlay.classList.add('show');
+  sampleOverlay.setAttribute('aria-hidden','false');
+  document.body.classList.add('overlay-open');
+
+  const files = await loadSamplesFor(service);
+  sampleGallery.innerHTML = '';
+  if(files.length === 0){
+    // fallback to localStorage samples array
+    const arr = samples[service] || [];
+    if(arr && arr.length){
+      arr.forEach(url=>{
+        const d = document.createElement('div'); d.className = 'sample-thumb';
+        d.innerHTML = `<img src="${url}" alt="${service} sample">`;
+        sampleGallery.appendChild(d);
+      });
+    } else {
+      sampleGallery.innerHTML = `<div class="no-samples">No samples found for this service. Add images to <code>samples/${slug(service)}</code> or upload via admin.</div>`;
+    }
+  } else {
+    files.forEach(url=>{
+      const d = document.createElement('div'); d.className = 'sample-thumb';
+      d.innerHTML = `<img src="${url}" alt="${service} sample">`;
+      d.addEventListener('click', ()=> window.open(url,'_blank'));
+      sampleGallery.appendChild(d);
+    });
   }
-});
+}
 
-/* admin upload handlers */
+function closeSampleModal(){
+  sampleOverlay.classList.remove('show');
+  sampleOverlay.setAttribute('aria-hidden','true');
+  document.body.classList.remove('overlay-open');
+  sampleGallery.innerHTML = '';
+  currentService = null;
+}
+closeSampleBtn.addEventListener('click', ()=> closeSampleModal());
+sampleOverlay.addEventListener('click', (e)=>{ if(e.target === sampleOverlay) closeSampleModal(); });
+
+/* admin upload handlers for fsModal */
 fsFileInput.addEventListener('change', ()=>{
   const files = Array.from(fsFileInput.files || []);
   if(files.length) uploadFiles(files, currentService);
@@ -627,14 +675,11 @@ function uploadFiles(files, svc){
   });
 }
 
-/* =========================
-   Settings: generate 55 wallpapers & 55 colors
-   ========================= */
+/* ========== Settings: wallpapers/colors ========== */
 const wallpapersEl = document.getElementById('wallpapers');
 const accentSwatches = document.getElementById('accentSwatches');
 const titleSwatches = document.getElementById('titleSwatches');
 
-// generate 55 gradient wallpapers programmatically
 const genWallpapers = [];
 for(let i=0;i<55;i++){
   const h1 = Math.floor((i*47)%360);
@@ -645,8 +690,6 @@ for(let i=0;i<55;i++){
     `linear-gradient(135deg, hsl(${h1} 30% 12%), hsl(${h2} 30% 18%))`;
   genWallpapers.push(g);
 }
-
-// render wallpapers
 genWallpapers.forEach((w,i)=>{
   const d = document.createElement('div');
   d.style.height='64px'; d.style.borderRadius='8px'; d.style.margin='6px'; d.style.cursor='pointer';
@@ -655,7 +698,6 @@ genWallpapers.forEach((w,i)=>{
   wallpapersEl && wallpapersEl.appendChild(d);
 });
 
-// generate 55 accent colors (hues across wheel)
 const genColors = [];
 for(let i=0;i<55;i++){
   const hue = Math.round((i*360/55));
@@ -666,32 +708,20 @@ genColors.forEach(c=>{
   s.addEventListener('click', ()=> setAccent(c));
   accentSwatches && accentSwatches.appendChild(s);
 });
-// title color swatches (reuse with different lightness)
 genColors.forEach(c=>{
   const s = document.createElement('div'); s.className='swatch'; s.style.background=c; s.title=c;
   s.addEventListener('click', ()=> setSvcTitleColor(c));
   titleSwatches && titleSwatches.appendChild(s);
 });
 
-/* wallpaper handlers */
-function setWallpaper(w){
-  settings.wallpaper = w; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings();
-}
+function setWallpaper(w){ settings.wallpaper = w; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
 function removeWallpaper(){ settings.wallpaper=null; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
 function useDefaultWallpaper(){ settings.wallpaper=null; applySettings(); }
-
-/* color setters */
 function setAccent(c){ settings.accent=c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
 function setSvcTitleColor(c){ settings.svcTitleColor=c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
+function setTheme(t){ settings.theme = t; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
 
-/* theme */
-function setTheme(t){
-  settings.theme = t; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings();
-}
-
-/* =========================
-   Sidebar navigation behavior
-   ========================= */
+/* ========== Sidebar nav ========== */
 document.querySelectorAll('nav.side button').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('nav.side button').forEach(b=>b.classList.remove('active'));
@@ -709,29 +739,21 @@ function showPage(id){
   closeFs();
 }
 
-/* =========================
-   Admin hidden 'c' in footer -> password prompt
-   (both sidebar and floating footer will use same handler)
-   ========================= */
+/* ========== Admin hidden 'c' handler (both places) ========== */
 function handleAdminClick(){
   const p = prompt('Enter admin password:');
   if(p === ADMIN_PASSWORD){
     isAdmin = true;
     alert('Admin ON');
     document.getElementById('fsAdminUpload').style.display='block';
-    // show fonts panel
-    document.getElementById('adminFontsPanel').classList.add('show');
+    document.getElementById('adminFontsPanel').style.display='block';
     populateFontsIfNeeded();
-  } else {
-    alert('Wrong password');
-  }
+  } else alert('Wrong password');
 }
 document.getElementById('hiddenC').addEventListener('click', handleAdminClick);
 document.getElementById('hiddenCMain').addEventListener('click', handleAdminClick);
 
-/* =========================
-   ABOUT text and translate
-   ========================= */
+/* About content */
 const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali. With years of practical experience in branding and visual communication, we deliver premium design solutions tailored for businesses and creators. Our services range from three-dimensional logo creation, wooden logo concepts, t-shirt designs, social media graphics, packaging layouts, marriage invitation cards, business card designs, to attention-grabbing YouTube thumbnails.
 
 Our process is collaborative and professional: we listen to your needs, present multiple concept samples, and refine designs with prompt revisions until the final artwork perfectly matches your brand's identity. We prioritize quality, clarity, and originality in every project, ensuring that each visual asset increases audience engagement and presents your brand with authenticity.
@@ -744,7 +766,6 @@ Clients who work with AlTa Designs experience:
 
 We are proud to support Pakistan's creative economy by helping individuals and businesses present their best visual selves. With a strong focus on strategy and aesthetics, AlTa Designs aims to make Pakistani design talent known across the world. Trust, quality, and creativity form the pillars of our studio.`;
 const aboutUrdu = `AlTa Designs ایک ممتاز گرافک ڈیزائن اسٹوڈیو ہے جس کی قیادت راؤ علی کر رہے ہیں۔ وسیع تجربے کے ساتھ، ہم برانڈنگ اور بصری مواصلات کے لیے پریمیم ڈیزائن حل فراہم کرتے ہیں۔ ہماری خدمات میں تھری ڈائمینشنل لوگو، ووڈن لوگو تصورات، ٹی شرٹ ڈیزائن، سوشل میڈیا گرافکس، پیکیجنگ لے آؤٹس، شادی کے دعوت نامے، بزنس کارڈ ڈیزائن اور دل کھینچنے والی یوٹیوب تھمب نیل شامل ہیں۔`;
-
 document.getElementById('aboutContent').textContent = aboutEng;
 let isUrdu = false;
 document.getElementById('translateBtn').addEventListener('click', ()=>{
@@ -752,9 +773,7 @@ document.getElementById('translateBtn').addEventListener('click', ()=>{
   else { document.getElementById('aboutContent').textContent = aboutEng; document.getElementById('translateBtn').textContent='Translate to Urdu'; isUrdu=false; }
 });
 
-/* =========================
-   Search & voice
-   ========================= */
+/* Search & voice */
 const searchInput = document.getElementById('searchInput');
 searchInput.addEventListener('input', ()=> {
   const q = (searchInput.value||'').toLowerCase().trim();
@@ -771,9 +790,7 @@ document.getElementById('voiceBtn').addEventListener('click', ()=>{
   r.onend = ()=>{};
 });
 
-/* =========================
-   Projects grid builder
-   ========================= */
+/* Projects grid builder */
 function buildProjects(){
   const projGrid = document.getElementById('projectsGrid');
   projGrid.innerHTML = '';
@@ -785,71 +802,46 @@ function buildProjects(){
   });
 }
 
-/* =========================
-   Floating footer show on load (with delay for flying effect)
-   ========================= */
+/* Floating footer show */
 const floatingFooter = document.getElementById('floatingFooter');
 setTimeout(()=>{ floatingFooter.classList.add('show'); floatingFooter.setAttribute('aria-hidden','false'); }, 600);
 
-/* =========================
-   Fonts Admin Panel: populate 242 options (some pre-mapped)
-   ========================= */
+/* Fonts admin panel (basic populate) */
 const adminFontsSelect = document.getElementById('adminFontsSelect');
-const adminFontsPanel = document.getElementById('adminFontsPanel');
-const applyFontBtn = document.getElementById('applyFontBtn');
 let fontsPopulated = false;
-
 function populateFontsIfNeeded(){
   if(fontsPopulated) return;
   fontsPopulated = true;
-  // Create array of 242 font choices. First few are actual common fonts; rest are placeholders.
   const common = [
     {label:'Inter (system)', value:'Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial'},
     {label:'Poppins', value:'Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial'},
     {label:'Roboto', value:'Roboto, system-ui, -apple-system, "Segoe UI", Arial'},
     {label:'Arial', value:'Arial, Helvetica, sans-serif'},
-    {label:'Georgia', value:'Georgia, "Times New Roman", Times, serif'},
-    {label:'Times New Roman', value:'"Times New Roman", Times, serif'},
-    {label:'Courier New', value:'"Courier New", Courier, monospace'},
-    {label:'Verdana', value:'Verdana, Geneva, sans-serif'},
-    {label:'Trebuchet MS', value:'"Trebuchet MS", Helvetica, sans-serif'},
-    {label:'Lucida Sans', value:'"Lucida Sans", "Lucida Grande", sans-serif'}
+    {label:'Georgia', value:'Georgia, "Times New Roman", Times, serif'}
   ];
-  // push common first
   common.forEach(c=> {
     const opt = document.createElement('option');
     opt.value = c.value;
     opt.textContent = c.label;
     adminFontsSelect.appendChild(opt);
   });
-  // now add placeholders to total 242
-  const start = common.length + 1;
-  for(let i=start;i<=242;i++){
-    const opt = document.createElement('option');
-    opt.value = `var(--main-font)`; // placeholder value; selecting will set to CSS var fallback unless replaced
-    opt.textContent = `Font ${i}`;
+  for(let i=6;i<=242;i++){
+    const opt = document.createElement('option'); opt.value = `var(--main-font)`; opt.textContent = `Font ${i}`;
     adminFontsSelect.appendChild(opt);
   }
-
-  // If there is previously saved font in settings, select it
   if(settings.fontChoice){
-    // try to find a matching option value; if not found, create a custom option
     let found = false;
     for(const opt of adminFontsSelect.options){
       if(opt.value === settings.fontChoice){ opt.selected = true; found = true; break; }
     }
     if(!found){
-      const opt = document.createElement('option');
-      opt.value = settings.fontChoice;
-      opt.textContent = `Custom: ${settings.fontChoice}`;
+      const opt = document.createElement('option'); opt.value = settings.fontChoice; opt.textContent = `Custom: ${settings.fontChoice}`;
       adminFontsSelect.insertBefore(opt, adminFontsSelect.firstChild);
       opt.selected = true;
     }
   }
 }
-
-/* Apply font choice: set --main-font and apply to hero & titles, save to settings */
-applyFontBtn.addEventListener('click', ()=>{
+document.getElementById('applyFontBtn')?.addEventListener('click', ()=>{
   const v = adminFontsSelect.value || '';
   if(!v) return alert('Select a font first');
   settings.fontChoice = v;
@@ -858,17 +850,17 @@ applyFontBtn.addEventListener('click', ()=>{
   alert('Font applied to Hero & Service titles.');
 });
 
-/* =========================
-   Init UI
-   ========================= */
+/* Init */
 applySettings();
 buildServices();
 buildProjects();
-renderGallery(SERVICES[0]); // pre-render one
+renderGallery(SERVICES[0]);
 showPage('home');
 
-/* close modal on esc/click outside (existing behavior maintained) */
-document.addEventListener('keydown', e=> { if(e.key==='Escape') closeFs(); });
+/* Close handlers */
+document.addEventListener('keydown', e=> {
+  if(e.key==='Escape'){ if(sampleOverlay.classList.contains('show')) closeSampleModal(); if(orderOverlay.classList.contains('show')) closeOrderPopup(); if(fsModal.classList.contains('show')) closeFs(); }
+});
 document.querySelector('.fs-modal').addEventListener('click', e=> { if(e.target === document.querySelector('.fs-modal')) closeFs(); });
 
 /* Save settings on unload */
