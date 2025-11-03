@@ -47,6 +47,7 @@
   .main{
     flex:1;display:flex;flex-direction:column;padding:24px;overflow:auto;
     background:transparent;
+    position:relative;
   }
 
   /* ====== HOME: heading + cloudy search + services grid ====== */
@@ -55,7 +56,7 @@
     font-size:48px;font-weight:900;color:var(--accent);letter-spacing:.6px;
     text-shadow:0 12px 40px rgba(0,0,0,0.6);
     line-height:1;
-    transition:color .25s, text-shadow .25s;
+    transition:color .25s, text-shadow .25s, font-family .2s;
     background-clip:text;
   }
 
@@ -85,7 +86,7 @@
     border:1px solid rgba(255,255,255,0.025);box-shadow:0 14px 40px rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center;gap:12px;transition:transform .18s;
   }
   .svc-card:hover{transform:translateY(-8px)}
-  .svc-title{font-size:16px;font-weight:700;color:var(--svc-color, #fff);text-align:center}
+  .svc-title{font-size:16px;font-weight:700;color:var(--svc-color, #fff);text-align:center;transition:font-family .2s}
   /* 3D Order Button */
   .order-3d{
     margin-top:6px;padding:12px 22px;border-radius:999px;border:0;background:linear-gradient(180deg, var(--accent), #ffdb8f);
@@ -113,7 +114,6 @@
   /* ====== NEW: Small centered order popup & blur ====== */
   .order-popup-overlay{
     position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:3000;
-    /* transparent darkened layer; blur will be applied to container via class */
     background:rgba(0,0,0,0.35);
     padding:18px;
   }
@@ -121,7 +121,7 @@
   .order-popup{
     width:100%;max-width:420px;border-radius:14px;padding:20px;background:linear-gradient(180deg,#0f1113,#0b0b0d);border:1px solid rgba(255,255,255,0.04);
     box-shadow:0 30px 80px rgba(0,0,0,0.7), 0 6px 18px rgba(0,0,0,0.6);
-    display:flex;flex-direction:column;gap:12px;align-items:stretch;
+    display:flex;flex-direction:column;gap:12px;align-items:stretch;position:relative;
   }
   .order-popup .title{font-size:18px;color:var(--accent);font-weight:800;text-align:center}
   .order-popup .desc{color:var(--muted);font-size:13px;text-align:center}
@@ -140,13 +140,21 @@
   /* blur when overlay open - add class on body */
   .overlay-open .container,
   .overlay-open .fs-modal{filter:blur(6px) brightness(.9);pointer-events:none;user-select:none}
-  /* ensure overlay itself remains interactive */
   .overlay-open .order-popup-overlay{pointer-events:auto}
-  /* make overlay not affect layout on small screens */
-  @media (max-width:560px){
-    .order-popup{max-width:92%;padding:14px}
-    .order-popup .title{font-size:16px}
+
+  /* ====== NEW: Floating footer on main screen (flying animation) ====== */
+  .floating-footer{
+    position:fixed;left:50%;transform:translateX(-50%) translateY(120%);bottom:18px;z-index:2500;
+    background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    color:var(--muted);padding:12px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);
+    display:flex;align-items:center;gap:12px;box-shadow:0 18px 40px rgba(0,0,0,0.6);
+    opacity:0; transition:transform .8s cubic-bezier(.16,.84,.32,1),opacity .6s;
   }
+  .floating-footer.show{transform:translateX(-50%) translateY(0);opacity:1}
+  .floating-footer .hidden-link{cursor:pointer;color:var(--muted);text-decoration:underline;font-weight:700}
+  .floating-footer .brandline{font-weight:600;color:var(--accent)}
+  /* small animation wave on hover */
+  .floating-footer:hover{transform:translateX(-50%) translateY(-6px);box-shadow:0 30px 70px rgba(0,0,0,0.7)}
 
   /* SETTINGS (column-wise) */
   .settings-page{display:none}
@@ -154,6 +162,13 @@
   .card-panel{background:linear-gradient(180deg,#0b0b0d,#0f1113);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
   .swatches{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
   .swatch{width:36px;height:28px;border-radius:8px;cursor:pointer;border:2px solid rgba(255,255,255,0.03)}
+
+  /* admin fonts panel specifics */
+  .admin-fonts{display:none;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);background:linear-gradient(180deg,#0a0b0c,#0f1113)}
+  .admin-fonts.show{display:block}
+  .admin-fonts label{color:var(--muted);font-size:13px;display:block;margin-bottom:8px}
+  .admin-fonts select{width:100%;padding:8px;border-radius:8px;border:0;background:rgba(255,255,255,0.02);color:var(--text)}
+  .admin-fonts button{margin-top:8px;padding:8px;border-radius:8px;border:0;background:var(--accent);color:#000;font-weight:700;cursor:pointer}
 
   /* ABOUT/CONTACT/OTHER PAGES */
   .page{display:none}
@@ -177,6 +192,7 @@
     .hero-title{font-size:28px}
     .cloud-search{width:92%}
     .services-grid{grid-template-columns:1fr}
+    .floating-footer{bottom:10px; padding:10px 12px}
   }
 </style>
 </head>
@@ -259,6 +275,15 @@
           <h4 style="color:var(--muted)">Service Title Colors (55)</h4>
           <div class="swatches" id="titleSwatches"></div>
         </div>
+
+        <!-- ADMIN: Fonts panel will appear here if admin -->
+        <div class="card-panel admin-fonts" id="adminFontsPanel">
+          <label for="adminFontsSelect">Fonts (242) — change Hero & Service Titles</label>
+          <select id="adminFontsSelect" size="6" style="height:140px"></select>
+          <button id="applyFontBtn">Apply Font</button>
+          <div style="color:var(--muted);margin-top:8px;font-size:12px">Tip: First few entries are common fonts; others are placeholders you can replace with web fonts later.</div>
+        </div>
+
       </div>
     </section>
 
@@ -352,6 +377,13 @@
   </div>
 </div>
 
+<!-- NEW: Floating footer on main screen (shows with animation) -->
+<div class="floating-footer" id="floatingFooter" aria-hidden="true">
+  <div class="brandline">© AlTa Group of Graphics — <strong>Rao Ali</strong></div>
+  <div style="color:var(--muted);font-size:13px"> — </div>
+  <div class="hidden-link" id="hiddenCMain" title="Admin">c</div>
+</div>
+
 <script>
 /* =========================
    Data & Config
@@ -388,7 +420,7 @@ if(!samples){
 /* settings default */
 let settings = JSON.parse(localStorage.getItem(LS_SETTINGS) || 'null');
 if(!settings){
-  settings = { theme: 'dark', accent: '#d4af37', svcTitleColor: '#ffffff', wallpaper: null };
+  settings = { theme: 'dark', accent: '#d4af37', svcTitleColor: '#ffffff', wallpaper: null, fontChoice: null };
   localStorage.setItem(LS_SETTINGS, JSON.stringify(settings));
 }
 
@@ -402,6 +434,19 @@ let currentService = null;
 function applySettings(){
   document.documentElement.style.setProperty('--accent', settings.accent || '#d4af37');
   document.documentElement.style.setProperty('--svc-color', settings.svcTitleColor || '#ffffff');
+  // apply font choice if present
+  if(settings.fontChoice){
+    document.documentElement.style.setProperty('--main-font', settings.fontChoice);
+    // also set hero and service titles
+    const hero = document.getElementById('heroTitle');
+    if(hero) hero.style.fontFamily = settings.fontChoice;
+    document.querySelectorAll('.svc-title').forEach(el => el.style.fontFamily = settings.fontChoice);
+  } else {
+    // fallback: ensure hero/title use var main-font
+    document.getElementById('heroTitle').style.fontFamily = getComputedStyle(document.documentElement).getPropertyValue('--main-font');
+    document.querySelectorAll('.svc-title').forEach(el => el.style.fontFamily = getComputedStyle(document.documentElement).getPropertyValue('--main-font'));
+  }
+
   // background (cloudy CSS uses gradients; if wallpaper set, use it)
   if(settings.wallpaper){
     document.body.style.background = settings.wallpaper;
@@ -434,15 +479,11 @@ function buildServices(){
                       <button class="order-3d" data-service="${s}">Order Now</button>`;
     // open fs modal on click anywhere except Order Now button
     card.addEventListener('click', (e)=>{
-      // if clicked on order button, do nothing here (order button has its own handler)
       if(e.target.closest('.order-3d')) return;
       openFs(s);
     });
 
     // attach Order Now button to open the new small popup (NOT the fullscreen fsModal)
-    // this replaces the previous behavior for Order Now clicks
-    // keep rest of code untouched
-    // ensure propagation stopped so card click doesn't open fs modal
     setTimeout(()=>{ // small timeout to ensure inner HTML is parsed
       const btn = card.querySelector('.order-3d');
       if(btn){
@@ -520,10 +561,8 @@ function showOrderPopup(service){
   currentService = service;
   orderPopupTitle.textContent = `Order: ${service}`;
   orderPopupDesc.textContent = `Place your order directly with us via WhatsApp or Telegram.`;
-  // show overlay
   orderOverlay.classList.add('show');
   orderOverlay.setAttribute('aria-hidden','false');
-  // add blur state to background
   document.body.classList.add('overlay-open');
 }
 
@@ -534,10 +573,8 @@ function closeOrderPopup(){
   currentService = null;
 }
 
-// buttons actions
 orderPopupWhats.addEventListener('click', ()=>{
   if(!currentService) return;
-  // direct WhatsApp chat to your number with message
   const wa = 'https://wa.me/'+PHONE+'?text='+encodeURIComponent('I want to order: '+currentService);
   window.open(wa,'_blank');
   closeOrderPopup();
@@ -548,18 +585,14 @@ orderPopupTele.addEventListener('click', ()=>{
   closeOrderPopup();
 });
 orderPopupClose.addEventListener('click', ()=> closeOrderPopup());
-
-// close on clicking outside popup content (overlay background)
 orderOverlay.addEventListener('click', (e)=>{
   if(e.target === orderOverlay) closeOrderPopup();
 });
 
-// close on Escape
+/* close on Escape (popup and fs modal) */
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape'){
-    // if popup open, close it
     if(orderOverlay.classList.contains('show')) closeOrderPopup();
-    // keep existing fs modal esc behavior (closeFs) also present below
     if(fsModal.classList.contains('show')) closeFs();
   }
 });
@@ -619,7 +652,7 @@ genWallpapers.forEach((w,i)=>{
   d.style.height='64px'; d.style.borderRadius='8px'; d.style.margin='6px'; d.style.cursor='pointer';
   d.style.background = w; d.title = 'Wallpaper '+(i+1);
   d.addEventListener('click', ()=> { setWallpaper(w); });
-  wallpapersEl.appendChild(d);
+  wallpapersEl && wallpapersEl.appendChild(d);
 });
 
 // generate 55 accent colors (hues across wheel)
@@ -631,13 +664,13 @@ for(let i=0;i<55;i++){
 genColors.forEach(c=>{
   const s = document.createElement('div'); s.className='swatch'; s.style.background=c; s.title=c;
   s.addEventListener('click', ()=> setAccent(c));
-  accentSwatches.appendChild(s);
+  accentSwatches && accentSwatches.appendChild(s);
 });
 // title color swatches (reuse with different lightness)
 genColors.forEach(c=>{
   const s = document.createElement('div'); s.className='swatch'; s.style.background=c; s.title=c;
   s.addEventListener('click', ()=> setSvcTitleColor(c));
-  titleSwatches.appendChild(s);
+  titleSwatches && titleSwatches.appendChild(s);
 });
 
 /* wallpaper handlers */
@@ -671,24 +704,33 @@ function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const el = document.getElementById(id);
   if(el) el.classList.add('active');
-  // if settings, show settings-grid block (special)
   if(id==='settings'){ document.getElementById('settings').classList.add('active'); } else { document.getElementById('settings').classList.remove('active'); }
-  // ensure main scroll top
   document.getElementById('main').scrollTop = 0;
   closeFs();
 }
 
 /* =========================
    Admin hidden 'c' in footer -> password prompt
+   (both sidebar and floating footer will use same handler)
    ========================= */
-document.getElementById('hiddenC').addEventListener('click', ()=>{
+function handleAdminClick(){
   const p = prompt('Enter admin password:');
-  if(p === ADMIN_PASSWORD){ isAdmin = true; alert('Admin ON'); document.getElementById('fsAdminUpload').style.display='block'; }
-  else alert('Wrong password');
-});
+  if(p === ADMIN_PASSWORD){
+    isAdmin = true;
+    alert('Admin ON');
+    document.getElementById('fsAdminUpload').style.display='block';
+    // show fonts panel
+    document.getElementById('adminFontsPanel').classList.add('show');
+    populateFontsIfNeeded();
+  } else {
+    alert('Wrong password');
+  }
+}
+document.getElementById('hiddenC').addEventListener('click', handleAdminClick);
+document.getElementById('hiddenCMain').addEventListener('click', handleAdminClick);
 
 /* =========================
-   About text and translate
+   ABOUT text and translate
    ========================= */
 const aboutEng = `AlTa Designs is a distinguished graphic design studio led by Rao Ali. With years of practical experience in branding and visual communication, we deliver premium design solutions tailored for businesses and creators. Our services range from three-dimensional logo creation, wooden logo concepts, t-shirt designs, social media graphics, packaging layouts, marriage invitation cards, business card designs, to attention-grabbing YouTube thumbnails.
 
@@ -721,7 +763,6 @@ searchInput.addEventListener('input', ()=> {
     card.style.display = (!q || txt.includes(q)) ? 'flex' : 'none';
   });
 });
-// voice (if supported)
 document.getElementById('voiceBtn').addEventListener('click', ()=>{
   if(!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)){ alert('Voice search not supported'); return; }
   const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -745,16 +786,88 @@ function buildProjects(){
 }
 
 /* =========================
+   Floating footer show on load (with delay for flying effect)
+   ========================= */
+const floatingFooter = document.getElementById('floatingFooter');
+setTimeout(()=>{ floatingFooter.classList.add('show'); floatingFooter.setAttribute('aria-hidden','false'); }, 600);
+
+/* =========================
+   Fonts Admin Panel: populate 242 options (some pre-mapped)
+   ========================= */
+const adminFontsSelect = document.getElementById('adminFontsSelect');
+const adminFontsPanel = document.getElementById('adminFontsPanel');
+const applyFontBtn = document.getElementById('applyFontBtn');
+let fontsPopulated = false;
+
+function populateFontsIfNeeded(){
+  if(fontsPopulated) return;
+  fontsPopulated = true;
+  // Create array of 242 font choices. First few are actual common fonts; rest are placeholders.
+  const common = [
+    {label:'Inter (system)', value:'Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial'},
+    {label:'Poppins', value:'Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial'},
+    {label:'Roboto', value:'Roboto, system-ui, -apple-system, "Segoe UI", Arial'},
+    {label:'Arial', value:'Arial, Helvetica, sans-serif'},
+    {label:'Georgia', value:'Georgia, "Times New Roman", Times, serif'},
+    {label:'Times New Roman', value:'"Times New Roman", Times, serif'},
+    {label:'Courier New', value:'"Courier New", Courier, monospace'},
+    {label:'Verdana', value:'Verdana, Geneva, sans-serif'},
+    {label:'Trebuchet MS', value:'"Trebuchet MS", Helvetica, sans-serif'},
+    {label:'Lucida Sans', value:'"Lucida Sans", "Lucida Grande", sans-serif'}
+  ];
+  // push common first
+  common.forEach(c=> {
+    const opt = document.createElement('option');
+    opt.value = c.value;
+    opt.textContent = c.label;
+    adminFontsSelect.appendChild(opt);
+  });
+  // now add placeholders to total 242
+  const start = common.length + 1;
+  for(let i=start;i<=242;i++){
+    const opt = document.createElement('option');
+    opt.value = `var(--main-font)`; // placeholder value; selecting will set to CSS var fallback unless replaced
+    opt.textContent = `Font ${i}`;
+    adminFontsSelect.appendChild(opt);
+  }
+
+  // If there is previously saved font in settings, select it
+  if(settings.fontChoice){
+    // try to find a matching option value; if not found, create a custom option
+    let found = false;
+    for(const opt of adminFontsSelect.options){
+      if(opt.value === settings.fontChoice){ opt.selected = true; found = true; break; }
+    }
+    if(!found){
+      const opt = document.createElement('option');
+      opt.value = settings.fontChoice;
+      opt.textContent = `Custom: ${settings.fontChoice}`;
+      adminFontsSelect.insertBefore(opt, adminFontsSelect.firstChild);
+      opt.selected = true;
+    }
+  }
+}
+
+/* Apply font choice: set --main-font and apply to hero & titles, save to settings */
+applyFontBtn.addEventListener('click', ()=>{
+  const v = adminFontsSelect.value || '';
+  if(!v) return alert('Select a font first');
+  settings.fontChoice = v;
+  localStorage.setItem(LS_SETTINGS, JSON.stringify(settings));
+  applySettings();
+  alert('Font applied to Hero & Service titles.');
+});
+
+/* =========================
    Init UI
    ========================= */
 applySettings();
 buildServices();
 buildProjects();
 renderGallery(SERVICES[0]); // pre-render one
-// showHome by default
 showPage('home');
 
-/* close modal on esc/click outside */
+/* close modal on esc/click outside (existing behavior maintained) */
 document.addEventListener('keydown', e=> { if(e.key==='Escape') closeFs(); });
 document.querySelector('.fs-modal').addEventListener('click', e=> { if(e.target === document.querySelector('.fs-modal')) closeFs(); });
 
