@@ -68,7 +68,6 @@
     border:1px solid rgba(255,255,255,0.045);backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 2px 8px rgba(255,255,255,0.02);
   }
-  /* pseudo-cloud glow layers */
   .cloud-search::before, .cloud-search::after{
     content:"";position:absolute;border-radius:999px;pointer-events:none;z-index:0;filter:blur(28px);opacity:.25;
   }
@@ -87,7 +86,6 @@
   }
   .svc-card:hover{transform:translateY(-8px)}
   .svc-title{font-size:16px;font-weight:700;color:var(--svc-color, #fff);text-align:center;transition:font-family .2s}
-  /* 3D Order Button */
   .order-3d{
     margin-top:6px;padding:12px 22px;border-radius:999px;border:0;background:linear-gradient(180deg, var(--accent), #ffdb8f);
     color:#000;font-weight:800;cursor:pointer;box-shadow:0 18px 30px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.12);
@@ -111,7 +109,7 @@
   .fs-upload{padding:12px;border-radius:8px;border:1px dashed rgba(255,255,255,0.03);background:transparent;color:var(--muted);text-align:center}
   .fs-upload input{display:none}
 
-  /* ====== NEW: Small centered order popup & blur ====== */
+  /* NEW: Small centered order popup & blur */
   .order-popup-overlay{
     position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:3000;
     background:rgba(0,0,0,0.35);
@@ -142,7 +140,7 @@
   .overlay-open .fs-modal{filter:blur(6px) brightness(.9);pointer-events:none;user-select:none}
   .overlay-open .order-popup-overlay{pointer-events:auto}
 
-  /* ====== NEW: Floating footer on main screen (flying animation) ====== */
+  /* NEW: Floating footer on main screen (flying animation) */
   .floating-footer{
     position:fixed;left:50%;transform:translateX(-50%) translateY(120%);bottom:18px;z-index:2500;
     background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
@@ -153,7 +151,6 @@
   .floating-footer.show{transform:translateX(-50%) translateY(0);opacity:1}
   .floating-footer .hidden-link{cursor:pointer;color:var(--muted);text-decoration:underline;font-weight:700}
   .floating-footer .brandline{font-weight:600;color:var(--accent)}
-  /* small animation wave on hover */
   .floating-footer:hover{transform:translateX(-50%) translateY(-6px);box-shadow:0 30px 70px rgba(0,0,0,0.7)}
 
   /* SETTINGS (column-wise) */
@@ -178,8 +175,7 @@
   .bottom-bar{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
   .bottom-bar .hidden-link{display:inline-block;margin-left:8px;color:var(--muted);cursor:pointer;text-decoration:underline;font-size:12px}
 
-  /* ====== ADDED: Signup modal & Users cards styles (modern glass) ====== */
-  /* Signup modal */
+  /* ADDED: Signup modal & Users cards styles (modern glass) */
   #signupModal {
     position: fixed; inset: 0; display: none; z-index: 10050; align-items:center; justify-content:center;
   }
@@ -189,7 +185,7 @@
   }
   .signup-card {
     position:relative; width:100%; max-width:420px; padding:20px; border-radius:14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 20px 60px rgba(0,0,0,0.6);
     color:var(--text); z-index:10051;
   }
@@ -200,17 +196,17 @@
   .btn-ghost{ padding:8px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--muted); cursor:pointer; }
   .btn-primary{ padding:8px 12px; border-radius:8px; border:0; background: linear-gradient(180deg,var(--accent), #ffdb8f); color:#000; font-weight:800; cursor:pointer; }
 
-  /* Users page: stylish cards */
+  /* Users page: transparent dark cards */
   .users-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:12px; margin-top:12px; }
   .user-card{
-    padding:12px; border-radius:12px; min-height:90px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.03); box-shadow: 0 10px 30px rgba(0,0,0,0.55); display:flex; flex-direction:column; gap:8px;
+    padding:12px; border-radius:12px; min-height:90px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    border:1px solid rgba(255,255,255,0.02); box-shadow: 0 10px 30px rgba(0,0,0,0.55); display:flex; flex-direction:column; gap:8px;
   }
   .user-card .name{ font-weight:800; color:var(--text); font-size:15px; }
   .user-card .wa{ color:var(--muted); font-size:13px; }
   .user-card .time{ color:var(--muted); font-size:12px; margin-top:auto; }
 
-  /* RESPONSIVE: keep left column visible on mobile and equal height */
+  /* RESPONSIVE */
   @media (max-width:900px){
     :root{--sidebar-w:28%}
     .sidebar{width:28%}
@@ -218,7 +214,7 @@
     .cloud-search{width:86%}
   }
   @media (max-width:560px){
-    .container{flex-direction:row; /* still two columns */ }
+    .container{flex-direction:row;}
     .sidebar{width:34%;padding:12px}
     .main{padding:12px}
     .hero-title{font-size:28px}
@@ -229,7 +225,7 @@
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="pageContainer">
   <!-- SIDEBAR (left column) -->
   <aside class="sidebar" id="sidebar">
     <div class="brand">
@@ -448,7 +444,7 @@
 
 <script>
 /* =========================
-   Data & Config (existing + additions)
+   Data & Config
    ========================= */
 const ADMIN_PASSWORD = 'Ali ray555';
 const PHONE = '923032792947';
@@ -468,7 +464,7 @@ const SERVICES = [
   'Business Card'
 ];
 
-/* ===== FIREBASE CONFIG (use your provided config) ===== */
+/* ===== FIREBASE CONFIG (your project) ===== */
 const firebaseConfig = {
   apiKey: "AIzaSyBkhSzsHF49bv3UfHic8PQ7JhnXwi60nY4",
   authDomain: "alta-website-97bfe.firebaseapp.com",
@@ -514,28 +510,29 @@ function applySettings(){
   // apply font choice if present
   if(settings.fontChoice){
     document.documentElement.style.setProperty('--main-font', settings.fontChoice);
-    // also set hero and service titles
     const hero = document.getElementById('heroTitle');
     if(hero) hero.style.fontFamily = settings.fontChoice;
     document.querySelectorAll('.svc-title').forEach(el => el.style.fontFamily = settings.fontChoice);
   } else {
-    // fallback: ensure hero/title use var main-font
-    document.getElementById('heroTitle').style.fontFamily = getComputedStyle(document.documentElement).getPropertyValue('--main-font');
+    const hero = document.getElementById('heroTitle');
+    if(hero) hero.style.fontFamily = getComputedStyle(document.documentElement).getPropertyValue('--main-font');
     document.querySelectorAll('.svc-title').forEach(el => el.style.fontFamily = getComputedStyle(document.documentElement).getPropertyValue('--main-font'));
   }
 
   // background (cloudy CSS uses gradients; if wallpaper set, use it)
   if(settings.wallpaper){
     document.body.style.background = settings.wallpaper;
-    document.getElementById('sidebar').style.background = settings.wallpaper;
+    const sb = document.getElementById('sidebar');
+    if(sb) sb.style.background = settings.wallpaper;
   } else {
-    // theme dark/light
     if(settings.theme === 'dark'){
       document.body.style.background = 'linear-gradient(180deg,#070708,#0b0b0d)';
-      document.getElementById('sidebar').style.background = 'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))';
+      const sb = document.getElementById('sidebar');
+      if(sb) sb.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))';
     } else {
       document.body.style.background = 'linear-gradient(180deg,#f7f8fb,#eef6ff)';
-      document.getElementById('sidebar').style.background = 'linear-gradient(180deg,#ffffff,#f1f5f9)';
+      const sb = document.getElementById('sidebar');
+      if(sb) sb.style.background = 'linear-gradient(180deg,#ffffff,#f1f5f9)';
       document.documentElement.style.setProperty('--muted','#475569');
       document.documentElement.style.setProperty('--text','#0b1220');
     }
@@ -554,20 +551,16 @@ function buildServices(){
     card.tabIndex = 0;
     card.innerHTML = `<div class="svc-title">${s}</div>
                       <button class="order-3d" data-service="${s}">Order Now</button>`;
-    // open fs modal on click anywhere except Order Now button
     card.addEventListener('click', (e)=>{
       if(e.target.closest('.order-3d')) return;
       openFs(s);
     });
-
-    // attach Order Now button to open the new small popup (NOT the fullscreen fsModal)
-    setTimeout(()=>{ // small timeout to ensure inner HTML is parsed
+    setTimeout(()=>{ 
       const btn = card.querySelector('.order-3d');
       if(btn){
         btn.addEventListener('click', (ev)=>{ ev.stopPropagation(); showOrderPopup(s); });
       }
     },0);
-
     servicesGrid.appendChild(card);
   });
 }
@@ -608,7 +601,7 @@ function renderGallery(service){
 document.getElementById('fsCloseBtn').addEventListener('click', ()=> closeFs());
 function closeFs(){ fsModal.classList.remove('show'); fsModal.setAttribute('aria-hidden','true'); currentService = null; }
 
-/* orders (inside fullscreen modal) - keep existing behavior */
+/* orders (inside fullscreen modal) */
 document.getElementById('fsOrderWhats').addEventListener('click', ()=>{
   if(!currentService) return;
   window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent('I want to order: '+currentService),'_blank');
@@ -625,7 +618,7 @@ document.getElementById('fsOrderBig').addEventListener('click', ()=>{
 });
 
 /* =========================
-   NEW: Order popup behavior (the change you requested)
+   NEW: Order popup behavior
    ========================= */
 const orderOverlay = document.getElementById('orderPopupOverlay');
 const orderPopupTitle = document.getElementById('orderPopupTitle');
@@ -711,7 +704,6 @@ const wallpapersEl = document.getElementById('wallpapers');
 const accentSwatches = document.getElementById('accentSwatches');
 const titleSwatches = document.getElementById('titleSwatches');
 
-// generate 55 gradient wallpapers programmatically
 const genWallpapers = [];
 for(let i=0;i<55;i++){
   const h1 = Math.floor((i*47)%360);
@@ -723,7 +715,6 @@ for(let i=0;i<55;i++){
   genWallpapers.push(g);
 }
 
-// render wallpapers
 genWallpapers.forEach((w,i)=>{
   const d = document.createElement('div');
   d.style.height='64px'; d.style.borderRadius='8px'; d.style.margin='6px'; d.style.cursor='pointer';
@@ -732,7 +723,6 @@ genWallpapers.forEach((w,i)=>{
   wallpapersEl && wallpapersEl.appendChild(d);
 });
 
-// generate 55 accent colors (hues across wheel)
 const genColors = [];
 for(let i=0;i<55;i++){
   const hue = Math.round((i*360/55));
@@ -743,25 +733,21 @@ genColors.forEach(c=>{
   s.addEventListener('click', ()=> setAccent(c));
   accentSwatches && accentSwatches.appendChild(s);
 });
-// title color swatches (reuse with different lightness)
 genColors.forEach(c=>{
   const s = document.createElement('div'); s.className='swatch'; s.style.background=c; s.title=c;
   s.addEventListener('click', ()=> setSvcTitleColor(c));
   titleSwatches && titleSwatches.appendChild(s);
 });
 
-/* wallpaper handlers */
 function setWallpaper(w){
   settings.wallpaper = w; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings();
 }
 function removeWallpaper(){ settings.wallpaper=null; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
 function useDefaultWallpaper(){ settings.wallpaper=null; applySettings(); }
 
-/* color setters */
 function setAccent(c){ settings.accent=c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
 function setSvcTitleColor(c){ settings.svcTitleColor=c; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings(); }
 
-/* theme */
 function setTheme(t){
   settings.theme = t; localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); applySettings();
 }
@@ -788,7 +774,6 @@ function showPage(id){
 
 /* =========================
    Admin hidden 'c' in footer -> password prompt
-   (both sidebar and floating footer will use same handler)
    ========================= */
 function handleAdminClick(){
   const p = prompt('Enter admin password:');
@@ -796,16 +781,10 @@ function handleAdminClick(){
     isAdmin = true;
     alert('Admin ON');
     document.getElementById('fsAdminUpload').style.display='block';
-    // show fonts panel
     document.getElementById('adminFontsPanel').classList.add('show');
     populateFontsIfNeeded();
-
-    // show admin-only menu items
     document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
-
-    // optionally open Users page immediately
-    // showPage('users'); loadUsersList();
-    loadUsersList(); // pre-load list in background
+    loadUsersList();
   } else {
     alert('Wrong password');
   }
@@ -876,7 +855,7 @@ const floatingFooter = document.getElementById('floatingFooter');
 setTimeout(()=>{ floatingFooter.classList.add('show'); floatingFooter.setAttribute('aria-hidden','false'); }, 600);
 
 /* =========================
-   Fonts Admin Panel: populate 242 options (some pre-mapped)
+   Fonts Admin Panel
    ========================= */
 const adminFontsSelect = document.getElementById('adminFontsSelect');
 const adminFontsPanel = document.getElementById('adminFontsPanel');
@@ -886,7 +865,6 @@ let fontsPopulated = false;
 function populateFontsIfNeeded(){
   if(fontsPopulated) return;
   fontsPopulated = true;
-  // Create array of 242 font choices. First few are actual common fonts; rest are placeholders.
   const common = [
     {label:'Inter (system)', value:'Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial'},
     {label:'Poppins', value:'Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial'},
@@ -899,25 +877,20 @@ function populateFontsIfNeeded(){
     {label:'Trebuchet MS', value:'"Trebuchet MS", Helvetica, sans-serif'},
     {label:'Lucida Sans', value:'"Lucida Sans", "Lucida Grande", sans-serif'}
   ];
-  // push common first
   common.forEach(c=> {
     const opt = document.createElement('option');
     opt.value = c.value;
     opt.textContent = c.label;
     adminFontsSelect.appendChild(opt);
   });
-  // now add placeholders to total 242
   const start = common.length + 1;
   for(let i=start;i<=242;i++){
     const opt = document.createElement('option');
-    opt.value = `var(--main-font)`; // placeholder value; selecting will set to CSS var fallback unless replaced
+    opt.value = `var(--main-font)`;
     opt.textContent = `Font ${i}`;
     adminFontsSelect.appendChild(opt);
   }
-
-  // If there is previously saved font in settings, select it
   if(settings.fontChoice){
-    // try to find a matching option value; if not found, create a custom option
     let found = false;
     for(const opt of adminFontsSelect.options){
       if(opt.value === settings.fontChoice){ opt.selected = true; found = true; break; }
@@ -931,8 +904,6 @@ function populateFontsIfNeeded(){
     }
   }
 }
-
-/* Apply font choice: set --main-font and apply to hero & titles, save to settings */
 applyFontBtn.addEventListener('click', ()=>{
   const v = adminFontsSelect.value || '';
   if(!v) return alert('Select a font first');
@@ -943,13 +914,16 @@ applyFontBtn.addEventListener('click', ()=>{
 });
 
 /* =========================
-   NEW: Signup modal logic & Firestore writes
+   Signup modal logic & Firestore writes
    ========================= */
 function showSignupModal(){
   const modal = document.getElementById('signupModal');
   modal.style.display = 'flex';
   modal.setAttribute('aria-hidden','false');
+  // add overlay but do not block main interaction except to capture input focus
   document.body.classList.add('overlay-open');
+  // focus name
+  setTimeout(()=>{ const el = document.getElementById('signupName'); if(el) el.focus(); }, 350);
 }
 function closeSignupModal(){
   const modal = document.getElementById('signupModal');
@@ -963,12 +937,10 @@ function closeSignupModal(){
   const key = 'alta_user_signed';
   try{
     if(!localStorage.getItem(key)){
-      // show after small delay for UX
+      // show after small delay for UX but do not block rendering
       setTimeout(showSignupModal, 700);
     }
-  }catch(e){
-    // ignore localStorage errors
-  }
+  }catch(e){}
 })();
 
 async function submitSignup(){
@@ -988,7 +960,8 @@ async function submitSignup(){
     });
     try{ localStorage.setItem('alta_user_signed','1'); }catch(e){}
     closeSignupModal();
-    alert('Thanks! You are registered ✅');
+    // friendly on-page toast (simple)
+    setTimeout(()=> alert('Thanks! You are registered ✅'), 200);
   }catch(err){
     console.error('Firestore write error:', err);
     alert('There was an error saving your info. Please try again.');
@@ -1051,7 +1024,7 @@ renderGallery(SERVICES[0]); // pre-render one
 showPage('home');
 
 /* close modal on esc/click outside (existing behavior maintained) */
-document.addEventListener('keydown', e=> { if(e.key==='Escape') closeFs(); });
+document.addEventListener('keydown', e=> { if(e.key==='Escape') { if(orderOverlay.classList.contains('show')) closeOrderPopup(); if(fsModal.classList.contains('show')) closeFs(); } });
 document.querySelector('.fs-modal').addEventListener('click', e=> { if(e.target === document.querySelector('.fs-modal')) closeFs(); });
 
 /* Save settings on unload */
