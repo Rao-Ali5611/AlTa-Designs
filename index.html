@@ -178,6 +178,38 @@
   .bottom-bar{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
   .bottom-bar .hidden-link{display:inline-block;margin-left:8px;color:var(--muted);cursor:pointer;text-decoration:underline;font-size:12px}
 
+  /* ====== ADDED: Signup modal & Users cards styles (modern glass) ====== */
+  /* Signup modal */
+  #signupModal {
+    position: fixed; inset: 0; display: none; z-index: 10050; align-items:center; justify-content:center;
+  }
+  #signupModal .bg {
+    position:absolute; inset:0; background: linear-gradient(180deg, rgba(2,6,23,0.45), rgba(2,6,23,0.55));
+    backdrop-filter: blur(6px) saturate(120%);
+  }
+  .signup-card {
+    position:relative; width:100%; max-width:420px; padding:20px; border-radius:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    color:var(--text); z-index:10051;
+  }
+  .signup-card h3 { margin:0 0 6px 0; color:var(--accent); font-size:18px; font-weight:800; }
+  .signup-card p { margin:0 0 12px 0; color:var(--muted); font-size:13px; }
+  .signup-card input{ width:100%; padding:10px 12px; margin-bottom:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text); outline:none; }
+  .signup-row{ display:flex; gap:8px; justify-content:flex-end; }
+  .btn-ghost{ padding:8px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--muted); cursor:pointer; }
+  .btn-primary{ padding:8px 12px; border-radius:8px; border:0; background: linear-gradient(180deg,var(--accent), #ffdb8f); color:#000; font-weight:800; cursor:pointer; }
+
+  /* Users page: stylish cards */
+  .users-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:12px; margin-top:12px; }
+  .user-card{
+    padding:12px; border-radius:12px; min-height:90px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03); box-shadow: 0 10px 30px rgba(0,0,0,0.55); display:flex; flex-direction:column; gap:8px;
+  }
+  .user-card .name{ font-weight:800; color:var(--text); font-size:15px; }
+  .user-card .wa{ color:var(--muted); font-size:13px; }
+  .user-card .time{ color:var(--muted); font-size:12px; margin-top:auto; }
+
   /* RESPONSIVE: keep left column visible on mobile and equal height */
   @media (max-width:900px){
     :root{--sidebar-w:28%}
@@ -214,6 +246,9 @@
       <button data-target="contact">📞 Contact</button>
       <button data-target="about">📜 About Us</button>
       <button data-target="inspiration">✨ Inspiration</button>
+
+      <!-- ADMIN ONLY: Users (hidden until admin mode on) -->
+      <button class="admin-only" data-target="users" style="display:none">👥 Users</button>
     </nav>
 
     <div class="spacer"></div>
@@ -328,6 +363,14 @@
       <h2 style="color:var(--accent)">Inspiration</h2>
       <div id="inspirationGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px"></div>
     </section>
+
+    <!-- USERS (admin only) -->
+    <section id="users" class="page">
+      <h2 style="color:var(--accent)">Users</h2>
+      <div id="usersGrid" class="users-grid">
+        <!-- user cards loaded by JS -->
+      </div>
+    </section>
   </main>
 </div>
 
@@ -364,6 +407,21 @@
   </div>
 </div>
 
+<!-- NEW: Signup modal (modern glass) -->
+<div id="signupModal" aria-hidden="true">
+  <div class="bg" onclick="closeSignupModal()"></div>
+  <div class="signup-card" role="dialog" aria-modal="true" aria-label="Signup">
+    <h3>Welcome — Sign up</h3>
+    <p>Enter your name and WhatsApp number to get in touch quickly.</p>
+    <input id="signupName" placeholder="Full name" autocomplete="name" />
+    <input id="signupWhats" placeholder="WhatsApp (e.g. +92301...)" autocomplete="tel" />
+    <div class="signup-row">
+      <button class="btn-ghost" onclick="closeSignupModal()">Cancel</button>
+      <button class="btn-primary" onclick="submitSignup()">Submit</button>
+    </div>
+  </div>
+</div>
+
 <!-- NEW: small centered order popup -->
 <div class="order-popup-overlay" id="orderPopupOverlay" aria-hidden="true">
   <div class="order-popup" role="dialog" aria-modal="true" aria-label="Order Options">
@@ -384,9 +442,13 @@
   <div class="hidden-link" id="hiddenCMain" title="Admin">c</div>
 </div>
 
+<!-- Firebase compat scripts (used for simple Firestore usage) -->
+<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore-compat.js"></script>
+
 <script>
 /* =========================
-   Data & Config
+   Data & Config (existing + additions)
    ========================= */
 const ADMIN_PASSWORD = 'Ali ray555';
 const PHONE = '923032792947';
@@ -405,6 +467,21 @@ const SERVICES = [
   'T-Shirt Design',
   'Business Card'
 ];
+
+/* ===== FIREBASE CONFIG (use your provided config) ===== */
+const firebaseConfig = {
+  apiKey: "AIzaSyBkhSzsHF49bv3UfHic8PQ7JhnXwi60nY4",
+  authDomain: "alta-website-97bfe.firebaseapp.com",
+  projectId: "alta-website-97bfe",
+  storageBucket: "alta-website-97bfe.firebasestorage.app",
+  messagingSenderId: "143821646269",
+  appId: "1:143821646269:web:cc6ff0b0b80ddc939e0ad4",
+  measurementId: "G-PLSXLBR4J9"
+};
+/* Initialize firebase (compat) */
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+/* ===================================================== */
 
 /* Load or init samples */
 let samples = JSON.parse(localStorage.getItem(LS_SAMPLES) || 'null');
@@ -722,6 +799,13 @@ function handleAdminClick(){
     // show fonts panel
     document.getElementById('adminFontsPanel').classList.add('show');
     populateFontsIfNeeded();
+
+    // show admin-only menu items
+    document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
+
+    // optionally open Users page immediately
+    // showPage('users'); loadUsersList();
+    loadUsersList(); // pre-load list in background
   } else {
     alert('Wrong password');
   }
@@ -775,7 +859,7 @@ document.getElementById('voiceBtn').addEventListener('click', ()=>{
    Projects grid builder
    ========================= */
 function buildProjects(){
-  const projGrid = document.getElementById('projectsGrid');
+  const projGrid = document.getElementById( 'projectsGrid' );
   projGrid.innerHTML = '';
   const projects = JSON.parse(localStorage.getItem(LS_PROJECTS) || '[]');
   projects.forEach((p,i)=>{
@@ -857,6 +941,105 @@ applyFontBtn.addEventListener('click', ()=>{
   applySettings();
   alert('Font applied to Hero & Service titles.');
 });
+
+/* =========================
+   NEW: Signup modal logic & Firestore writes
+   ========================= */
+function showSignupModal(){
+  const modal = document.getElementById('signupModal');
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden','false');
+  document.body.classList.add('overlay-open');
+}
+function closeSignupModal(){
+  const modal = document.getElementById('signupModal');
+  modal.style.display = 'none';
+  modal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('overlay-open');
+}
+
+/* Show signup once per browser using localStorage flag */
+(function maybeShowSignup(){
+  const key = 'alta_user_signed';
+  try{
+    if(!localStorage.getItem(key)){
+      // show after small delay for UX
+      setTimeout(showSignupModal, 700);
+    }
+  }catch(e){
+    // ignore localStorage errors
+  }
+})();
+
+async function submitSignup(){
+  const name = (document.getElementById('signupName').value || '').trim();
+  const whatsapp = (document.getElementById('signupWhats').value || '').trim();
+  if(!name || !whatsapp){
+    alert('Please enter your name and WhatsApp number.');
+    return;
+  }
+  try{
+    await db.collection('users').add({
+      name: name,
+      whatsapp: whatsapp,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      userAgent: navigator.userAgent || '',
+      page: window.location.pathname || ''
+    });
+    try{ localStorage.setItem('alta_user_signed','1'); }catch(e){}
+    closeSignupModal();
+    alert('Thanks! You are registered ✅');
+  }catch(err){
+    console.error('Firestore write error:', err);
+    alert('There was an error saving your info. Please try again.');
+  }
+}
+
+/* =========================
+   Load users for admin view (stylish cards)
+   ========================= */
+async function loadUsersList(){
+  const container = document.getElementById('usersGrid');
+  if(!container) return;
+  container.innerHTML = '<div style="color:var(--muted)">Loading users…</div>';
+  try{
+    const snap = await db.collection('users').orderBy('createdAt','desc').limit(1000).get();
+    if(snap.empty){ container.innerHTML = '<div style="color:var(--muted)">No users found yet.</div>'; return; }
+    const rows = [];
+    snap.forEach(doc=>{
+      const d = doc.data();
+      rows.push({
+        id: doc.id,
+        name: d.name || '',
+        whatsapp: d.whatsapp || '',
+        ts: d.createdAt && d.createdAt.toDate ? d.createdAt.toDate() : null
+      });
+    });
+    renderUsersCards(rows);
+  }catch(err){
+    console.error('Error loading users:', err);
+    container.innerHTML = '<div style="color:var(--muted)">Error loading users (check console).</div>';
+  }
+}
+
+function renderUsersCards(users){
+  const container = document.getElementById('usersGrid');
+  if(!container) return;
+  container.innerHTML = '';
+  users.forEach(u=>{
+    const card = document.createElement('div'); card.className = 'user-card';
+    const timeText = u.ts ? (u.ts.toLocaleString()) : '';
+    card.innerHTML = `<div class="name">${escapeHtml(u.name)}</div>
+                      <div class="wa">📱 ${escapeHtml(u.whatsapp)}</div>
+                      <div class="time">${timeText}</div>`;
+    container.appendChild(card);
+  });
+}
+
+/* small helper to avoid simple XSS when rendering */
+function escapeHtml(str){
+  return String(str || '').replace(/[&<>"'`=\/]/g, function(s){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'})[s]; });
+}
 
 /* =========================
    Init UI
